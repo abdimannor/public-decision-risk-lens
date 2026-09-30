@@ -1,8 +1,22 @@
 # Public Decision Risk Lens
 
+> **Final project for the [Building AI course](https://buildingai.elementsofai.com/).**
+
 ## Summary
 
-**Building AI course project.** Public Decision Risk Lens is a human-supervised concept for reviewing public-sector decision documents before an AI-supported or automated process is introduced. It is designed to help reviewers identify passages that may require closer attention because they affect transparency, accountability, fairness, privacy, or people’s ability to question a decision.
+**Building AI course project.** Public Decision Risk Lens is a human-supervised concept for reviewing public-sector decision documents before an AI-supported or automated process is introduced. It helps reviewers identify passages that may require closer attention because they affect transparency, accountability, fairness, privacy, or people’s ability to question a decision.
+
+![An official public document being signed](assets/policy-signing.jpg)
+
+*An official document-signing process, used here as an illustration of how public decisions become formalised. The project concerns document review, not the institution or people depicted.*
+
+### Project status
+
+- **Current stage:** concept and governance design
+- **Future stage:** source-linked prototype for public documents
+- **Decision authority:** remains human, accountable, and open to challenge
+
+![Public Decision Risk Lens workflow](assets/risk-lens-workflow.svg)
 
 ## Background
 
@@ -38,4 +52,6 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 
 ## Acknowledgments
 
-This initial project concept contains no external code, datasets, images, or visual assets.
+- The original workflow diagram in `assets/risk-lens-workflow.svg` was created for this project and is covered by this repository’s [CC BY 4.0 licence](LICENSE).
+- The illustrative photograph, [*Signing of the General Appropriations Act of 2025 A*](https://commons.wikimedia.org/wiki/File:Signing_of_the_General_Appropriations_Act_of_2025_A.jpg), is by the Philippine Presidential Communications Office and is marked **Public Domain** on Wikimedia Commons. It is used only as a general illustration of official document-signing.
+- No external code or datasets are included in this project.

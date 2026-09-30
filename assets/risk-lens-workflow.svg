@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Public Decision Risk Lens workflow</title>
+  <desc id="desc">A four-stage human-supervised workflow: public document, risk lens, human review, and auditable review note.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#16223a"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="520" fill="url(#background)"/>
+  <rect width="1200" height="520" fill="url(#grid)"/>
+  <text x="70" y="84" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">Public Decision Risk Lens</text>
+  <text x="70" y="120" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="17">A human-supervised workflow for reviewing public-sector decision documents.</text>
+  <line x1="292" y1="288" x2="354" y2="288" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="567" y1="288" x2="629" y2="288" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="842" y1="288" x2="904" y2="288" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)"/>
+  <g filter="url(#shadow)">
+    <rect x="70" y="206" width="220" height="164" rx="18" fill="#0f2f43" stroke="#38bdf8" stroke-width="2"/>
+    <rect x="345" y="206" width="220" height="164" rx="18" fill="#123629" stroke="#34d399" stroke-width="2"/>
+    <rect x="620" y="206" width="220" height="164" rx="18" fill="#3b1d5f" stroke="#c084fc" stroke-width="2"/>
+    <rect x="895" y="206" width="220" height="164" rx="18" fill="#3b2a15" stroke="#fbbf24" stroke-width="2"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="96" y="254" fill="#e0f2fe" font-size="19" font-weight="700">1. Public document</text>
+    <text x="96" y="287" fill="#cbd5e1" font-size="15">Policy, procurement,</text>
+    <text x="96" y="310" fill="#cbd5e1" font-size="15">guidance or template</text>
+    <text x="96" y="343" fill="#7dd3fc" font-size="14">Source remains visible</text>
+
+    <text x="371" y="254" fill="#d1fae5" font-size="19" font-weight="700">2. Risk lens</text>
+    <text x="371" y="287" fill="#cbd5e1" font-size="15">Flags passages about</text>
+    <text x="371" y="310" fill="#cbd5e1" font-size="15">rights and safeguards</text>
+    <text x="371" y="343" fill="#6ee7b7" font-size="14">No automated verdict</text>
+
+    <text x="646" y="254" fill="#f3e8ff" font-size="19" font-weight="700">3. Human review</text>
+    <text x="646" y="287" fill="#cbd5e1" font-size="15">Accept, reject or</text>
+    <text x="646" y="310" fill="#cbd5e1" font-size="15">contextualise findings</text>
+    <text x="646" y="343" fill="#d8b4fe" font-size="14">Accountable judgment</text>
+
+    <text x="921" y="254" fill="#fef3c7" font-size="19" font-weight="700">4. Review note</text>
+    <text x="921" y="287" fill="#cbd5e1" font-size="15">Traceable concerns</text>
+    <text x="921" y="310" fill="#cbd5e1" font-size="15">for further scrutiny</text>
+    <text x="921" y="343" fill="#fcd34d" font-size="14">Auditable record</text>
+  </g>
+  <text x="70" y="458" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="14">Decision authority remains with accountable human institutions.</text>
+</svg>

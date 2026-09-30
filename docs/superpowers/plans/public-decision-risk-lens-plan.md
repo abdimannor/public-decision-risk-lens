@@ -88,7 +88,7 @@ git commit -m "docs: add project README"
 - [ ] **Step 1: Define the licence and content acceptance checks before adding the licence**
 
 ```bash
-python -c "from pathlib import Path; l=Path('LICENSE').read_text(encoding='utf-8'); assert 'Creative Commons Attribution 4.0 International' in l; files=sorted(p.relative_to(Path('.')).as_posix() for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts); allowed={'README.md','LICENSE','.gitignore','docs/superpowers/specs/public-decision-risk-lens-design.md','docs/superpowers/plans/public-decision-risk-lens-plan.md'}; unexpected=[p for p in files if p not in allowed]; assert not unexpected, unexpected; print('Licence and repository-content checks passed')"
+python -c "from pathlib import Path; l=Path('LICENSE').read_text(encoding='utf-8'); assert 'Creative Commons Attribution 4.0 International' in l; files=sorted(__import__('subprocess').check_output(['git', 'ls-files'], text=True).splitlines()); allowed={'README.md','LICENSE','.gitignore','docs/superpowers/specs/public-decision-risk-lens-design.md','docs/superpowers/plans/public-decision-risk-lens-plan.md'}; unexpected=[p for p in files if p not in allowed]; assert not unexpected, unexpected; print('Licence and repository-content checks passed')"
 ```
 
 - [ ] **Step 2: Run the acceptance check to verify it fails before `LICENSE` exists**

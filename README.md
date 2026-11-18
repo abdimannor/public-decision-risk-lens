@@ -12,8 +12,8 @@
 
 ### Project status
 
-- **Current stage:** concept and governance design
-- **Future stage:** source-linked prototype for public documents
+- **Current stage:** concept plus an early pattern-matching prototype
+- **Future stage:** taxonomy developed with practitioners and tested on public documents
 - **Decision authority:** remains human, accountable, and open to challenge
 
 ![Public Decision Risk Lens workflow](assets/risk-lens-workflow.svg)
@@ -29,6 +29,19 @@ The project addresses an early stage in this process: reviewing documents before
 A policy analyst, procurement officer, data-protection specialist, or oversight team selects a public policy, procurement specification, impact assessment, guideline, or decision template for review. The proposed tool highlights passages that may concern transparency, accountability, discrimination, privacy, contestability, human oversight, security, or misuse.
 
 Each flag is linked to the relevant passage and risk category. A human reviewer then accepts, rejects, or contextualises the flag and records a review note. The intended output is an auditable discussion aid, not an automated verdict.
+
+### Prototype
+
+The `prototype/` folder contains a small, dependency-free version of the review workflow. To try it, open `prototype/index.html` in a browser, paste a document or load a `.txt` file, or load the fictional sample. All processing stays in the browser.
+
+What it does:
+
+- splits the text into numbered passages and highlights words and phrases from a visible taxonomy (`prototype/taxonomy.js`) with English and Swedish patterns for the eight categories;
+- lists each flag by category with the passage, the matched term and the rule that fired;
+- notes topics such as appeal or human review that are not found in this text, as a prompt to check other documents rather than as a finding;
+- lets a reviewer accept, reject or contextualise each flag, write a note, and export a review log as JSON or Markdown.
+
+What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The tests run with `node --test prototype/`.
 
 ## Data sources and AI methods
 

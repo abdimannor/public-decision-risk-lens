@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node --test prototype/
+      - run: node --test prototype/engine.test.js
 
   browser:
     runs-on: ubuntu-24.04

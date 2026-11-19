@@ -71,3 +71,5 @@ mark { background: var(--mark); color: inherit; padding: 0 .1em; border-radius: 
 .hint { color: var(--muted); font-size: .92rem; }
 .foot { color: var(--muted); font-size: .9rem; padding-top: 2rem; padding-bottom: 2rem; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+button.danger { border-color: var(--reject); color: var(--reject); }
+[hidden] { display: none !important; }

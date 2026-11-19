@@ -12,6 +12,39 @@
   let result = null;
   let reviews = {}; // flag id -> { decision, note }
   let sourceName = "pasted text";
+  const STORE_KEY = "risk-lens-review-v1";
+
+  // Saves the document, reviewer and decisions in this browser only (localStorage).
+  function save() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        text: $("doc").value, sourceName, reviewer: $("reviewer").value, reviews
+      }));
+    } catch (e) { /* storage may be unavailable, e.g. private mode */ }
+  }
+
+  function restore() {
+    let saved;
+    try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) { saved = null; }
+    if (!saved || !saved.text) return;
+    $("doc").value = saved.text;
+    sourceName = saved.sourceName || "pasted text";
+    $("reviewer").value = saved.reviewer || "";
+    analyse(saved.reviews || {});
+  }
+
+  function clearReview() {
+    try { localStorage.removeItem(STORE_KEY); } catch (e) { /* ignore */ }
+    result = null;
+    reviews = {};
+    sourceName = "pasted text";
+    $("doc").value = "";
+    $("reviewer").value = "";
+    $("file").value = "";
+    $("workspace").hidden = true;
+    $("clear").hidden = true;
+    $("status").textContent = "Review cleared. Nothing is stored in this browser.";
+  }
 
   function el(tag, attrs = {}, ...children) {
     const node = document.createElement(tag);
@@ -84,13 +117,14 @@
         review.decision = value;
         wrap.dataset.decision = value;
         updateStatus();
+        save();
       });
       fs.append(el("label", {}, input, label));
     }
     const noteId = `n-${f.id}`;
     const note = el("textarea", { id: noteId, rows: "2" });
     note.value = review.note;
-    note.addEventListener("input", () => (review.note = note.value));
+    note.addEventListener("input", () => { review.note = note.value; save(); });
     wrap.append(
       el("div", { class: "meta" },
         el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, `Passage ${f.passageIndex}`),
@@ -127,19 +161,21 @@
     $("status").textContent = `${result.passages.length} passages, ${result.flags.length} flags, ${result.absences.length} topics not found. Reviewed ${done} of ${result.flags.length} flags.`;
   }
 
-  function analyse() {
+  function analyse(savedReviews) {
     const text = $("doc").value;
     if (!text.trim()) {
       $("status").textContent = "Paste or load a document first.";
       return;
     }
     result = Engine.analyse(text);
-    reviews = {};
+    reviews = savedReviews && typeof savedReviews === "object" && !(savedReviews instanceof Event) ? savedReviews : {};
     renderPassages();
     renderAbsences();
     renderFlags();
     $("workspace").hidden = false;
+    $("clear").hidden = false;
     updateStatus();
+    save();
   }
 
   function buildLog() {
@@ -195,7 +231,9 @@
     return new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
   }
 
-  $("analyse").addEventListener("click", analyse);
+  $("analyse").addEventListener("click", () => analyse());
+  $("clear").addEventListener("click", clearReview);
+  $("reviewer").addEventListener("input", save);
   $("load-sample").addEventListener("click", () => {
     $("doc").value = window.RiskLensSample.text;
     sourceName = window.RiskLensSample.title;
@@ -211,4 +249,5 @@
   });
   $("export-json").addEventListener("click", () => result && download(`review-log-${stamp()}.json`, "application/json", JSON.stringify(buildLog(), null, 2)));
   $("export-md").addEventListener("click", () => result && download(`review-log-${stamp()}.md`, "text/markdown", toMarkdown(buildLog())));
+  restore();
 })();

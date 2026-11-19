@@ -1,0 +1,12 @@
+{
+  "name": "public-decision-risk-lens",
+  "private": true,
+  "license": "CC-BY-4.0",
+  "scripts": {
+    "test": "node --test prototype/engine.test.js",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0"
+  }
+}

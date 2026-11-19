@@ -71,3 +71,14 @@ mark { background: var(--mark); color: inherit; padding: 0 .1em; border-radius: 
 .hint { color: var(--muted); font-size: .92rem; }
 .foot { color: var(--muted); font-size: .9rem; padding-top: 2rem; padding-bottom: 2rem; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+button.danger { border-color: var(--reject); color: var(--reject); }
+[hidden] { display: none !important; }
+/* Layout fixes from screenshot review */
+.flag { border-left: 4px solid transparent; }
+@media (min-width: 861px) {
+  .doc-view { position: sticky; top: 5rem; align-self: start; max-height: calc(100vh - 6rem); overflow-y: auto; }
+  .doc-view h2 { margin-top: 0; }
+}
+@media (max-width: 860px) {
+  .banner { position: static; font-size: .9rem; }
+}

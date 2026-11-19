@@ -32,7 +32,7 @@ Each flag is linked to the relevant passage and risk category. A human reviewer 
 
 ### Prototype
 
-The `prototype/` folder contains a small, dependency-free version of the review workflow. To try it, open `prototype/index.html` in a browser, paste a document or load a `.txt` file, or load the fictional sample. All processing stays in the browser.
+The `prototype/` folder contains a small, dependency-free version of the review workflow. To try it, open `prototype/index.html` in a browser, paste a document or load a `.txt` file, or load the fictional sample. All processing stays in the browser. A live copy will be at https://abdimannor.github.io/public-decision-risk-lens/prototype/ once GitHub Pages is enabled. The text, decisions and notes are stored only in your browser (local storage) so they survive a reload; the Clear review button removes them.
 
 What it does:
 
@@ -41,7 +41,7 @@ What it does:
 - notes topics such as appeal or human review that are not found in this text, as a prompt to check other documents rather than as a finding;
 - lets a reviewer accept, reject or contextualise each flag, write a note, and export a review log as JSON or Markdown.
 
-What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The tests run with `node --test prototype/`.
+What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The unit tests run with `node --test prototype/`; browser tests run with `npm install` and `npx playwright test`.
 
 ## Data sources and AI methods
 

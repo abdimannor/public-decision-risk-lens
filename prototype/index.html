@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Public Decision Risk Lens: prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#flags">Skip to flags</a>
+  <div class="banner" role="note">
+    <strong>Advisory discussion aid.</strong>
+    This early prototype matches visible words and phrases. It can miss risks and it will produce false positives.
+    It does not decide anything and does not assess people. Every flag needs a human reviewer.
+  </div>
+
+  <header class="top">
+    <h1>Public Decision Risk Lens <span class="tag">prototype</span></h1>
+    <p class="lede">Paste a public decision document or load a .txt file. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
+  </header>
+
+  <main>
+    <section class="input" aria-labelledby="input-h">
+      <h2 id="input-h">1. Document</h2>
+      <label for="doc">Document text</label>
+      <textarea id="doc" rows="10" spellcheck="false" placeholder="Paste text here"></textarea>
+      <div class="row">
+        <button id="analyse" type="button" class="primary">Analyse text</button>
+        <button id="load-sample" type="button">Load fictional sample</button>
+        <label class="file">Load .txt file <input id="file" type="file" accept=".txt,text/plain"></label>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="workspace" hidden id="workspace">
+      <section class="doc-view" aria-labelledby="doc-h">
+        <h2 id="doc-h">2. Passages</h2>
+        <ol id="passages" class="passages"></ol>
+      </section>
+
+      <section class="flags" id="flags" aria-labelledby="flags-h" tabindex="-1">
+        <h2 id="flags-h">3. Review</h2>
+        <div class="field">
+          <label for="reviewer">Reviewer (role or initials, optional)</label>
+          <input id="reviewer" type="text" autocomplete="off">
+        </div>
+        <div id="absences"></div>
+        <div id="flag-groups"></div>
+        <div class="export">
+          <h3>Export review log</h3>
+          <p class="hint">The log records each rule that fired, the passage text and your decision. Nothing leaves this browser unless you save the file.</p>
+          <div class="row">
+            <button id="export-json" type="button">Export JSON</button>
+            <button id="export-md" type="button">Export Markdown</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p>Building AI course project. Patterns are listed in <code>taxonomy.js</code>. Licence CC BY 4.0.</p>
+  </footer>
+
+  <script src="taxonomy.js"></script>
+  <script src="engine.js"></script>
+  <script src="sample.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

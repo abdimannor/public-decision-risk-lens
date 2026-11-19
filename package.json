@@ -3,7 +3,7 @@
   "private": true,
   "license": "CC-BY-4.0",
   "scripts": {
-    "test": "node --test prototype/",
+    "test": "node --test prototype/engine.test.js",
     "test:e2e": "playwright test"
   },
   "devDependencies": {

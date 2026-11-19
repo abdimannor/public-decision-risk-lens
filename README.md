@@ -41,7 +41,7 @@ What it does:
 - notes topics such as appeal or human review that are not found in this text, as a prompt to check other documents rather than as a finding;
 - lets a reviewer accept, reject or contextualise each flag, write a note, and export a review log as JSON or Markdown.
 
-What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The unit tests run with `node --test prototype/`; browser tests run with `npm install` and `npx playwright test`.
+What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The unit tests run with `node --test prototype/engine.test.js`; browser tests run with `npm install` and `npx playwright test`.
 
 ## Data sources and AI methods
 

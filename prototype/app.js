@@ -198,7 +198,7 @@
     for (const cat of TAXONOMY) {
       const flags = result.flags.filter((f) => f.category === cat.id);
       if (!flags.length) continue;
-      const group = el("details", { class: "group", open: "" },
+      const group = el("details", { class: "group", open: "", "data-cat": cat.id },
         el("summary", {}, `${cat.label} (${flags.length})`),
         el("p", { class: "q" }, cat.description, " ", el("em", {}, cat.question)));
       flags.forEach((f) => group.append(renderFlag(f)));

@@ -56,6 +56,7 @@
     $("reviewer").value = "";
     $("file").value = "";
     $("workspace").hidden = true;
+    renderProgress();
     $("riskmap-section").hidden = true;
     $("clear").hidden = true;
     $("status").textContent = t("cleared");
@@ -64,6 +65,7 @@
   function el(tag, attrs = {}, ...children) {
     const node = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
+      if (v == null) continue;
       if (k === "class") node.className = v;
       else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
       else node.setAttribute(k, v);
@@ -582,8 +584,38 @@
     node.classList.add("current");
   });
 
-  // Reviewer progress meter (filled in below).
-  function renderProgress() {}
+  // Reviewer progress meter: sticky at the top of the review column. Counts
+  // decisions, not risk; it says nothing about the document itself.
+  function renderProgress() {
+    const box = $("progress");
+    if (!result) { box.replaceChildren(); return; }
+    const total = result.flags.length;
+    const isDone = (f) => !!(reviews[f.id] && reviews[f.id].decision);
+    const done = result.flags.filter(isDone).length;
+    const pct = total ? Math.round((done / total) * 100) : 100;
+    const cats = TAXONOMY.map(L).map((c) => {
+      const fs = result.flags.filter((f) => f.category === c.id);
+      return { c, n: fs.length, d: fs.filter(isDone).length };
+    }).filter((x) => x.n);
+    box.replaceChildren(
+      el("div", { class: "p-top" },
+        el("p", { class: "p-count", id: "progress-count" }, t("progress", { d: done, n: total })),
+        el("button", { type: "button", id: "next-unreviewed", class: "primary", onclick: nextUnreviewed, disabled: done === total ? "" : null }, t("nextUnreviewed")),
+        el("button", { type: "button", class: "linkbtn keys-btn", onclick: () => $("shortcuts").showModal(), "aria-keyshortcuts": "?" }, el("kbd", { "aria-hidden": "true" }, "?"), " ", t("shortcutsBtn"))),
+      el("div", { class: "p-bar", role: "progressbar", "aria-labelledby": "progress-count", "aria-valuemin": "0", "aria-valuemax": String(total), "aria-valuenow": String(done) },
+        el("span", { style: `--p:${pct}%` })),
+      el("ul", { class: "p-cats" }, ...cats.map(({ c, n, d }) => el("li", { "data-cat": c.id, class: d === n ? "done" : "", title: t("catProgress", { cat: c.label, d, n }) },
+        el("span", { class: "sw", "aria-hidden": "true" }), el("span", { class: "visually-hidden" }, t("catProgress", { cat: c.label, d, n })),
+        el("span", { "aria-hidden": "true" }, `${c.label} ${d}/${n}`)))),
+      done === total && total ? el("p", { class: "p-all" }, t("allReviewed")) : null);
+  }
+  function nextUnreviewed() {
+    const list = flagNodes();
+    const start = list.indexOf(currentFlag());
+    const order = list.slice(start + 1).concat(list.slice(0, start + 1));
+    const next = order.find((n) => !n.dataset.decision);
+    if (next) focusFlag(next);
+  }
 
   // Language switch: Swedish when the browser asks for Swedish, English
   // otherwise; an explicit choice is remembered in this browser.
@@ -599,6 +631,15 @@
     }
     if ($("compare-out").childElementCount) $("compare-run").click();
   }
+  // Keep the sticky progress meter just under the sticky banner.
+  function syncBannerHeight() {
+    const b = document.querySelector(".banner");
+    const h = getComputedStyle(b).position === "sticky" ? b.offsetHeight : 0;
+    document.documentElement.style.setProperty("--banner-h", `${h + 8}px`);
+  }
+  window.addEventListener("resize", syncBannerHeight);
+  I18N.onChange(syncBannerHeight);
+  syncBannerHeight();
   document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("click", () => I18N.setLang(b.dataset.lang)));
   I18N.onChange(applyLanguage);
   applyLanguage();

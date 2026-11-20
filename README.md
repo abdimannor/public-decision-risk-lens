@@ -32,14 +32,16 @@ Each flag is linked to the relevant passage and risk category. A human reviewer 
 
 ### Prototype
 
-The `prototype/` folder contains a small, dependency-free version of the review workflow. To try it, open `prototype/index.html` in a browser, paste a document or load a `.txt` file, or load the fictional sample. All processing stays in the browser. A live copy will be at https://abdimannor.github.io/public-decision-risk-lens/prototype/ once GitHub Pages is enabled. The text, decisions and notes are stored only in your browser (local storage) so they survive a reload; the Clear review button removes them.
+The `prototype/` folder contains a small version of the review workflow with no build step and no external services. To try it, open `prototype/index.html` in a browser, paste a document, load a `.txt` or PDF file, or load the fictional sample. PDF text is extracted in the browser with a vendored copy of pdf.js (`prototype/vendor/pdfjs/`, Apache-2.0), and each passage keeps its page number in flags and exports. PDF import needs the page served over http (for example `node tests/server.js`), because browsers block module scripts on `file://`. Scanned PDFs without a text layer are not supported (no OCR). All processing stays in the browser. A live copy will be at https://abdimannor.github.io/public-decision-risk-lens/prototype/ once GitHub Pages is enabled. The text, decisions and notes are stored only in your browser (local storage) so they survive a reload; the Clear review button removes them.
 
 What it does:
 
 - splits the text into numbered passages and highlights words and phrases from a visible taxonomy (`prototype/taxonomy.js`) with English and Swedish patterns for the eight categories;
 - lists each flag by category with the passage, the matched term and the rule that fired;
 - notes topics such as appeal or human review that are not found in this text, as a prompt to check other documents rather than as a finding;
-- lets a reviewer accept, reject or contextualise each flag, write a note, and export a review log as JSON or Markdown.
+- lets a reviewer accept, reject or contextualise each flag, write a note, and export a review log as JSON or Markdown;
+- shows a risk map of the whole document: one row per category, one cell per passage, with counts per category (counts are matches, not severity);
+- prints an A4 review report with the flags, decisions, notes and the advisory notice.
 
 What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The unit tests run with `node --test prototype/engine.test.js`; browser tests run with `npm install` and `npx playwright test`.
 

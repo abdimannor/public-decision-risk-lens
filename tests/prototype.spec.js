@@ -83,3 +83,67 @@ test("keyboard: Tab reaches the decision radios", async ({ page }) => {
   await page.keyboard.press("ArrowRight");
   await expect(page.locator(".flag").first()).not.toHaveAttribute("data-decision", "");
 });
+
+async function makePdf(browser) {
+  const p = await browser.newPage();
+  await p.setContent(`<html><body style="font: 14px sans-serif">
+    <p>The municipality introduces a new service for housing support applications.</p>
+    <p>Applications are sorted by an algorithm supplied by a third-party supplier.</p>
+    <div style="page-break-before: always"></div>
+    <p>The system uses automated profiling of applicants to set priority.</p>
+  </body></html>`);
+  const pdf = await p.pdf({ format: "A4" });
+  await p.close();
+  return pdf;
+}
+
+test("PDF upload extracts text per page and keeps page numbers", async ({ page, browser }) => {
+  const pdf = await makePdf(browser);
+  await page.goto("/prototype/");
+  await page.locator("#file").setInputFiles({ name: "decision.pdf", mimeType: "application/pdf", buffer: pdf });
+  await expect(page.locator("#workspace")).toBeVisible();
+  await expect(page.locator(".passages li")).toHaveCount(3);
+  await expect(page.locator(".passages li").nth(2)).toHaveAttribute("data-page", "2");
+  await expect(page.locator(".passages li").nth(2)).toContainText("automated profiling");
+  await expect(page.locator(".flag .meta", { hasText: "page 2" }).first()).toBeVisible();
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByRole("button", { name: "Export JSON" }).click()
+  ]);
+  const log = JSON.parse(fs.readFileSync(await download.path(), "utf8"));
+  expect(log.source).toBe("decision.pdf");
+  expect(log.flags.some((f) => f.page === 2)).toBe(true);
+  expect(log.flags.every((f) => f.page === 1 || f.page === 2)).toBe(true);
+});
+
+test("risk map counts flags per category and jumps to a passage", async ({ page }) => {
+  await loadSample(page);
+  await expect(page.locator("#riskmap-section")).toBeVisible();
+  const total = await page.locator(".flag").count();
+  const counts = await page.locator(".rm-key").evaluateAll((n) => n.map((k) => Number(k.dataset.count)));
+  expect(counts.reduce((a, b) => a + b, 0)).toBe(total);
+  const cell = page.locator(".rm-cell.on").last();
+  const label = await cell.getAttribute("aria-label");
+  const index = label.match(/Passage (\d+)/)[1];
+  await cell.click();
+  await expect(page.locator(`#passage-${index}`)).toHaveClass(/active/);
+  await expect(page.locator(`#passage-${index}`)).toBeFocused();
+});
+
+test("print report renders decisions, notes and the advisory notice", async ({ page }) => {
+  await loadSample(page);
+  const first = page.locator(".flag").first();
+  await first.getByLabel("Reject").check();
+  await first.locator("textarea").fill("term used in another sense");
+  await page.evaluate(() => { window.print = () => {}; });
+  await page.getByRole("button", { name: "Print review report" }).click();
+  const report = page.locator("#report");
+  await expect(report).toBeHidden();
+  await page.emulateMedia({ media: "print" });
+  await expect(report).toBeVisible();
+  await expect(report).toContainText("Advisory discussion aid");
+  await expect(report).toContainText("Decision: reject");
+  await expect(report).toContainText("term used in another sense");
+  await expect(page.locator("#workspace")).toBeHidden();
+  if (process.env.REPORT_PDF) await page.pdf({ path: process.env.REPORT_PDF, format: "A4" });
+});

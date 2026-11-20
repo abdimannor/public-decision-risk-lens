@@ -16,7 +16,7 @@
 
   <header class="top">
     <h1>Public Decision Risk Lens <span class="tag">prototype</span></h1>
-    <p class="lede">Paste a public decision document or load a .txt file. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
+    <p class="lede">Paste a public decision document or load a .txt or PDF file. PDF text is read in this browser and every passage keeps its page number. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
   </header>
 
   <main>
@@ -27,11 +27,17 @@
       <div class="row">
         <button id="analyse" type="button" class="primary">Analyse text</button>
         <button id="load-sample" type="button">Load fictional sample</button>
-        <label class="file">Load .txt file <input id="file" type="file" accept=".txt,text/plain"></label>
+        <label class="file">Load .txt or .pdf <input id="file" type="file" accept=".txt,text/plain,.pdf,application/pdf"></label>
         <button id="clear" type="button" class="danger" hidden>Clear review</button>
       </div>
       <p class="hint">Your text, decisions and notes are saved in this browser only (local storage) so they survive a reload. Use Clear review to remove them.</p>
       <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="riskmap-wrap" id="riskmap-section" aria-labelledby="rm-h" hidden>
+      <h2 id="rm-h">Risk map</h2>
+      <p class="hint">Where trigger terms appear across the document, by category. Each lit cell is a passage; select it to jump there. Counts are matches, not severity.</p>
+      <div id="riskmap" class="riskmap"></div>
     </section>
 
     <div class="workspace" hidden id="workspace">
@@ -54,14 +60,17 @@
           <div class="row">
             <button id="export-json" type="button">Export JSON</button>
             <button id="export-md" type="button">Export Markdown</button>
+            <button id="print-report" type="button" class="primary">Print review report</button>
           </div>
         </div>
       </section>
     </div>
   </main>
 
+  <section id="report" class="report" aria-label="Printable review report"></section>
+
   <footer class="foot">
-    <p>Building AI course project. Patterns are listed in <code>taxonomy.js</code>. Licence CC BY 4.0.</p>
+    <p>&copy; 2026 Mahad Abdullahi</p>
   </footer>
 
   <script src="taxonomy.js"></script>

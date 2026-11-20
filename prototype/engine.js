@@ -101,7 +101,20 @@
     return { passages, flags: findFlags(passages), absences: findAbsences(passages) };
   }
 
-  const api = { splitPassages, findFlags, findAbsences, analyse, patternToRegExp };
+  // Analyse a paged document (for example text extracted from a PDF). Each
+  // page is split on its own, so every passage keeps the page it came from.
+  // Passage numbers run on across pages.
+  function analysePages(pages) {
+    const passages = [];
+    for (const pg of pages || []) {
+      for (const p of splitPassages(pg.text)) {
+        passages.push({ index: passages.length + 1, page: pg.page, text: p.text });
+      }
+    }
+    return { passages, flags: findFlags(passages), absences: findAbsences(passages) };
+  }
+
+  const api = { splitPassages, findFlags, findAbsences, analyse, analysePages, patternToRegExp };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.RiskLensEngine = api;
 })(typeof window !== "undefined" ? window : globalThis);

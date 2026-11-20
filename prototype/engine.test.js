@@ -60,3 +60,14 @@ test("flags never contain a score or a verdict", () => {
     assert.deepEqual(Object.keys(f).sort(), ["category", "id", "matchedTerm", "passageIndex", "ranges", "rule"]);
   }
 });
+
+test("analysePages keeps page numbers and runs passage numbers on", () => {
+  const { analysePages } = require("./engine.js");
+  const r = analysePages([
+    { page: 1, text: "Intro paragraph.\n\nThe vendor runs an algorithm." },
+    { page: 2, text: "Automated profiling of applicants." }
+  ]);
+  assert.deepEqual(r.passages.map((p) => [p.index, p.page]), [[1, 1], [2, 1], [3, 2]]);
+  const onPage2 = r.flags.filter((f) => f.passageIndex === 3);
+  assert.ok(onPage2.length > 0);
+});

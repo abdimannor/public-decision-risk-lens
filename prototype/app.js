@@ -12,13 +12,14 @@
   let result = null;
   let reviews = {}; // flag id -> { decision, note }
   let sourceName = "pasted text";
+  let pages = null; // [{ page, text }] when the document came from a PDF
   const STORE_KEY = "risk-lens-review-v1";
 
   // Saves the document, reviewer and decisions in this browser only (localStorage).
   function save() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({
-        text: $("doc").value, sourceName, reviewer: $("reviewer").value, reviews
+        text: $("doc").value, pages, sourceName, reviewer: $("reviewer").value, reviews
       }));
     } catch (e) { /* storage may be unavailable, e.g. private mode */ }
   }
@@ -29,6 +30,7 @@
     if (!saved || !saved.text) return;
     $("doc").value = saved.text;
     sourceName = saved.sourceName || "pasted text";
+    pages = Array.isArray(saved.pages) ? saved.pages : null;
     $("reviewer").value = saved.reviewer || "";
     analyse(saved.reviews || {});
   }
@@ -38,10 +40,12 @@
     result = null;
     reviews = {};
     sourceName = "pasted text";
+    pages = null;
     $("doc").value = "";
     $("reviewer").value = "";
     $("file").value = "";
     $("workspace").hidden = true;
+    $("riskmap-section").hidden = true;
     $("clear").hidden = true;
     $("status").textContent = "Review cleared. Nothing is stored in this browser.";
   }
@@ -74,6 +78,7 @@
     for (const p of result.passages) {
       const flags = result.flags.filter((f) => f.passageIndex === p.index);
       const li = el("li", { id: `passage-${p.index}`, value: String(p.index), tabindex: "-1" });
+      if (p.page) li.dataset.page = String(p.page);
       if (flags.length) li.classList.add("flagged");
       let pos = 0;
       for (const [s, e] of mergeRanges(flags.flatMap((f) => f.ranges))) {
@@ -92,6 +97,43 @@
     li.classList.add("active");
     li.scrollIntoView({ block: "center" });
     li.focus({ preventScroll: true });
+  }
+
+  // Risk map: one column per passage, one row per category. Lit cells show
+  // where trigger terms cluster. It counts matches; it does not weigh them.
+  function renderRiskMap() {
+    const box = $("riskmap");
+    box.replaceChildren();
+    const n = result.passages.length;
+    const legend = el("ul", { class: "rm-legend" });
+    const grid = el("div", { class: "rm-grid", style: `--cols:${n}` });
+    for (const cat of TAXONOMY) {
+      const hits = new Set(result.flags.filter((f) => f.category === cat.id).map((f) => f.passageIndex));
+      const count = result.flags.filter((f) => f.category === cat.id).length;
+      legend.append(el("li", { class: "rm-key", "data-cat": cat.id, "data-count": String(count) },
+        el("span", { class: "sw", "aria-hidden": "true" }), cat.label, " ", el("b", {}, String(count))));
+      const row = el("div", { class: "rm-row", "data-cat": cat.id, role: "group", "aria-label": `${cat.label}: ${count} flags` });
+      row.append(el("span", { class: "rm-label" }, cat.label));
+      const cells = el("div", { class: "rm-cells" });
+      for (const p of result.passages) {
+        if (hits.has(p.index)) {
+          cells.append(el("button", {
+            type: "button", class: "rm-cell on", title: `${cat.label}: ${passageLabel(p.index)}`,
+            "aria-label": `${cat.label} in ${passageLabel(p.index)}`, onclick: () => goToPassage(p.index)
+          }));
+        } else cells.append(el("span", { class: "rm-cell", "aria-hidden": "true" }));
+      }
+      row.append(cells);
+      grid.append(row);
+    }
+    const pageTicks = el("div", { class: "rm-pages", "aria-hidden": "true" });
+    let lastPage = null;
+    for (const p of result.passages) {
+      pageTicks.append(el("span", { class: p.page && p.page !== lastPage ? "tick" : "" }, p.page && p.page !== lastPage ? `p${p.page}` : ""));
+      lastPage = p.page || lastPage;
+    }
+    if (lastPage) grid.append(el("div", { class: "rm-row" }, el("span", { class: "rm-label" }, "Page"), pageTicks));
+    box.append(legend, grid);
   }
 
   function renderAbsences() {
@@ -127,7 +169,7 @@
     note.addEventListener("input", () => { review.note = note.value; save(); });
     wrap.append(
       el("div", { class: "meta" },
-        el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, `Passage ${f.passageIndex}`),
+        el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, passageLabel(f.passageIndex)),
         ` matched "${f.matchedTerm}"`),
       el("code", {}, f.rule),
       fs,
@@ -135,6 +177,15 @@
       note
     );
     return wrap;
+  }
+
+  function pageOf(index) {
+    return result.passages[index - 1]?.page || null;
+  }
+
+  function passageLabel(index) {
+    const page = pageOf(index);
+    return page ? `Passage ${index}, page ${page}` : `Passage ${index}`;
   }
 
   function renderFlags() {
@@ -147,7 +198,7 @@
     for (const cat of TAXONOMY) {
       const flags = result.flags.filter((f) => f.category === cat.id);
       if (!flags.length) continue;
-      const group = el("details", { class: "group", open: "" },
+      const group = el("details", { class: "group", open: "", "data-cat": cat.id },
         el("summary", {}, `${cat.label} (${flags.length})`),
         el("p", { class: "q" }, cat.description, " ", el("em", {}, cat.question)));
       flags.forEach((f) => group.append(renderFlag(f)));
@@ -167,12 +218,14 @@
       $("status").textContent = "Paste or load a document first.";
       return;
     }
-    result = Engine.analyse(text);
+    result = pages ? Engine.analysePages(pages) : Engine.analyse(text);
     reviews = savedReviews && typeof savedReviews === "object" && !(savedReviews instanceof Event) ? savedReviews : {};
     renderPassages();
+    renderRiskMap();
     renderAbsences();
     renderFlags();
     $("workspace").hidden = false;
+    $("riskmap-section").hidden = false;
     $("clear").hidden = false;
     updateStatus();
     save();
@@ -189,6 +242,7 @@
       flags: result.flags.map((f) => ({
         id: f.id,
         passageIndex: f.passageIndex,
+        page: pageOf(f.passageIndex),
         category: category[f.category],
         matchedTerm: f.matchedTerm,
         rule: f.rule,
@@ -208,7 +262,7 @@
       "## Flags", ""
     ];
     for (const f of log.flags) {
-      lines.push(`### Passage ${f.passageIndex}: ${f.category} ("${f.matchedTerm}")`, "",
+      lines.push(`### Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category} ("${f.matchedTerm}")`, "",
         `- Rule: \`${f.rule}\``, `- Decision: ${f.decision}`, `- Note: ${f.note || "(none)"}`, "",
         ...f.passage.split("\n").map((l) => `> ${l}`), "");
     }
@@ -216,6 +270,42 @@
     if (!log.notFoundInThisText.length) lines.push("(none)");
     for (const a of log.notFoundInThisText) lines.push(`- ${a.label}. ${a.question} Rule: \`${a.rule}\``);
     return lines.join("\n") + "\n";
+  }
+
+  // Printable report (A4). Built from the same log as the exports, so the
+  // printed document never says more than the review log does.
+  function buildReport() {
+    const log = buildLog();
+    const box = $("report");
+    box.replaceChildren();
+    const counts = TAXONOMY.map((c) => [c, log.flags.filter((f) => f.category === c.label).length]).filter(([, n]) => n);
+    const decided = log.flags.filter((f) => f.decision !== "not reviewed").length;
+    box.append(
+      el("header", { class: "r-head" },
+        el("p", { class: "r-kicker" }, "Public Decision Risk Lens prototype"),
+        el("h1", {}, "Review report"),
+        el("p", { class: "r-notice" }, el("strong", {}, "Advisory discussion aid. "), log.notice.replace(/^Advisory discussion aid\. /, ""), " It does not decide anything and does not assess people."),
+        el("dl", { class: "r-meta" },
+          el("dt", {}, "Source"), el("dd", {}, log.source),
+          el("dt", {}, "Reviewer"), el("dd", {}, log.reviewer || "not given"),
+          el("dt", {}, "Generated"), el("dd", {}, new Date(log.exportedAt).toLocaleString()),
+          el("dt", {}, "Reviewed"), el("dd", {}, `${decided} of ${log.flags.length} flags`))),
+      el("h2", {}, "Flags by category"),
+      el("ul", { class: "r-counts" }, ...counts.map(([c, n]) => el("li", { "data-cat": c.id }, el("span", { class: "sw" }), `${c.label}: ${n}`))));
+    if (!counts.length) box.append(el("p", {}, "No trigger terms were found. That does not mean the document is free of risk."));
+    box.append(el("h2", {}, "Flags and decisions"));
+    for (const f of log.flags) {
+      const cat = TAXONOMY.find((c) => c.label === f.category);
+      box.append(el("article", { class: "r-flag", "data-cat": cat ? cat.id : "" },
+        el("h3", {}, `Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category}`),
+        el("p", { class: "r-line" }, `Matched "${f.matchedTerm}". Decision: `, el("strong", {}, f.decision), f.note ? `. Note: ${f.note}` : ""),
+        el("blockquote", {}, f.passage),
+        el("p", { class: "r-rule" }, f.rule)));
+    }
+    box.append(el("h2", {}, "Not found in this text"));
+    if (!log.notFoundInThisText.length) box.append(el("p", {}, "(none)"));
+    else box.append(el("ul", {}, ...log.notFoundInThisText.map((x) => el("li", {}, el("strong", {}, x.label), ". ", x.question))));
+    box.append(el("p", { class: "r-foot" }, "Pattern matching can miss risks and produce false positives. Every flag needs a human reviewer. Building AI course project."));
   }
 
   function download(name, type, content) {
@@ -239,15 +329,78 @@
     sourceName = window.RiskLensSample.title;
     analyse();
   });
-  $("doc").addEventListener("input", () => (sourceName = "pasted text"));
+  $("doc").addEventListener("input", () => { sourceName = "pasted text"; pages = null; });
   $("file").addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    $("doc").value = await file.text();
-    sourceName = file.name;
-    analyse();
+    const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+    try {
+      if (isPdf) {
+        $("status").textContent = `Reading ${file.name} in this browser...`;
+        pages = await readPdf(file);
+        $("doc").value = pages.map((p) => p.text).join("\n\n");
+        if (!$("doc").value.trim()) {
+          pages = null;
+          $("status").textContent = "No text layer was found in this PDF. Scanned PDFs need OCR first; this tool does not do OCR.";
+          return;
+        }
+      } else {
+        pages = null;
+        $("doc").value = await file.text();
+      }
+      sourceName = file.name;
+      analyse();
+    } catch (err) {
+      pages = null;
+      $("status").textContent = `Could not read ${file.name}: ${err.message || err}`;
+    }
   });
+
+  // PDF text extraction with the vendored pdf.js. Lines are rebuilt from the
+  // text items; a vertical gap larger than about one and a half lines starts a
+  // new paragraph, so passages stay close to the visible layout.
+  let pdfjsPromise = null;
+  function loadPdfjs() {
+    if (!pdfjsPromise) {
+      const base = new URL("vendor/pdfjs/", document.baseURI);
+      pdfjsPromise = import(new URL("pdf.min.mjs", base).href).then((lib) => {
+        lib.GlobalWorkerOptions.workerSrc = new URL("pdf.worker.min.mjs", base).href;
+        return lib;
+      });
+    }
+    return pdfjsPromise;
+  }
+
+  async function readPdf(file) {
+    const lib = await loadPdfjs();
+    const task = lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()), isEvalSupported: false });
+    const doc = await task.promise;
+    const out = [];
+    for (let n = 1; n <= doc.numPages; n++) {
+      const page = await doc.getPage(n);
+      const content = await page.getTextContent();
+      let text = "";
+      let lastY = null;
+      let lastH = 0;
+      for (const item of content.items) {
+        if (typeof item.str !== "string") continue;
+        const y = item.transform[5];
+        const h = item.height || lastH || 10;
+        if (lastY !== null && Math.abs(lastY - y) > h * 1.6 && !text.endsWith("\n\n")) text = text.replace(/\s*$/, "") + "\n\n";
+        else if (lastY !== null && Math.abs(lastY - y) > h * 0.5 && !/\s$/.test(text)) text += "\n";
+        text += item.str;
+        if (item.hasEOL && !/\s$/.test(text)) text += "\n";
+        lastY = y;
+        lastH = h;
+      }
+      out.push({ page: n, text: text.trim() });
+    }
+    await task.destroy();
+    return out;
+  }
   $("export-json").addEventListener("click", () => result && download(`review-log-${stamp()}.json`, "application/json", JSON.stringify(buildLog(), null, 2)));
+  $("print-report").addEventListener("click", () => { if (!result) return; buildReport(); window.print(); });
+  window.addEventListener("beforeprint", () => result && buildReport());
   $("export-md").addEventListener("click", () => result && download(`review-log-${stamp()}.md`, "text/markdown", toMarkdown(buildLog())));
   restore();
 })();

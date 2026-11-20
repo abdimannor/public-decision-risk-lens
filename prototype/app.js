@@ -14,6 +14,16 @@
   let sourceName = "pasted text";
   let pages = null; // [{ page, text }] when the document came from a PDF
   const STORE_KEY = "risk-lens-review-v1";
+  const RULES_KEY = "risk-lens-rules-v1";
+  let rules = loadRules(); // reviewer-defined rules: [{ term, category, question }]
+
+  function loadRules() {
+    try { return Engine.normaliseRules(JSON.parse(localStorage.getItem(RULES_KEY) || "[]")); } catch (e) { return []; }
+  }
+  function saveRules() {
+    try { localStorage.setItem(RULES_KEY, JSON.stringify(rules)); } catch (e) { /* storage may be unavailable */ }
+  }
+  const catLabel = (id) => (TAXONOMY.find((c) => c.id === id) || {}).label || id;
 
   // Saves the document, reviewer and decisions in this browser only (localStorage).
   function save() {
@@ -149,7 +159,7 @@
 
   function renderFlag(f) {
     const review = reviews[f.id] || (reviews[f.id] = { decision: "", note: "" });
-    const wrap = el("div", { class: "flag", "data-decision": review.decision });
+    const wrap = el("div", { class: "flag", "data-decision": review.decision, "data-source": f.source || "taxonomy" });
     const name = `d-${f.id}`;
     const fs = el("fieldset", {}, el("legend", {}, "Reviewer decision"));
     for (const [value, label] of DECISIONS) {
@@ -170,13 +180,35 @@
     wrap.append(
       el("div", { class: "meta" },
         el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, passageLabel(f.passageIndex)),
-        ` matched "${f.matchedTerm}"`),
+        ` matched "${f.matchedTerm}"`,
+        f.source === "reviewer" ? el("span", { class: "badge" }, "Reviewer-added") : null),
       el("code", {}, f.rule),
+      f.question ? el("p", { class: "rq" }, "Your question: ", el("em", {}, f.question)) : null,
+      renderWhy(f),
       fs,
       el("label", { for: noteId }, "Review note"),
       note
     );
     return wrap;
+  }
+
+  // "Why this flag?": the exact rule, the matched span in context, the
+  // category description and question, and the related absence checks.
+  function renderWhy(f) {
+    const x = Engine.explainFlag(f, result);
+    const d = el("details", { class: "why" }, el("summary", {}, "Why this flag?"));
+    const dl = el("dl", {},
+      el("dt", {}, "Rule"), el("dd", {}, el("code", {}, x.rule),
+        x.source === "reviewer" ? " Added by a reviewer in this browser, not part of the built-in taxonomy." : " From the built-in draft taxonomy."),
+      el("dt", {}, "Pattern"), el("dd", {}, `"${x.pattern}" matched at the start of a word, any case, ${x.matchCount} time${x.matchCount === 1 ? "" : "s"} in this passage.`),
+      el("dt", {}, "In context"), el("dd", { class: "ctx" }, x.context.before, el("mark", {}, x.context.match), x.context.after),
+      el("dt", {}, x.category.label || "Category"), el("dd", {}, x.category.description, " ", el("em", {}, x.category.question)));
+    if (x.reviewerQuestion) dl.append(el("dt", {}, "Reviewer question"), el("dd", {}, x.reviewerQuestion));
+    dl.append(el("dt", {}, "Related absence checks"), el("dd", {}, x.relatedAbsenceChecks.length
+      ? el("ul", {}, ...x.relatedAbsenceChecks.map((c) => el("li", {}, el("strong", {}, c.label), `: ${c.status}. Looks for ${c.patterns.map((p) => `"${p}"`).join(", ")}.`)))
+      : "None for this category."));
+    d.append(dl, el("p", { class: "hint" }, "A match means the passage may deserve a closer look. It is not a finding."));
+    return d;
   }
 
   function pageOf(index) {
@@ -218,7 +250,7 @@
       $("status").textContent = "Paste or load a document first.";
       return;
     }
-    result = pages ? Engine.analysePages(pages) : Engine.analyse(text);
+    result = pages ? Engine.analysePages(pages, rules) : Engine.analyse(text, rules);
     reviews = savedReviews && typeof savedReviews === "object" && !(savedReviews instanceof Event) ? savedReviews : {};
     renderPassages();
     renderRiskMap();
@@ -246,10 +278,13 @@
         category: category[f.category],
         matchedTerm: f.matchedTerm,
         rule: f.rule,
+        ruleSource: f.source === "reviewer" ? "reviewer-added" : "taxonomy",
+        reviewerQuestion: f.question || undefined,
         passage: result.passages[f.passageIndex - 1].text,
         decision: reviews[f.id]?.decision || "not reviewed",
         note: reviews[f.id]?.note || ""
       })),
+      reviewerRules: rules.map((r) => ({ ...r, category: catLabel(r.category) })),
       notFoundInThisText: result.absences.map((a) => ({ label: a.label, question: a.question, rule: a.rule }))
     };
   }
@@ -262,11 +297,14 @@
       "## Flags", ""
     ];
     for (const f of log.flags) {
-      lines.push(`### Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category} ("${f.matchedTerm}")`, "",
-        `- Rule: \`${f.rule}\``, `- Decision: ${f.decision}`, `- Note: ${f.note || "(none)"}`, "",
+      lines.push(`### Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category} ("${f.matchedTerm}")${f.ruleSource === "reviewer-added" ? " [reviewer-added rule]" : ""}`, "",
+        `- Rule: \`${f.rule}\``, ...(f.reviewerQuestion ? [`- Reviewer question: ${f.reviewerQuestion}`] : []), `- Decision: ${f.decision}`, `- Note: ${f.note || "(none)"}`, "",
         ...f.passage.split("\n").map((l) => `> ${l}`), "");
     }
-    lines.push("## Not found in this text", "");
+    lines.push("## Reviewer-added rules", "");
+    if (!log.reviewerRules.length) lines.push("(none)");
+    for (const r of log.reviewerRules) lines.push(`- "${r.term}" (${r.category})${r.question ? `: ${r.question}` : ""}`);
+    lines.push("", "## Not found in this text", "");
     if (!log.notFoundInThisText.length) lines.push("(none)");
     for (const a of log.notFoundInThisText) lines.push(`- ${a.label}. ${a.question} Rule: \`${a.rule}\``);
     return lines.join("\n") + "\n";
@@ -297,10 +335,14 @@
     for (const f of log.flags) {
       const cat = TAXONOMY.find((c) => c.label === f.category);
       box.append(el("article", { class: "r-flag", "data-cat": cat ? cat.id : "" },
-        el("h3", {}, `Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category}`),
+        el("h3", {}, `Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category}`, f.ruleSource === "reviewer-added" ? el("span", { class: "badge" }, "Reviewer-added") : null),
         el("p", { class: "r-line" }, `Matched "${f.matchedTerm}". Decision: `, el("strong", {}, f.decision), f.note ? `. Note: ${f.note}` : ""),
         el("blockquote", {}, f.passage),
         el("p", { class: "r-rule" }, f.rule)));
+    }
+    if (log.reviewerRules.length) {
+      box.append(el("h2", {}, "Reviewer-added rules"),
+        el("ul", {}, ...log.reviewerRules.map((r) => el("li", {}, `"${r.term}" (${r.category})`, r.question ? `: ${r.question}` : ""))));
     }
     box.append(el("h2", {}, "Not found in this text"));
     if (!log.notFoundInThisText.length) box.append(el("p", {}, "(none)"));
@@ -402,5 +444,80 @@
   $("print-report").addEventListener("click", () => { if (!result) return; buildReport(); window.print(); });
   window.addEventListener("beforeprint", () => result && buildReport());
   $("export-md").addEventListener("click", () => result && download(`review-log-${stamp()}.md`, "text/markdown", toMarkdown(buildLog())));
+
+  // Reviewer-defined rules panel.
+  for (const c of TAXONOMY) $("rule-cat").append(el("option", { value: c.id }, c.label));
+  function renderRules() {
+    const list = $("rule-list");
+    list.replaceChildren();
+    if (!rules.length) { list.append(el("li", { class: "empty" }, "No rules of your own yet.")); return; }
+    rules.forEach((r, i) => list.append(el("li", { "data-cat": r.category },
+      el("span", { class: "sw", "aria-hidden": "true" }), el("strong", {}, `"${r.term}"`), ` ${catLabel(r.category)}`,
+      r.question ? el("span", { class: "rq" }, ` ${r.question}`) : null,
+      el("button", { type: "button", class: "linkbtn", "aria-label": `Remove rule "${r.term}"`, onclick: () => { rules.splice(i, 1); rulesChanged(`Removed "${r.term}".`); } }, "Remove"))));
+  }
+  function rulesChanged(msg) {
+    saveRules();
+    renderRules();
+    $("rules-status").textContent = `${msg} ${rules.length} rule${rules.length === 1 ? "" : "s"} of your own.`;
+    if (result) analyse(reviews);
+  }
+  $("rule-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const added = Engine.normaliseRules([...rules, { term: $("rule-term").value, category: $("rule-cat").value, question: $("rule-q").value }]);
+    if (added.length === rules.length) { $("rules-status").textContent = "That rule is empty or already in the list."; return; }
+    rules = added;
+    $("rule-term").value = ""; $("rule-q").value = "";
+    rulesChanged(`Added "${rules[rules.length - 1].term}".`);
+  });
+  $("rules-export").addEventListener("click", () => download(`risk-lens-rules-${stamp()}.json`, "application/json", JSON.stringify(Engine.rulePack(rules), null, 2)));
+  $("rules-import").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const incoming = Engine.parseRulePack(JSON.parse(await file.text()));
+      const before = rules.length;
+      rules = Engine.normaliseRules([...rules, ...incoming]);
+      rulesChanged(`Imported ${rules.length - before} new rule${rules.length - before === 1 ? "" : "s"} from ${file.name}.`);
+    } catch (err) {
+      $("rules-status").textContent = `Could not import ${file.name}: ${err.message || err}`;
+    }
+    e.target.value = "";
+  });
+  renderRules();
+
+  // Compare two versions.
+  for (const v of ["a", "b"]) {
+    $(`ver-${v}-file`).addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (file) $(`ver-${v}`).value = await file.text();
+    });
+  }
+  $("compare-use-doc").addEventListener("click", () => { $("ver-a").value = $("doc").value; });
+  $("compare-run").addEventListener("click", () => {
+    const ta = $("ver-a").value, tb = $("ver-b").value;
+    const out = $("compare-out");
+    out.replaceChildren();
+    if (!ta.trim() || !tb.trim()) { $("compare-status").textContent = "Add text for both versions first."; return; }
+    const A = Engine.analyse(ta, rules), B = Engine.analyse(tb, rules);
+    const c = Engine.compareVersions(A, B);
+    $("compare-status").textContent = `${c.appeared.length} appear, ${c.disappeared.length} disappear, ${c.persisted.length} persist.`;
+    const item = (f, res, tag) => el("li", { "data-cat": f.category },
+      el("span", { class: "sw", "aria-hidden": "true" }),
+      el("strong", {}, `${catLabel(f.category)}: "${f.matchedTerm}"`), ` ${tag} passage ${f.passageIndex}`,
+      f.source === "reviewer" ? el("span", { class: "badge" }, "Reviewer-added") : null,
+      el("blockquote", {}, res.passages[f.passageIndex - 1].text));
+    const group = (cls, title, note, items) => el("div", { class: `cmp-group ${cls}` },
+      el("h3", {}, `${title} (${items.length})`), el("p", { class: "hint" }, note),
+      items.length ? el("ul", {}, ...items) : el("p", {}, "(none)"));
+    out.append(
+      group("appeared", "Appear in B", "Rules that fire in the revised text with no similar passage in A.", c.appeared.map((x) => item(x.b, B, "in B,"))),
+      group("disappeared", "Disappear from A", "Rules that fired in A with no similar passage in B. Check whether the concern was addressed or only reworded.", c.disappeared.map((x) => item(x.a, A, "in A,"))),
+      group("persisted", "Persist", "Same rule, similar passage in both versions.", c.persisted.map((x) => {
+        const li = item(x.b, B, `in B (A passage ${x.a.passageIndex}, ${Math.round(x.similarity * 100)}% shared words),`);
+        return li;
+      })));
+  });
+
   restore();
 })();

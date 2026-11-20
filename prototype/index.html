@@ -36,6 +36,23 @@
       <p id="status" class="status" role="status" aria-live="polite"></p>
     </section>
 
+    <section class="rules" id="rules" aria-labelledby="rules-h">
+      <h2 id="rules-h">Your own rules</h2>
+      <p class="hint">Add a word or phrase you want to watch for. Your rules run next to the built-in taxonomy, are marked <span class="badge">Reviewer-added</span> in flags, exports and the printed report, and are saved in this browser. Share them as a JSON rule pack.</p>
+      <form id="rule-form" class="rule-form">
+        <div class="field"><label for="rule-term">Term or phrase</label><input id="rule-term" type="text" required maxlength="120" autocomplete="off"></div>
+        <div class="field"><label for="rule-cat">Category</label><select id="rule-cat"></select></div>
+        <div class="field wide"><label for="rule-q">Review question (optional)</label><input id="rule-q" type="text" maxlength="400" autocomplete="off"></div>
+        <button type="submit" class="primary">Add rule</button>
+      </form>
+      <ul id="rule-list" class="rule-list"></ul>
+      <div class="row">
+        <button id="rules-export" type="button">Export rule pack</button>
+        <label class="file">Import rule pack <input id="rules-import" type="file" accept=".json,application/json"></label>
+      </div>
+      <p id="rules-status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
     <section class="riskmap-wrap" id="riskmap-section" aria-labelledby="rm-h" hidden>
       <h2 id="rm-h">Risk map</h2>
       <p class="hint">Where trigger terms appear across the document, by category. Each lit cell is a passage; select it to jump there. Counts are matches, not severity.</p>
@@ -67,13 +84,32 @@
         </div>
       </section>
     </div>
+    <section class="compare" id="compare" aria-labelledby="cmp-h">
+      <h2 id="cmp-h">Compare two versions</h2>
+      <p class="hint">Paste or load an earlier version A and a revised version B. Flags are paired by rule and by how similar the passage wording is (shared words, at least half). The result shows which flags appear, disappear or persist. A flag that disappears may mean the wording changed, not that a concern was addressed: read both passages.</p>
+      <div class="cmp-inputs">
+        <div class="field">
+          <label for="ver-a">Version A (earlier)</label>
+          <textarea id="ver-a" rows="6" spellcheck="false"></textarea>
+          <label class="file">Load .txt for A <input id="ver-a-file" type="file" accept=".txt,text/plain"></label>
+        </div>
+        <div class="field">
+          <label for="ver-b">Version B (revised)</label>
+          <textarea id="ver-b" rows="6" spellcheck="false"></textarea>
+          <label class="file">Load .txt for B <input id="ver-b-file" type="file" accept=".txt,text/plain"></label>
+        </div>
+      </div>
+      <div class="row">
+        <button id="compare-run" type="button" class="primary">Compare versions</button>
+        <button id="compare-use-doc" type="button">Use current document as A</button>
+      </div>
+      <p id="compare-status" class="status" role="status" aria-live="polite"></p>
+      <div id="compare-out" class="cmp-out"></div>
+    </section>
   </main>
 
   <section id="report" class="report" aria-label="Printable review report"></section>
 
-  <footer class="foot">
-    <p>&copy; 2026 Mahad Abdullahi</p>
-  </footer>
 
   <script src="taxonomy.js"></script>
   <script src="engine.js"></script>

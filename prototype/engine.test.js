@@ -57,8 +57,11 @@ test("empty input returns no passages and no flags", () => {
 test("flags never contain a score or a verdict", () => {
   const { flags } = analyse("The model uses personal data and a risk score.");
   for (const f of flags) {
-    assert.deepEqual(Object.keys(f).sort(), ["category", "id", "matchedTerm", "passageIndex", "ranges", "rule"]);
+    assert.deepEqual(Object.keys(f).sort(), ["category", "id", "matchedTerm", "passageIndex", "ranges", "rule", "source"]);
+    assert.equal(f.source, "taxonomy");
   }
+  const reviewer = analyse("A scorecard is used.", [{ term: "scorecard", category: "transparency" }]).flags;
+  for (const f of reviewer) for (const k of Object.keys(f)) assert.ok(!/score$|verdict|severity/i.test(k), k);
 });
 
 test("analysePages keeps page numbers and runs passage numbers on", () => {
@@ -100,4 +103,68 @@ test("a pattern ending in a space or punctuation is not extended into the next w
   const { extendToWordEnd } = require("./engine.js");
   assert.equal(extendToWordEnd("risk score here", 5), 5);
   assert.equal(extendToWordEnd("risk score here", 3), 4);
+});
+
+// Reviewer-defined rules
+const E = require("./engine.js");
+
+test("engine applies reviewer-defined rules and marks them", () => {
+  const rules = [{ term: "eligibility score", category: "discrimination", question: "Who set the threshold?" }];
+  const r = E.analyse("The eligibility scores are computed weekly.", rules);
+  const f = r.flags.find((x) => x.source === "reviewer");
+  assert.ok(f);
+  assert.equal(f.matchedTerm, "eligibility scores");
+  assert.equal(f.category, "discrimination");
+  assert.equal(f.question, "Who set the threshold?");
+  assert.match(f.rule, /^reviewer-added\/discrimination: "eligibility score"/);
+  assert.ok(r.flags.filter((x) => x.source !== "reviewer").every((x) => x.source === "taxonomy"));
+});
+
+test("reviewer rules are validated and de-duplicated", () => {
+  const rules = E.normaliseRules([
+    { term: "  X-ray ", category: "privacy" },
+    { term: "x-ray", category: "privacy" },
+    { term: "", category: "privacy" },
+    { term: "foo", category: "no-such-category" },
+    null
+  ]);
+  assert.deepEqual(rules, [{ term: "X-ray", category: "privacy", question: "" }]);
+});
+
+test("rule packs round-trip and reject malformed input", () => {
+  const pack = E.rulePack([{ term: "scorecard", category: "transparency", question: "Is it published?" }]);
+  assert.equal(pack.format, "risk-lens-rule-pack");
+  assert.deepEqual(E.parseRulePack(JSON.parse(JSON.stringify(pack))), pack.rules);
+  assert.throws(() => E.parseRulePack({ nope: 1 }));
+});
+
+test("compareVersions sorts flags into appeared, disappeared and persisted", () => {
+  const a = E.analyse("The agency uses an algorithm to rank applications.\n\nThere is no appeal.");
+  const b = E.analyse("The agency uses an algorithm to rank all applications.\n\nData is kept with a retention period of one year.");
+  const c = E.compareVersions(a, b);
+  assert.ok(c.persisted.some((x) => x.b.matchedTerm === "algorithm"));
+  assert.ok(c.disappeared.some((x) => x.a.matchedTerm === "appeal"));
+  assert.ok(c.appeared.some((x) => x.b.matchedTerm === "retention"));
+  assert.equal(c.persisted.length + c.appeared.length, b.flags.length);
+  assert.equal(c.persisted.length + c.disappeared.length, a.flags.length);
+});
+
+test("compareVersions does not pair the same rule across unrelated passages", () => {
+  const a = E.analyse("Officers monitor the queue in the north office every morning.");
+  const b = E.analyse("Completely different wording: we monitor nothing about anyone.");
+  const c = E.compareVersions(a, b);
+  assert.equal(c.persisted.length, 0);
+});
+
+test("explainFlag gives rule, context, category and related absence checks", () => {
+  const r = E.analyse("Short intro. The tool uses an algorithm to decide. More text follows here.");
+  const f = r.flags.find((x) => x.matchedTerm === "algorithm");
+  const x = E.explainFlag(f, r);
+  assert.equal(x.pattern, "algorithm");
+  assert.equal(x.context.match, "algorithm");
+  assert.ok(x.context.before.endsWith("uses an "));
+  assert.equal(x.category.id, "transparency");
+  assert.ok(x.category.question.length > 0);
+  assert.ok(x.relatedAbsenceChecks.length >= 1);
+  assert.equal(x.relatedAbsenceChecks[0].status, "not found in this text");
 });

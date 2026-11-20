@@ -147,3 +147,50 @@ test("print report renders decisions, notes and the advisory notice", async ({ p
   await expect(page.locator("#workspace")).toBeHidden();
   if (process.env.REPORT_PDF) await page.pdf({ path: process.env.REPORT_PDF, format: "A4" });
 });
+
+test("reviewer-added rule flags immediately, is marked and exported", async ({ page }) => {
+  await loadSample(page);
+  const before = await page.locator(".flag").count();
+  await page.getByLabel("Term or phrase").fill("home-care");
+  await page.getByLabel("Category").selectOption("accountability");
+  await page.getByLabel("Review question (optional)").fill("Which unit signs off?");
+  await page.getByRole("button", { name: "Add rule" }).click();
+  await expect(page.locator('.flag[data-source="reviewer"]').first()).toBeVisible();
+  expect(await page.locator(".flag").count()).toBeGreaterThan(before);
+  await expect(page.locator('.flag[data-source="reviewer"] .badge').first()).toHaveText("Reviewer-added");
+  const [dl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Export JSON" }).click()]);
+  const log = JSON.parse(fs.readFileSync(await dl.path(), "utf8"));
+  expect(log.flags.some((f) => f.ruleSource === "reviewer-added" && f.reviewerQuestion)).toBe(true);
+  expect(log.reviewerRules[0].term).toBe("home-care");
+  const [md] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Export Markdown" }).click()]);
+  expect(fs.readFileSync(await md.path(), "utf8")).toContain("[reviewer-added rule]");
+  await page.reload();
+  await expect(page.locator("#rule-list li")).toContainText("home-care");
+  const [pack] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Export rule pack" }).click()]);
+  const json = JSON.parse(fs.readFileSync(await pack.path(), "utf8"));
+  expect(json.format).toBe("risk-lens-rule-pack");
+  await page.getByRole("button", { name: 'Remove rule "home-care"' }).click();
+  await expect(page.locator('.flag[data-source="reviewer"]')).toHaveCount(0);
+  await page.locator("#rules-import").setInputFiles({ name: "pack.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(json)) });
+  await expect(page.locator("#rules-status")).toContainText("Imported 1 new rule");
+  await expect(page.locator('.flag[data-source="reviewer"]').first()).toBeVisible();
+});
+
+test("compare two versions lists appearing, disappearing and persisting flags", async ({ page }) => {
+  await page.goto("/prototype/");
+  await page.getByLabel("Version A (earlier)").fill("The agency uses an algorithm to rank applications.\n\nThere is no appeal.");
+  await page.getByLabel("Version B (revised)").fill("The agency uses an algorithm to rank all applications.\n\nData has a retention period of one year.");
+  await page.getByRole("button", { name: "Compare versions" }).click();
+  await expect(page.locator(".cmp-group.appeared")).toContainText("retention");
+  await expect(page.locator(".cmp-group.disappeared")).toContainText("appeal");
+  await expect(page.locator(".cmp-group.persisted")).toContainText("algorithm");
+});
+
+test("why this flag shows rule, context, category and absence checks", async ({ page }) => {
+  await loadSample(page);
+  const why = page.locator(".flag .why").first();
+  await why.locator("summary").click();
+  await expect(why.locator("dt", { hasText: "Rule" })).toBeVisible();
+  await expect(why.locator(".ctx mark")).toBeVisible();
+  await expect(why).toContainText("Related absence checks");
+});

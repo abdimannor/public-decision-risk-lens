@@ -182,7 +182,7 @@
     const note = el("textarea", { id: noteId, rows: "2" });
     note.value = review.note;
     note.addEventListener("input", () => { review.note = note.value; save(); });
-    wrap.append(
+    wrap.append(...[
       el("div", { class: "meta" },
         el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, passageLabel(f.passageIndex)),
         t("matched", { term: f.matchedTerm }),
@@ -193,7 +193,7 @@
       fs,
       el("label", { for: noteId }, t("reviewNote")),
       note
-    );
+    ].filter((c) => c != null));
     return wrap;
   }
 

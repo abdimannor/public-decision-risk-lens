@@ -21,3 +21,9 @@ test("progress meter counts decisions by category and jumps to the next unreview
   await expect(meter).toContainText(`Reviewed ${total} of ${total}`);
   await expect(page.getByRole("button", { name: "Next unreviewed" })).toBeDisabled();
 });
+
+test("a flag without a reviewer question does not print the text null", async ({ page }) => {
+  await page.goto("/prototype/");
+  await page.getByRole("button", { name: "Load fictional sample" }).click();
+  await expect(page.locator("#flag-groups .flag").first()).not.toContainText("null");
+});

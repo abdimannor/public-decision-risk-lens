@@ -214,3 +214,15 @@ button.primary:hover { background: var(--ink-mid); }
 .lang { display: inline-flex; border: 1px solid rgba(232, 238, 252, .45); border-radius: 999px; overflow: hidden; }
 .lang button { background: transparent; color: #e8eefc; border: 0; border-radius: 0; padding: .3rem .8rem; font: inherit; font-size: .85rem; cursor: pointer; }
 .lang button[aria-pressed="true"] { background: var(--signal); color: var(--ink-deep); font-weight: 700; }
+
+/* Keyboard-first review */
+.flag:focus { outline: none; }
+.flag.current { box-shadow: 0 0 0 3px var(--mark-focus); }
+.flag:focus-visible, .flag.current:focus { outline: 3px solid var(--accent); outline-offset: 3px; }
+.shortcuts { border: 0; border-radius: 12px; padding: 1.5rem 1.75rem; max-width: 30rem; width: calc(100% - 2rem); box-shadow: 0 20px 60px rgba(10, 20, 40, .35); }
+.shortcuts::backdrop { background: rgba(8, 16, 32, .55); }
+.shortcuts h2 { margin-top: 0; }
+.keys { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1rem; align-items: center; }
+.keys dt { margin: 0; }
+.keys dd { margin: 0; }
+kbd { display: inline-block; min-width: 1.8em; text-align: center; font: 600 .85rem ui-monospace, SFMono-Regular, Menlo, monospace; padding: .15rem .4rem; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 6px; background: var(--surface); color: var(--ink); }

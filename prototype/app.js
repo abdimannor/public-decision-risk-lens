@@ -531,6 +531,57 @@
       })));
   });
 
+  // Keyboard-first review: j/k move between flags, a/r/c decide, n opens the
+  // note, ? shows the shortcuts sheet. Ignored while typing in a text field.
+  const flagNodes = () => Array.from(document.querySelectorAll("#flag-groups .flag"));
+  function currentFlag() {
+    const a = document.activeElement;
+    return (a && a.closest && a.closest("#flag-groups .flag")) || document.querySelector("#flag-groups .flag.current");
+  }
+  function focusFlag(node) {
+    if (!node) return;
+    document.querySelectorAll("#flag-groups .flag.current").forEach((n) => n.classList.remove("current"));
+    node.classList.add("current");
+    const group = node.closest("details");
+    if (group && !group.open) group.open = true;
+    node.focus({ preventScroll: true });
+    node.scrollIntoView({ block: "nearest" });
+  }
+  function moveFlag(step) {
+    const list = flagNodes();
+    if (!list.length) return;
+    const i = list.indexOf(currentFlag());
+    focusFlag(list[i < 0 ? (step > 0 ? 0 : list.length - 1) : Math.min(list.length - 1, Math.max(0, i + step))]);
+  }
+  function decide(value) {
+    const node = currentFlag();
+    if (!node) return;
+    const input = node.querySelector(`input[type="radio"][value="${value}"]`);
+    if (!input) return;
+    input.checked = true;
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    node.classList.add("current");
+  }
+  const isTyping = (n) => n && (n.isContentEditable || n.tagName === "TEXTAREA" || n.tagName === "SELECT" ||
+    (n.tagName === "INPUT" && !["radio", "checkbox", "button", "submit", "reset", "file"].includes(n.type)));
+  document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "Escape" && e.target.tagName === "TEXTAREA" && e.target.closest(".flag")) { e.target.closest(".flag").focus(); return; }
+    if (isTyping(e.target) || $("shortcuts").open) return;
+    if (e.key === "?") { e.preventDefault(); $("shortcuts").showModal(); return; }
+    if (!result || $("workspace").hidden) return;
+    const actions = { j: () => moveFlag(1), k: () => moveFlag(-1), a: () => decide("accept"), r: () => decide("reject"), c: () => decide("contextualise"),
+      n: () => { const node = currentFlag(); const note = node && node.querySelector("textarea"); if (note) note.focus(); } };
+    const fn = actions[e.key];
+    if (fn) { e.preventDefault(); fn(); }
+  });
+  document.addEventListener("focusin", (e) => {
+    const node = e.target.closest && e.target.closest("#flag-groups .flag");
+    if (!node) return;
+    document.querySelectorAll("#flag-groups .flag.current").forEach((n) => n !== node && n.classList.remove("current"));
+    node.classList.add("current");
+  });
+
   // Reviewer progress meter (filled in below).
   function renderProgress() {}
 

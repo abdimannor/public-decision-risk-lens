@@ -24,7 +24,7 @@ test("flags English and Swedish terms with passage, category and rule", () => {
   assert.equal(auto.matchedTerm, "automated decision");
   const sv = flags.find((f) => f.category === "contestability");
   assert.equal(sv.passageIndex, 2);
-  assert.equal(sv.matchedTerm, "överklag");
+  assert.equal(sv.matchedTerm, "överklagas");
 });
 
 test("matches at word start only and ignores case", () => {
@@ -70,4 +70,34 @@ test("analysePages keeps page numbers and runs passage numbers on", () => {
   assert.deepEqual(r.passages.map((p) => [p.index, p.page]), [[1, 1], [2, 1], [3, 2]]);
   const onPage2 = r.flags.filter((f) => f.passageIndex === 3);
   assert.ok(onPage2.length > 0);
+});
+
+test("highlight ranges cover the whole English word, not only the pattern stem", () => {
+  const text = "The board is prioritising cases with a scoring model.";
+  const flags = findFlags(splitPassages(text), [
+    { id: "t", patterns: { en: ["prioritis"] } }
+  ]);
+  assert.equal(flags.length, 1);
+  const [s, e] = flags[0].ranges[0];
+  assert.equal(text.slice(s, e), "prioritising");
+  assert.equal(flags[0].matchedTerm, "prioritising");
+  assert.ok(flags[0].rule.includes('"prioritis"'));
+});
+
+test("highlight ranges cover the whole Swedish inflected word with åäö", () => {
+  const text = "Beslutet kan överklagas till förvaltningsrätten.";
+  const flags = findFlags(splitPassages(text), [
+    { id: "t", patterns: { sv: ["överklag", "förvaltningsrätt"] } }
+  ]);
+  assert.deepEqual(flags.map((f) => f.matchedTerm), ["överklagas", "förvaltningsrätten"]);
+  for (const f of flags) {
+    const [s, e] = f.ranges[0];
+    assert.equal(text.slice(s, e), f.matchedTerm);
+  }
+});
+
+test("a pattern ending in a space or punctuation is not extended into the next word", () => {
+  const { extendToWordEnd } = require("./engine.js");
+  assert.equal(extendToWordEnd("risk score here", 5), 5);
+  assert.equal(extendToWordEnd("risk score here", 3), 4);
 });

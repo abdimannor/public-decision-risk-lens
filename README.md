@@ -50,6 +50,9 @@ What it does not do: it does not understand context, judge lawfulness or fairnes
 - **Your own rules.** A reviewer can add a term or phrase, pick a category and write a review question. The rule runs at once next to the built-in taxonomy. Its flags carry a "Reviewer-added" badge and a `reviewer-added/...` rule text in the JSON and Markdown logs and the printed report. Rules are saved in the browser and can be exported or imported as a JSON rule pack.
 - **Compare two versions.** Paste or load an earlier and a revised version. Flags are paired by rule and by shared words in the passage (at least half), and listed as appearing, disappearing or persisting. A flag that disappears may only mean the wording changed; a reviewer reads both passages.
 - **Why this flag?** Each flag opens an explanation: the exact rule, the matched words in context, the category description and guiding question, and the absence checks for the same category with their status.
+- **Svenska or English.** The interface, categories, review questions, absence checks, printed report and export headings come in Swedish and English. Swedish is the default when the browser asks for Swedish; the switch in the notice bar is remembered. Trigger patterns are the same in both languages.
+- **Keyboard-first review.** `j` and `k` move between flags, `a`, `r` and `c` accept, reject or contextualise, `n` opens the note, `?` shows the shortcuts. Keys are ignored while typing in a text field.
+- **Progress meter.** A sticky meter counts reviewed flags overall and per category, with a button to jump to the next flag without a decision. It counts decisions, not risk.
 
 ## Data sources and AI methods
 

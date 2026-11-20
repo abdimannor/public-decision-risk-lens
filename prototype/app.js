@@ -2,16 +2,16 @@
 (function () {
   const { TAXONOMY } = window.RiskLensTaxonomy;
   const Engine = window.RiskLensEngine;
+  const I18N = window.RiskLensI18n;
+  const t = I18N.t;
+  const L = (c) => I18N.cat(c);
   const $ = (id) => document.getElementById(id);
-  const DECISIONS = [
-    ["accept", "Accept"],
-    ["reject", "Reject"],
-    ["contextualise", "Contextualise"]
-  ];
+  const DECISIONS = ["accept", "reject", "contextualise"];
+  const decisionText = (d) => (d && DECISIONS.includes(d) ? t(d).toLowerCase() : t("notReviewed"));
 
   let result = null;
   let reviews = {}; // flag id -> { decision, note }
-  let sourceName = "pasted text";
+  let sourceName = null; // null means pasted text, shown in the current language
   let pages = null; // [{ page, text }] when the document came from a PDF
   const STORE_KEY = "risk-lens-review-v1";
   const RULES_KEY = "risk-lens-rules-v1";
@@ -23,7 +23,8 @@
   function saveRules() {
     try { localStorage.setItem(RULES_KEY, JSON.stringify(rules)); } catch (e) { /* storage may be unavailable */ }
   }
-  const catLabel = (id) => (TAXONOMY.find((c) => c.id === id) || {}).label || id;
+  const catLabel = (id) => L(TAXONOMY.find((c) => c.id === id)).label || id;
+  const srcName = () => sourceName || t("pastedText");
 
   // Saves the document, reviewer and decisions in this browser only (localStorage).
   function save() {
@@ -39,7 +40,7 @@
     try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) { saved = null; }
     if (!saved || !saved.text) return;
     $("doc").value = saved.text;
-    sourceName = saved.sourceName || "pasted text";
+    sourceName = saved.sourceName && saved.sourceName !== "pasted text" ? saved.sourceName : null;
     pages = Array.isArray(saved.pages) ? saved.pages : null;
     $("reviewer").value = saved.reviewer || "";
     analyse(saved.reviews || {});
@@ -49,20 +50,22 @@
     try { localStorage.removeItem(STORE_KEY); } catch (e) { /* ignore */ }
     result = null;
     reviews = {};
-    sourceName = "pasted text";
+    sourceName = null;
     pages = null;
     $("doc").value = "";
     $("reviewer").value = "";
     $("file").value = "";
     $("workspace").hidden = true;
+    renderProgress();
     $("riskmap-section").hidden = true;
     $("clear").hidden = true;
-    $("status").textContent = "Review cleared. Nothing is stored in this browser.";
+    $("status").textContent = t("cleared");
   }
 
   function el(tag, attrs = {}, ...children) {
     const node = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
+      if (v == null) continue;
       if (k === "class") node.className = v;
       else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
       else node.setAttribute(k, v);
@@ -117,19 +120,19 @@
     const n = result.passages.length;
     const legend = el("ul", { class: "rm-legend" });
     const grid = el("div", { class: "rm-grid", style: `--cols:${n}` });
-    for (const cat of TAXONOMY) {
+    for (const cat of TAXONOMY.map(L)) {
       const hits = new Set(result.flags.filter((f) => f.category === cat.id).map((f) => f.passageIndex));
       const count = result.flags.filter((f) => f.category === cat.id).length;
       legend.append(el("li", { class: "rm-key", "data-cat": cat.id, "data-count": String(count) },
         el("span", { class: "sw", "aria-hidden": "true" }), cat.label, " ", el("b", {}, String(count))));
-      const row = el("div", { class: "rm-row", "data-cat": cat.id, role: "group", "aria-label": `${cat.label}: ${count} flags` });
+      const row = el("div", { class: "rm-row", "data-cat": cat.id, role: "group", "aria-label": t("flagsAria", { cat: cat.label, n: count }) });
       row.append(el("span", { class: "rm-label" }, cat.label));
       const cells = el("div", { class: "rm-cells" });
       for (const p of result.passages) {
         if (hits.has(p.index)) {
           cells.append(el("button", {
             type: "button", class: "rm-cell on", title: `${cat.label}: ${passageLabel(p.index)}`,
-            "aria-label": `${cat.label} in ${passageLabel(p.index)}`, onclick: () => goToPassage(p.index)
+            "aria-label": t("cellIn", { cat: cat.label, where: passageLabel(p.index) }), onclick: () => goToPassage(p.index)
           }));
         } else cells.append(el("span", { class: "rm-cell", "aria-hidden": "true" }));
       }
@@ -142,7 +145,7 @@
       pageTicks.append(el("span", { class: p.page && p.page !== lastPage ? "tick" : "" }, p.page && p.page !== lastPage ? `p${p.page}` : ""));
       lastPage = p.page || lastPage;
     }
-    if (lastPage) grid.append(el("div", { class: "rm-row" }, el("span", { class: "rm-label" }, "Page"), pageTicks));
+    if (lastPage) grid.append(el("div", { class: "rm-row" }, el("span", { class: "rm-label" }, t("page")), pageTicks));
     box.append(legend, grid);
   }
 
@@ -150,25 +153,27 @@
     const box = $("absences");
     box.replaceChildren();
     if (!result.absences.length) return;
-    box.append(el("h3", {}, "Not found in this text"));
-    box.append(el("p", { class: "hint" }, "These topics are not mentioned in the text you analysed. They may be covered in other documents. This is a prompt to check, not a finding."));
-    for (const a of result.absences) {
+    box.append(el("h3", {}, t("notFoundH")));
+    box.append(el("p", { class: "hint" }, t("notFoundHint")));
+    for (const a of result.absences.map(I18N.check)) {
       box.append(el("div", { class: "absence" }, el("strong", {}, a.label), a.question, el("br"), el("code", {}, a.rule)));
     }
   }
 
   function renderFlag(f) {
     const review = reviews[f.id] || (reviews[f.id] = { decision: "", note: "" });
-    const wrap = el("div", { class: "flag", "data-decision": review.decision, "data-source": f.source || "taxonomy" });
+    const wrap = el("div", { class: "flag", id: `flag-${f.id}`, tabindex: "-1", "data-flag": f.id, "data-decision": review.decision, "data-source": f.source || "taxonomy" });
     const name = `d-${f.id}`;
-    const fs = el("fieldset", {}, el("legend", {}, "Reviewer decision"));
-    for (const [value, label] of DECISIONS) {
+    const fs = el("fieldset", {}, el("legend", {}, t("decisionLegend")));
+    for (const value of DECISIONS) {
+      const label = t(value);
       const input = el("input", { type: "radio", name, value });
       if (review.decision === value) input.checked = true;
       input.addEventListener("change", () => {
         review.decision = value;
         wrap.dataset.decision = value;
         updateStatus();
+        renderProgress();
         save();
       });
       fs.append(el("label", {}, input, label));
@@ -177,18 +182,18 @@
     const note = el("textarea", { id: noteId, rows: "2" });
     note.value = review.note;
     note.addEventListener("input", () => { review.note = note.value; save(); });
-    wrap.append(
+    wrap.append(...[
       el("div", { class: "meta" },
         el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, passageLabel(f.passageIndex)),
-        ` matched "${f.matchedTerm}"`,
-        f.source === "reviewer" ? el("span", { class: "badge" }, "Reviewer-added") : null),
+        t("matched", { term: f.matchedTerm }),
+        f.source === "reviewer" ? el("span", { class: "badge" }, t("reviewerAdded")) : null),
       el("code", {}, f.rule),
-      f.question ? el("p", { class: "rq" }, "Your question: ", el("em", {}, f.question)) : null,
+      f.question ? el("p", { class: "rq" }, t("yourQuestion"), el("em", {}, f.question)) : null,
       renderWhy(f),
       fs,
-      el("label", { for: noteId }, "Review note"),
+      el("label", { for: noteId }, t("reviewNote")),
       note
-    );
+    ].filter((c) => c != null));
     return wrap;
   }
 
@@ -196,18 +201,19 @@
   // category description and question, and the related absence checks.
   function renderWhy(f) {
     const x = Engine.explainFlag(f, result);
-    const d = el("details", { class: "why" }, el("summary", {}, "Why this flag?"));
+    const d = el("details", { class: "why" }, el("summary", {}, t("why")));
     const dl = el("dl", {},
-      el("dt", {}, "Rule"), el("dd", {}, el("code", {}, x.rule),
-        x.source === "reviewer" ? " Added by a reviewer in this browser, not part of the built-in taxonomy." : " From the built-in draft taxonomy."),
-      el("dt", {}, "Pattern"), el("dd", {}, `"${x.pattern}" matched at the start of a word, any case, ${x.matchCount} time${x.matchCount === 1 ? "" : "s"} in this passage.`),
-      el("dt", {}, "In context"), el("dd", { class: "ctx" }, x.context.before, el("mark", {}, x.context.match), x.context.after),
-      el("dt", {}, x.category.label || "Category"), el("dd", {}, x.category.description, " ", el("em", {}, x.category.question)));
-    if (x.reviewerQuestion) dl.append(el("dt", {}, "Reviewer question"), el("dd", {}, x.reviewerQuestion));
-    dl.append(el("dt", {}, "Related absence checks"), el("dd", {}, x.relatedAbsenceChecks.length
-      ? el("ul", {}, ...x.relatedAbsenceChecks.map((c) => el("li", {}, el("strong", {}, c.label), `: ${c.status}. Looks for ${c.patterns.map((p) => `"${p}"`).join(", ")}.`)))
-      : "None for this category."));
-    d.append(dl, el("p", { class: "hint" }, "A match means the passage may deserve a closer look. It is not a finding."));
+      el("dt", {}, t("rule")), el("dd", {}, el("code", {}, x.rule),
+        x.source === "reviewer" ? t("ruleReviewer") : t("ruleTaxonomy")),
+      el("dt", {}, t("pattern")), el("dd", {}, t("patternText", { p: x.pattern, n: x.matchCount, s: x.matchCount === 1 ? "" : (I18N.lang === "sv" ? "er" : "s") })),
+      el("dt", {}, t("inContext")), el("dd", { class: "ctx" }, x.context.before, el("mark", {}, x.context.match), x.context.after),
+      el("dt", {}, L(x.category).label || t("category")), el("dd", {}, L(x.category).description, " ", el("em", {}, L(x.category).question)));
+    if (x.reviewerQuestion) dl.append(el("dt", {}, t("reviewerQuestion")), el("dd", {}, x.reviewerQuestion));
+    dl.append(el("dt", {}, t("relatedChecks")), el("dd", {}, x.relatedAbsenceChecks.length
+      ? el("ul", {}, ...x.relatedAbsenceChecks.map((c) => el("li", {}, el("strong", {}, I18N.check(c).label),
+        t("checkLine", { status: c.status === "not found in this text" ? t("statusMissing") : t("statusPresent"), patterns: c.patterns.map((p) => `"${p}"`).join(", ") }))))
+      : t("noneForCat")));
+    d.append(dl, el("p", { class: "hint" }, t("whyHint")));
     return d;
   }
 
@@ -217,17 +223,17 @@
 
   function passageLabel(index) {
     const page = pageOf(index);
-    return page ? `Passage ${index}, page ${page}` : `Passage ${index}`;
+    return page ? t("passagePage", { i: index, p: page }) : t("passage", { i: index });
   }
 
   function renderFlags() {
     const box = $("flag-groups");
     box.replaceChildren();
     if (!result.flags.length) {
-      box.append(el("p", {}, "No trigger terms were found. That does not mean the document is free of risk."));
+      box.append(el("p", {}, t("noFlags")));
       return;
     }
-    for (const cat of TAXONOMY) {
+    for (const cat of TAXONOMY.map(L)) {
       const flags = result.flags.filter((f) => f.category === cat.id);
       if (!flags.length) continue;
       const group = el("details", { class: "group", open: "", "data-cat": cat.id },
@@ -241,13 +247,13 @@
   function updateStatus() {
     if (!result) return;
     const done = Object.values(reviews).filter((r) => r.decision).length;
-    $("status").textContent = `${result.passages.length} passages, ${result.flags.length} flags, ${result.absences.length} topics not found. Reviewed ${done} of ${result.flags.length} flags.`;
+    $("status").textContent = t("status", { p: result.passages.length, f: result.flags.length, a: result.absences.length, d: done });
   }
 
   function analyse(savedReviews) {
     const text = $("doc").value;
     if (!text.trim()) {
-      $("status").textContent = "Paste or load a document first.";
+      $("status").textContent = t("pasteFirst");
       return;
     }
     result = pages ? Engine.analysePages(pages, rules) : Engine.analyse(text, rules);
@@ -256,6 +262,7 @@
     renderRiskMap();
     renderAbsences();
     renderFlags();
+    renderProgress();
     $("workspace").hidden = false;
     $("riskmap-section").hidden = false;
     $("clear").hidden = false;
@@ -264,12 +271,13 @@
   }
 
   function buildLog() {
-    const category = Object.fromEntries(TAXONOMY.map((c) => [c.id, c.label]));
+    const category = Object.fromEntries(TAXONOMY.map((c) => [c.id, L(c).label]));
     return {
-      tool: "Public Decision Risk Lens prototype",
-      notice: "Advisory discussion aid. Pattern matching can miss risks and produce false positives. Not a verdict.",
+      tool: t("toolName"),
+      language: I18N.lang,
+      notice: t("notice"),
       exportedAt: new Date().toISOString(),
-      source: sourceName,
+      source: srcName(),
       reviewer: $("reviewer").value.trim() || null,
       flags: result.flags.map((f) => ({
         id: f.id,
@@ -285,28 +293,28 @@
         note: reviews[f.id]?.note || ""
       })),
       reviewerRules: rules.map((r) => ({ ...r, category: catLabel(r.category) })),
-      notFoundInThisText: result.absences.map((a) => ({ label: a.label, question: a.question, rule: a.rule }))
+      notFoundInThisText: result.absences.map(I18N.check).map((a) => ({ label: a.label, question: a.question, rule: a.rule }))
     };
   }
 
   function toMarkdown(log) {
     const lines = [
-      "# Review log: Public Decision Risk Lens prototype", "",
+      t("mdTitle"), "",
       `> ${log.notice}`, "",
-      `- Exported: ${log.exportedAt}`, `- Source: ${log.source}`, `- Reviewer: ${log.reviewer || "not given"}`, "",
-      "## Flags", ""
+      `- ${t("exported")}: ${log.exportedAt}`, `- ${t("source")}: ${log.source}`, `- ${t("reviewer")}: ${log.reviewer || t("notGiven")}`, "",
+      `## ${t("flagsH")}`, ""
     ];
     for (const f of log.flags) {
-      lines.push(`### Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category} ("${f.matchedTerm}")${f.ruleSource === "reviewer-added" ? " [reviewer-added rule]" : ""}`, "",
-        `- Rule: \`${f.rule}\``, ...(f.reviewerQuestion ? [`- Reviewer question: ${f.reviewerQuestion}`] : []), `- Decision: ${f.decision}`, `- Note: ${f.note || "(none)"}`, "",
+      lines.push(`### ${f.page ? t("passagePage", { i: f.passageIndex, p: f.page }) : t("passage", { i: f.passageIndex })}: ${f.category} ("${f.matchedTerm}")${f.ruleSource === "reviewer-added" ? ` [${t("reviewerRule")}]` : ""}`, "",
+        `- ${t("rule")}: \`${f.rule}\``, ...(f.reviewerQuestion ? [`- ${t("reviewerQuestion")}: ${f.reviewerQuestion}`] : []), `- ${t("decision")}: ${decisionText(f.decision)}`, `- ${t("note")}: ${f.note || t("noneP")}`, "",
         ...f.passage.split("\n").map((l) => `> ${l}`), "");
     }
-    lines.push("## Reviewer-added rules", "");
-    if (!log.reviewerRules.length) lines.push("(none)");
+    lines.push(`## ${t("rulesAddedH")}`, "");
+    if (!log.reviewerRules.length) lines.push(t("noneP"));
     for (const r of log.reviewerRules) lines.push(`- "${r.term}" (${r.category})${r.question ? `: ${r.question}` : ""}`);
-    lines.push("", "## Not found in this text", "");
-    if (!log.notFoundInThisText.length) lines.push("(none)");
-    for (const a of log.notFoundInThisText) lines.push(`- ${a.label}. ${a.question} Rule: \`${a.rule}\``);
+    lines.push("", `## ${t("notFoundH")}`, "");
+    if (!log.notFoundInThisText.length) lines.push(t("noneP"));
+    for (const a of log.notFoundInThisText) lines.push(`- ${a.label}. ${a.question} ${t("rule")}: \`${a.rule}\``);
     return lines.join("\n") + "\n";
   }
 
@@ -316,38 +324,38 @@
     const log = buildLog();
     const box = $("report");
     box.replaceChildren();
-    const counts = TAXONOMY.map((c) => [c, log.flags.filter((f) => f.category === c.label).length]).filter(([, n]) => n);
+    const counts = TAXONOMY.map(L).map((c) => [c, log.flags.filter((f) => f.category === c.label).length]).filter(([, n]) => n);
     const decided = log.flags.filter((f) => f.decision !== "not reviewed").length;
     box.append(
       el("header", { class: "r-head" },
-        el("p", { class: "r-kicker" }, "Public Decision Risk Lens prototype"),
-        el("h1", {}, "Review report"),
-        el("p", { class: "r-notice" }, el("strong", {}, "Advisory discussion aid. "), log.notice.replace(/^Advisory discussion aid\. /, ""), " It does not decide anything and does not assess people."),
+        el("p", { class: "r-kicker" }, t("toolName")),
+        el("h1", {}, t("reportH")),
+        el("p", { class: "r-notice" }, el("strong", {}, log.notice.split(". ")[0] + ". "), log.notice.split(". ").slice(1).join(". "), t("reportNoticeTail")),
         el("dl", { class: "r-meta" },
-          el("dt", {}, "Source"), el("dd", {}, log.source),
-          el("dt", {}, "Reviewer"), el("dd", {}, log.reviewer || "not given"),
-          el("dt", {}, "Generated"), el("dd", {}, new Date(log.exportedAt).toLocaleString()),
-          el("dt", {}, "Reviewed"), el("dd", {}, `${decided} of ${log.flags.length} flags`))),
-      el("h2", {}, "Flags by category"),
+          el("dt", {}, t("source")), el("dd", {}, log.source),
+          el("dt", {}, t("reviewer")), el("dd", {}, log.reviewer || t("notGiven")),
+          el("dt", {}, t("generated")), el("dd", {}, new Date(log.exportedAt).toLocaleString(I18N.lang === "sv" ? "sv-SE" : undefined)),
+          el("dt", {}, t("reviewed")), el("dd", {}, t("reviewedOf", { d: decided, n: log.flags.length })))),
+      el("h2", {}, t("byCatH")),
       el("ul", { class: "r-counts" }, ...counts.map(([c, n]) => el("li", { "data-cat": c.id }, el("span", { class: "sw" }), `${c.label}: ${n}`))));
-    if (!counts.length) box.append(el("p", {}, "No trigger terms were found. That does not mean the document is free of risk."));
-    box.append(el("h2", {}, "Flags and decisions"));
+    if (!counts.length) box.append(el("p", {}, t("noFlags")));
+    box.append(el("h2", {}, t("flagsDecisionsH")));
     for (const f of log.flags) {
-      const cat = TAXONOMY.find((c) => c.label === f.category);
+      const cat = TAXONOMY.map(L).find((c) => c.label === f.category);
       box.append(el("article", { class: "r-flag", "data-cat": cat ? cat.id : "" },
-        el("h3", {}, `Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category}`, f.ruleSource === "reviewer-added" ? el("span", { class: "badge" }, "Reviewer-added") : null),
-        el("p", { class: "r-line" }, `Matched "${f.matchedTerm}". Decision: `, el("strong", {}, f.decision), f.note ? `. Note: ${f.note}` : ""),
+        el("h3", {}, `${f.page ? t("passagePage", { i: f.passageIndex, p: f.page }) : t("passage", { i: f.passageIndex })}: ${f.category}`, f.ruleSource === "reviewer-added" ? el("span", { class: "badge" }, t("reviewerAdded")) : null),
+        el("p", { class: "r-line" }, t("matchedDecision", { term: f.matchedTerm }), el("strong", {}, decisionText(f.decision)), f.note ? `. ${t("note")}: ${f.note}` : ""),
         el("blockquote", {}, f.passage),
         el("p", { class: "r-rule" }, f.rule)));
     }
     if (log.reviewerRules.length) {
-      box.append(el("h2", {}, "Reviewer-added rules"),
+      box.append(el("h2", {}, t("rulesAddedH")),
         el("ul", {}, ...log.reviewerRules.map((r) => el("li", {}, `"${r.term}" (${r.category})`, r.question ? `: ${r.question}` : ""))));
     }
-    box.append(el("h2", {}, "Not found in this text"));
-    if (!log.notFoundInThisText.length) box.append(el("p", {}, "(none)"));
+    box.append(el("h2", {}, t("notFoundH")));
+    if (!log.notFoundInThisText.length) box.append(el("p", {}, t("noneP")));
     else box.append(el("ul", {}, ...log.notFoundInThisText.map((x) => el("li", {}, el("strong", {}, x.label), ". ", x.question))));
-    box.append(el("p", { class: "r-foot" }, "Pattern matching can miss risks and produce false positives. Every flag needs a human reviewer. Building AI course project."));
+    box.append(el("p", { class: "r-foot" }, t("reportFoot")));
   }
 
   function download(name, type, content) {
@@ -371,19 +379,19 @@
     sourceName = window.RiskLensSample.title;
     analyse();
   });
-  $("doc").addEventListener("input", () => { sourceName = "pasted text"; pages = null; });
+  $("doc").addEventListener("input", () => { sourceName = null; pages = null; });
   $("file").addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
     try {
       if (isPdf) {
-        $("status").textContent = `Reading ${file.name} in this browser...`;
+        $("status").textContent = t("readingPdf", { name: file.name });
         pages = await readPdf(file);
         $("doc").value = pages.map((p) => p.text).join("\n\n");
         if (!$("doc").value.trim()) {
           pages = null;
-          $("status").textContent = "No text layer was found in this PDF. Scanned PDFs need OCR first; this tool does not do OCR.";
+          $("status").textContent = t("noTextLayer");
           return;
         }
       } else {
@@ -394,7 +402,7 @@
       analyse();
     } catch (err) {
       pages = null;
-      $("status").textContent = `Could not read ${file.name}: ${err.message || err}`;
+      $("status").textContent = t("couldNotRead", { name: file.name, err: err.message || err });
     }
   });
 
@@ -446,29 +454,35 @@
   $("export-md").addEventListener("click", () => result && download(`review-log-${stamp()}.md`, "text/markdown", toMarkdown(buildLog())));
 
   // Reviewer-defined rules panel.
-  for (const c of TAXONOMY) $("rule-cat").append(el("option", { value: c.id }, c.label));
+  function renderRuleCats() {
+    const sel = $("rule-cat");
+    const keep = sel.value;
+    sel.replaceChildren(...TAXONOMY.map(L).map((c) => el("option", { value: c.id }, c.label)));
+    if (keep) sel.value = keep;
+  }
+  renderRuleCats();
   function renderRules() {
     const list = $("rule-list");
     list.replaceChildren();
-    if (!rules.length) { list.append(el("li", { class: "empty" }, "No rules of your own yet.")); return; }
+    if (!rules.length) { list.append(el("li", { class: "empty" }, t("noRules"))); return; }
     rules.forEach((r, i) => list.append(el("li", { "data-cat": r.category },
       el("span", { class: "sw", "aria-hidden": "true" }), el("strong", {}, `"${r.term}"`), ` ${catLabel(r.category)}`,
       r.question ? el("span", { class: "rq" }, ` ${r.question}`) : null,
-      el("button", { type: "button", class: "linkbtn", "aria-label": `Remove rule "${r.term}"`, onclick: () => { rules.splice(i, 1); rulesChanged(`Removed "${r.term}".`); } }, "Remove"))));
+      el("button", { type: "button", class: "linkbtn", "aria-label": t("removeRule", { term: r.term }), onclick: () => { rules.splice(i, 1); rulesChanged(t("removed", { term: r.term })); } }, t("remove")))));
   }
   function rulesChanged(msg) {
     saveRules();
     renderRules();
-    $("rules-status").textContent = `${msg} ${rules.length} rule${rules.length === 1 ? "" : "s"} of your own.`;
+    $("rules-status").textContent = `${msg} ${t("ruleCount", { n: rules.length, s: rules.length === 1 ? "" : "s" })}`;
     if (result) analyse(reviews);
   }
   $("rule-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const added = Engine.normaliseRules([...rules, { term: $("rule-term").value, category: $("rule-cat").value, question: $("rule-q").value }]);
-    if (added.length === rules.length) { $("rules-status").textContent = "That rule is empty or already in the list."; return; }
+    if (added.length === rules.length) { $("rules-status").textContent = t("ruleDup"); return; }
     rules = added;
     $("rule-term").value = ""; $("rule-q").value = "";
-    rulesChanged(`Added "${rules[rules.length - 1].term}".`);
+    rulesChanged(t("added", { term: rules[rules.length - 1].term }));
   });
   $("rules-export").addEventListener("click", () => download(`risk-lens-rules-${stamp()}.json`, "application/json", JSON.stringify(Engine.rulePack(rules), null, 2)));
   $("rules-import").addEventListener("change", async (e) => {
@@ -478,9 +492,9 @@
       const incoming = Engine.parseRulePack(JSON.parse(await file.text()));
       const before = rules.length;
       rules = Engine.normaliseRules([...rules, ...incoming]);
-      rulesChanged(`Imported ${rules.length - before} new rule${rules.length - before === 1 ? "" : "s"} from ${file.name}.`);
+      rulesChanged(t("imported", { n: rules.length - before, s: rules.length - before === 1 ? "" : "s", name: file.name }));
     } catch (err) {
-      $("rules-status").textContent = `Could not import ${file.name}: ${err.message || err}`;
+      $("rules-status").textContent = t("couldNotImport", { name: file.name, err: err.message || err });
     }
     e.target.value = "";
   });
@@ -498,26 +512,137 @@
     const ta = $("ver-a").value, tb = $("ver-b").value;
     const out = $("compare-out");
     out.replaceChildren();
-    if (!ta.trim() || !tb.trim()) { $("compare-status").textContent = "Add text for both versions first."; return; }
+    if (!ta.trim() || !tb.trim()) { $("compare-status").textContent = t("bothVersions"); return; }
     const A = Engine.analyse(ta, rules), B = Engine.analyse(tb, rules);
     const c = Engine.compareVersions(A, B);
-    $("compare-status").textContent = `${c.appeared.length} appear, ${c.disappeared.length} disappear, ${c.persisted.length} persist.`;
+    $("compare-status").textContent = t("cmpStatus", { a: c.appeared.length, d: c.disappeared.length, p: c.persisted.length });
     const item = (f, res, tag) => el("li", { "data-cat": f.category },
       el("span", { class: "sw", "aria-hidden": "true" }),
-      el("strong", {}, `${catLabel(f.category)}: "${f.matchedTerm}"`), ` ${tag} passage ${f.passageIndex}`,
-      f.source === "reviewer" ? el("span", { class: "badge" }, "Reviewer-added") : null,
+      el("strong", {}, `${catLabel(f.category)}: "${f.matchedTerm}"`), ` ${tag}${t("passageWord", { i: f.passageIndex })}`,
+      f.source === "reviewer" ? el("span", { class: "badge" }, t("reviewerAdded")) : null,
       el("blockquote", {}, res.passages[f.passageIndex - 1].text));
     const group = (cls, title, note, items) => el("div", { class: `cmp-group ${cls}` },
       el("h3", {}, `${title} (${items.length})`), el("p", { class: "hint" }, note),
-      items.length ? el("ul", {}, ...items) : el("p", {}, "(none)"));
+      items.length ? el("ul", {}, ...items) : el("p", {}, t("noneP")));
     out.append(
-      group("appeared", "Appear in B", "Rules that fire in the revised text with no similar passage in A.", c.appeared.map((x) => item(x.b, B, "in B,"))),
-      group("disappeared", "Disappear from A", "Rules that fired in A with no similar passage in B. Check whether the concern was addressed or only reworded.", c.disappeared.map((x) => item(x.a, A, "in A,"))),
-      group("persisted", "Persist", "Same rule, similar passage in both versions.", c.persisted.map((x) => {
-        const li = item(x.b, B, `in B (A passage ${x.a.passageIndex}, ${Math.round(x.similarity * 100)}% shared words),`);
+      group("appeared", t("appearH"), t("appearHint"), c.appeared.map((x) => item(x.b, B, t("inB")))),
+      group("disappeared", t("disappearH"), t("disappearHint"), c.disappeared.map((x) => item(x.a, A, t("inA")))),
+      group("persisted", t("persistH"), t("persistHint"), c.persisted.map((x) => {
+        const li = item(x.b, B, t("inBShared", { i: x.a.passageIndex, pct: Math.round(x.similarity * 100) }));
         return li;
       })));
   });
+
+  // Keyboard-first review: j/k move between flags, a/r/c decide, n opens the
+  // note, ? shows the shortcuts sheet. Ignored while typing in a text field.
+  const flagNodes = () => Array.from(document.querySelectorAll("#flag-groups .flag"));
+  function currentFlag() {
+    const a = document.activeElement;
+    return (a && a.closest && a.closest("#flag-groups .flag")) || document.querySelector("#flag-groups .flag.current");
+  }
+  function focusFlag(node) {
+    if (!node) return;
+    document.querySelectorAll("#flag-groups .flag.current").forEach((n) => n.classList.remove("current"));
+    node.classList.add("current");
+    const group = node.closest("details");
+    if (group && !group.open) group.open = true;
+    node.focus({ preventScroll: true });
+    node.scrollIntoView({ block: "nearest" });
+  }
+  function moveFlag(step) {
+    const list = flagNodes();
+    if (!list.length) return;
+    const i = list.indexOf(currentFlag());
+    focusFlag(list[i < 0 ? (step > 0 ? 0 : list.length - 1) : Math.min(list.length - 1, Math.max(0, i + step))]);
+  }
+  function decide(value) {
+    const node = currentFlag();
+    if (!node) return;
+    const input = node.querySelector(`input[type="radio"][value="${value}"]`);
+    if (!input) return;
+    input.checked = true;
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    node.classList.add("current");
+  }
+  const isTyping = (n) => n && (n.isContentEditable || n.tagName === "TEXTAREA" || n.tagName === "SELECT" ||
+    (n.tagName === "INPUT" && !["radio", "checkbox", "button", "submit", "reset", "file"].includes(n.type)));
+  document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "Escape" && e.target.tagName === "TEXTAREA" && e.target.closest(".flag")) { e.target.closest(".flag").focus(); return; }
+    if (isTyping(e.target) || $("shortcuts").open) return;
+    if (e.key === "?") { e.preventDefault(); $("shortcuts").showModal(); return; }
+    if (!result || $("workspace").hidden) return;
+    const actions = { j: () => moveFlag(1), k: () => moveFlag(-1), a: () => decide("accept"), r: () => decide("reject"), c: () => decide("contextualise"),
+      n: () => { const node = currentFlag(); const note = node && node.querySelector("textarea"); if (note) note.focus(); } };
+    const fn = actions[e.key];
+    if (fn) { e.preventDefault(); fn(); }
+  });
+  document.addEventListener("focusin", (e) => {
+    const node = e.target.closest && e.target.closest("#flag-groups .flag");
+    if (!node) return;
+    document.querySelectorAll("#flag-groups .flag.current").forEach((n) => n !== node && n.classList.remove("current"));
+    node.classList.add("current");
+  });
+
+  // Reviewer progress meter: sticky at the top of the review column. Counts
+  // decisions, not risk; it says nothing about the document itself.
+  function renderProgress() {
+    const box = $("progress");
+    if (!result) { box.replaceChildren(); return; }
+    const total = result.flags.length;
+    const isDone = (f) => !!(reviews[f.id] && reviews[f.id].decision);
+    const done = result.flags.filter(isDone).length;
+    const pct = total ? Math.round((done / total) * 100) : 100;
+    const cats = TAXONOMY.map(L).map((c) => {
+      const fs = result.flags.filter((f) => f.category === c.id);
+      return { c, n: fs.length, d: fs.filter(isDone).length };
+    }).filter((x) => x.n);
+    box.replaceChildren(
+      el("div", { class: "p-top" },
+        el("p", { class: "p-count", id: "progress-count" }, t("progress", { d: done, n: total })),
+        el("button", { type: "button", id: "next-unreviewed", class: "primary", onclick: nextUnreviewed, disabled: done === total ? "" : null }, t("nextUnreviewed")),
+        el("button", { type: "button", class: "linkbtn keys-btn", onclick: () => $("shortcuts").showModal(), "aria-keyshortcuts": "?" }, el("kbd", { "aria-hidden": "true" }, "?"), " ", t("shortcutsBtn"))),
+      el("div", { class: "p-bar", role: "progressbar", "aria-labelledby": "progress-count", "aria-valuemin": "0", "aria-valuemax": String(total), "aria-valuenow": String(done) },
+        el("span", { style: `--p:${pct}%` })),
+      el("ul", { class: "p-cats" }, ...cats.map(({ c, n, d }) => el("li", { "data-cat": c.id, class: d === n ? "done" : "", title: t("catProgress", { cat: c.label, d, n }) },
+        el("span", { class: "sw", "aria-hidden": "true" }), el("span", { class: "visually-hidden" }, t("catProgress", { cat: c.label, d, n })),
+        el("span", { "aria-hidden": "true" }, `${c.label} ${d}/${n}`)))),
+      ...(done === total && total ? [el("p", { class: "p-all" }, t("allReviewed"))] : []));
+  }
+  function nextUnreviewed() {
+    const list = flagNodes();
+    const start = list.indexOf(currentFlag());
+    const order = list.slice(start + 1).concat(list.slice(0, start + 1));
+    const next = order.find((n) => !n.dataset.decision);
+    if (next) focusFlag(next);
+  }
+
+  // Language switch: Swedish when the browser asks for Swedish, English
+  // otherwise; an explicit choice is remembered in this browser.
+  function applyLanguage() {
+    I18N.applyStatic(document);
+    document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === I18N.lang)));
+    renderRuleCats();
+    renderRules();
+    if (result) {
+      const focusedFlag = document.activeElement && document.activeElement.closest && document.activeElement.closest(".flag");
+      renderPassages(); renderRiskMap(); renderAbsences(); renderFlags(); renderProgress(); updateStatus();
+      if (focusedFlag) { const again = $(focusedFlag.id); if (again) again.focus(); }
+    }
+    if ($("compare-out").childElementCount) $("compare-run").click();
+  }
+  // Keep the sticky progress meter just under the sticky banner.
+  function syncBannerHeight() {
+    const b = document.querySelector(".banner");
+    const h = getComputedStyle(b).position === "sticky" ? b.offsetHeight : 0;
+    document.documentElement.style.setProperty("--banner-h", `${h + 8}px`);
+  }
+  window.addEventListener("resize", syncBannerHeight);
+  I18N.onChange(syncBannerHeight);
+  syncBannerHeight();
+  document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("click", () => I18N.setLang(b.dataset.lang)));
+  I18N.onChange(applyLanguage);
+  applyLanguage();
 
   restore();
 })();

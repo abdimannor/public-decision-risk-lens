@@ -45,6 +45,12 @@ What it does:
 
 What it does not do: it does not understand context, judge lawfulness or fairness, score people or make decisions. It will miss risks and flag ordinary language. The unit tests run with `node --test prototype/engine.test.js`; browser tests run with `npm install` and `npx playwright test`.
 
+### Reviewer tools in the prototype
+
+- **Your own rules.** A reviewer can add a term or phrase, pick a category and write a review question. The rule runs at once next to the built-in taxonomy. Its flags carry a "Reviewer-added" badge and a `reviewer-added/...` rule text in the JSON and Markdown logs and the printed report. Rules are saved in the browser and can be exported or imported as a JSON rule pack.
+- **Compare two versions.** Paste or load an earlier and a revised version. Flags are paired by rule and by shared words in the passage (at least half), and listed as appearing, disappearing or persisting. A flag that disappears may only mean the wording changed; a reviewer reads both passages.
+- **Why this flag?** Each flag opens an explanation: the exact rule, the matched words in context, the category description and guiding question, and the absence checks for the same category with their status.
+
 ## Data sources and AI methods
 
 A future prototype could use public Swedish and EU policy documents, official guidance, procurement documents, and published algorithmic-impact assessments. The quality, completeness, and institutional context of these documents would remain essential limitations.

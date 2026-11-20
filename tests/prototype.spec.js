@@ -83,3 +83,35 @@ test("keyboard: Tab reaches the decision radios", async ({ page }) => {
   await page.keyboard.press("ArrowRight");
   await expect(page.locator(".flag").first()).not.toHaveAttribute("data-decision", "");
 });
+
+async function makePdf(browser) {
+  const p = await browser.newPage();
+  await p.setContent(`<html><body style="font: 14px sans-serif">
+    <p>The municipality introduces a new service for housing support applications.</p>
+    <p>Applications are sorted by an algorithm supplied by a third-party supplier.</p>
+    <div style="page-break-before: always"></div>
+    <p>The system uses automated profiling of applicants to set priority.</p>
+  </body></html>`);
+  const pdf = await p.pdf({ format: "A4" });
+  await p.close();
+  return pdf;
+}
+
+test("PDF upload extracts text per page and keeps page numbers", async ({ page, browser }) => {
+  const pdf = await makePdf(browser);
+  await page.goto("/prototype/");
+  await page.locator("#file").setInputFiles({ name: "decision.pdf", mimeType: "application/pdf", buffer: pdf });
+  await expect(page.locator("#workspace")).toBeVisible();
+  await expect(page.locator(".passages li")).toHaveCount(3);
+  await expect(page.locator(".passages li").nth(2)).toHaveAttribute("data-page", "2");
+  await expect(page.locator(".passages li").nth(2)).toContainText("automated profiling");
+  await expect(page.locator(".flag .meta", { hasText: "page 2" }).first()).toBeVisible();
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByRole("button", { name: "Export JSON" }).click()
+  ]);
+  const log = JSON.parse(fs.readFileSync(await download.path(), "utf8"));
+  expect(log.source).toBe("decision.pdf");
+  expect(log.flags.some((f) => f.page === 2)).toBe(true);
+  expect(log.flags.every((f) => f.page === 1 || f.page === 2)).toBe(true);
+});

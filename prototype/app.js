@@ -12,13 +12,14 @@
   let result = null;
   let reviews = {}; // flag id -> { decision, note }
   let sourceName = "pasted text";
+  let pages = null; // [{ page, text }] when the document came from a PDF
   const STORE_KEY = "risk-lens-review-v1";
 
   // Saves the document, reviewer and decisions in this browser only (localStorage).
   function save() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({
-        text: $("doc").value, sourceName, reviewer: $("reviewer").value, reviews
+        text: $("doc").value, pages, sourceName, reviewer: $("reviewer").value, reviews
       }));
     } catch (e) { /* storage may be unavailable, e.g. private mode */ }
   }
@@ -29,6 +30,7 @@
     if (!saved || !saved.text) return;
     $("doc").value = saved.text;
     sourceName = saved.sourceName || "pasted text";
+    pages = Array.isArray(saved.pages) ? saved.pages : null;
     $("reviewer").value = saved.reviewer || "";
     analyse(saved.reviews || {});
   }
@@ -38,6 +40,7 @@
     result = null;
     reviews = {};
     sourceName = "pasted text";
+    pages = null;
     $("doc").value = "";
     $("reviewer").value = "";
     $("file").value = "";
@@ -74,6 +77,7 @@
     for (const p of result.passages) {
       const flags = result.flags.filter((f) => f.passageIndex === p.index);
       const li = el("li", { id: `passage-${p.index}`, value: String(p.index), tabindex: "-1" });
+      if (p.page) li.dataset.page = String(p.page);
       if (flags.length) li.classList.add("flagged");
       let pos = 0;
       for (const [s, e] of mergeRanges(flags.flatMap((f) => f.ranges))) {
@@ -127,7 +131,7 @@
     note.addEventListener("input", () => { review.note = note.value; save(); });
     wrap.append(
       el("div", { class: "meta" },
-        el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, `Passage ${f.passageIndex}`),
+        el("button", { type: "button", class: "linkbtn", onclick: () => goToPassage(f.passageIndex) }, passageLabel(f.passageIndex)),
         ` matched "${f.matchedTerm}"`),
       el("code", {}, f.rule),
       fs,
@@ -135,6 +139,15 @@
       note
     );
     return wrap;
+  }
+
+  function pageOf(index) {
+    return result.passages[index - 1]?.page || null;
+  }
+
+  function passageLabel(index) {
+    const page = pageOf(index);
+    return page ? `Passage ${index}, page ${page}` : `Passage ${index}`;
   }
 
   function renderFlags() {
@@ -167,7 +180,7 @@
       $("status").textContent = "Paste or load a document first.";
       return;
     }
-    result = Engine.analyse(text);
+    result = pages ? Engine.analysePages(pages) : Engine.analyse(text);
     reviews = savedReviews && typeof savedReviews === "object" && !(savedReviews instanceof Event) ? savedReviews : {};
     renderPassages();
     renderAbsences();
@@ -189,6 +202,7 @@
       flags: result.flags.map((f) => ({
         id: f.id,
         passageIndex: f.passageIndex,
+        page: pageOf(f.passageIndex),
         category: category[f.category],
         matchedTerm: f.matchedTerm,
         rule: f.rule,
@@ -208,7 +222,7 @@
       "## Flags", ""
     ];
     for (const f of log.flags) {
-      lines.push(`### Passage ${f.passageIndex}: ${f.category} ("${f.matchedTerm}")`, "",
+      lines.push(`### Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category} ("${f.matchedTerm}")`, "",
         `- Rule: \`${f.rule}\``, `- Decision: ${f.decision}`, `- Note: ${f.note || "(none)"}`, "",
         ...f.passage.split("\n").map((l) => `> ${l}`), "");
     }
@@ -239,14 +253,75 @@
     sourceName = window.RiskLensSample.title;
     analyse();
   });
-  $("doc").addEventListener("input", () => (sourceName = "pasted text"));
+  $("doc").addEventListener("input", () => { sourceName = "pasted text"; pages = null; });
   $("file").addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    $("doc").value = await file.text();
-    sourceName = file.name;
-    analyse();
+    const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+    try {
+      if (isPdf) {
+        $("status").textContent = `Reading ${file.name} in this browser...`;
+        pages = await readPdf(file);
+        $("doc").value = pages.map((p) => p.text).join("\n\n");
+        if (!$("doc").value.trim()) {
+          pages = null;
+          $("status").textContent = "No text layer was found in this PDF. Scanned PDFs need OCR first; this tool does not do OCR.";
+          return;
+        }
+      } else {
+        pages = null;
+        $("doc").value = await file.text();
+      }
+      sourceName = file.name;
+      analyse();
+    } catch (err) {
+      pages = null;
+      $("status").textContent = `Could not read ${file.name}: ${err.message || err}`;
+    }
   });
+
+  // PDF text extraction with the vendored pdf.js. Lines are rebuilt from the
+  // text items; a vertical gap larger than about one and a half lines starts a
+  // new paragraph, so passages stay close to the visible layout.
+  let pdfjsPromise = null;
+  function loadPdfjs() {
+    if (!pdfjsPromise) {
+      const base = new URL("vendor/pdfjs/", document.baseURI);
+      pdfjsPromise = import(new URL("pdf.min.mjs", base).href).then((lib) => {
+        lib.GlobalWorkerOptions.workerSrc = new URL("pdf.worker.min.mjs", base).href;
+        return lib;
+      });
+    }
+    return pdfjsPromise;
+  }
+
+  async function readPdf(file) {
+    const lib = await loadPdfjs();
+    const task = lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()), isEvalSupported: false });
+    const doc = await task.promise;
+    const out = [];
+    for (let n = 1; n <= doc.numPages; n++) {
+      const page = await doc.getPage(n);
+      const content = await page.getTextContent();
+      let text = "";
+      let lastY = null;
+      let lastH = 0;
+      for (const item of content.items) {
+        if (typeof item.str !== "string") continue;
+        const y = item.transform[5];
+        const h = item.height || lastH || 10;
+        if (lastY !== null && Math.abs(lastY - y) > h * 1.6 && !text.endsWith("\n\n")) text = text.replace(/\s*$/, "") + "\n\n";
+        else if (lastY !== null && Math.abs(lastY - y) > h * 0.5 && !/\s$/.test(text)) text += "\n";
+        text += item.str;
+        if (item.hasEOL && !/\s$/.test(text)) text += "\n";
+        lastY = y;
+        lastH = h;
+      }
+      out.push({ page: n, text: text.trim() });
+    }
+    await task.destroy();
+    return out;
+  }
   $("export-json").addEventListener("click", () => result && download(`review-log-${stamp()}.json`, "application/json", JSON.stringify(buildLog(), null, 2)));
   $("export-md").addEventListener("click", () => result && download(`review-log-${stamp()}.md`, "text/markdown", toMarkdown(buildLog())));
   restore();

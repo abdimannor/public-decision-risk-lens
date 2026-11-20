@@ -129,3 +129,21 @@ test("risk map counts flags per category and jumps to a passage", async ({ page 
   await expect(page.locator(`#passage-${index}`)).toHaveClass(/active/);
   await expect(page.locator(`#passage-${index}`)).toBeFocused();
 });
+
+test("print report renders decisions, notes and the advisory notice", async ({ page }) => {
+  await loadSample(page);
+  const first = page.locator(".flag").first();
+  await first.getByLabel("Reject").check();
+  await first.locator("textarea").fill("term used in another sense");
+  await page.evaluate(() => { window.print = () => {}; });
+  await page.getByRole("button", { name: "Print review report" }).click();
+  const report = page.locator("#report");
+  await expect(report).toBeHidden();
+  await page.emulateMedia({ media: "print" });
+  await expect(report).toBeVisible();
+  await expect(report).toContainText("Advisory discussion aid");
+  await expect(report).toContainText("Decision: reject");
+  await expect(report).toContainText("term used in another sense");
+  await expect(page.locator("#workspace")).toBeHidden();
+  if (process.env.REPORT_PDF) await page.pdf({ path: process.env.REPORT_PDF, format: "A4" });
+});

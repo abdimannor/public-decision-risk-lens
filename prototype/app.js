@@ -272,6 +272,42 @@
     return lines.join("\n") + "\n";
   }
 
+  // Printable report (A4). Built from the same log as the exports, so the
+  // printed document never says more than the review log does.
+  function buildReport() {
+    const log = buildLog();
+    const box = $("report");
+    box.replaceChildren();
+    const counts = TAXONOMY.map((c) => [c, log.flags.filter((f) => f.category === c.label).length]).filter(([, n]) => n);
+    const decided = log.flags.filter((f) => f.decision !== "not reviewed").length;
+    box.append(
+      el("header", { class: "r-head" },
+        el("p", { class: "r-kicker" }, "Public Decision Risk Lens prototype"),
+        el("h1", {}, "Review report"),
+        el("p", { class: "r-notice" }, el("strong", {}, "Advisory discussion aid. "), log.notice.replace(/^Advisory discussion aid\. /, ""), " It does not decide anything and does not assess people."),
+        el("dl", { class: "r-meta" },
+          el("dt", {}, "Source"), el("dd", {}, log.source),
+          el("dt", {}, "Reviewer"), el("dd", {}, log.reviewer || "not given"),
+          el("dt", {}, "Generated"), el("dd", {}, new Date(log.exportedAt).toLocaleString()),
+          el("dt", {}, "Reviewed"), el("dd", {}, `${decided} of ${log.flags.length} flags`))),
+      el("h2", {}, "Flags by category"),
+      el("ul", { class: "r-counts" }, ...counts.map(([c, n]) => el("li", { "data-cat": c.id }, el("span", { class: "sw" }), `${c.label}: ${n}`))));
+    if (!counts.length) box.append(el("p", {}, "No trigger terms were found. That does not mean the document is free of risk."));
+    box.append(el("h2", {}, "Flags and decisions"));
+    for (const f of log.flags) {
+      const cat = TAXONOMY.find((c) => c.label === f.category);
+      box.append(el("article", { class: "r-flag", "data-cat": cat ? cat.id : "" },
+        el("h3", {}, `Passage ${f.passageIndex}${f.page ? `, page ${f.page}` : ""}: ${f.category}`),
+        el("p", { class: "r-line" }, `Matched "${f.matchedTerm}". Decision: `, el("strong", {}, f.decision), f.note ? `. Note: ${f.note}` : ""),
+        el("blockquote", {}, f.passage),
+        el("p", { class: "r-rule" }, f.rule)));
+    }
+    box.append(el("h2", {}, "Not found in this text"));
+    if (!log.notFoundInThisText.length) box.append(el("p", {}, "(none)"));
+    else box.append(el("ul", {}, ...log.notFoundInThisText.map((x) => el("li", {}, el("strong", {}, x.label), ". ", x.question))));
+    box.append(el("p", { class: "r-foot" }, "Pattern matching can miss risks and produce false positives. Every flag needs a human reviewer. Building AI course project."));
+  }
+
   function download(name, type, content) {
     const url = URL.createObjectURL(new Blob([content], { type }));
     const a = el("a", { href: url, download: name });
@@ -363,6 +399,8 @@
     return out;
   }
   $("export-json").addEventListener("click", () => result && download(`review-log-${stamp()}.json`, "application/json", JSON.stringify(buildLog(), null, 2)));
+  $("print-report").addEventListener("click", () => { if (!result) return; buildReport(); window.print(); });
+  window.addEventListener("beforeprint", () => result && buildReport());
   $("export-md").addEventListener("click", () => result && download(`review-log-${stamp()}.md`, "text/markdown", toMarkdown(buildLog())));
   restore();
 })();

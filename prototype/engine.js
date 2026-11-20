@@ -49,6 +49,17 @@
     return passages.map((text, index) => ({ index: index + 1, text }));
   }
 
+  // A pattern only has to match the start of a word, so the raw match can stop
+  // inside a word ("prioritis" in "prioritising"). Extend the range to the end
+  // of that word (Unicode letters, marks and digits, so "överklag" covers
+  // "överklagas") so highlights and the reported term are whole words.
+  const WORD_CHAR = /[\p{L}\p{M}\p{N}]/u;
+  function extendToWordEnd(text, end) {
+    if (end === 0 || !WORD_CHAR.test(text[end - 1])) return end;
+    while (end < text.length && WORD_CHAR.test(text[end])) end++;
+    return end;
+  }
+
   // Return one flag per passage, category and matched term. Each flag keeps
   // the rule that fired and the character ranges, so it can be traced.
   function findFlags(passages, taxonomy = taxonomyApi.TAXONOMY) {
@@ -61,7 +72,7 @@
             const ranges = [];
             let m;
             while ((m = re.exec(passage.text)) !== null) {
-              ranges.push([m.index, m.index + m[0].length]);
+              ranges.push([m.index, extendToWordEnd(passage.text, m.index + m[0].length)]);
             }
             if (!ranges.length) continue;
             flags.push({
@@ -69,7 +80,7 @@
               passageIndex: passage.index,
               category: category.id,
               matchedTerm: passage.text.slice(ranges[0][0], ranges[0][1]),
-              rule: `${category.id}/${lang}: "${pattern}" (word start, any case)`,
+              rule: `${category.id}/${lang}: "${pattern}" (word start, highlighted to word end, any case)`,
               ranges
             });
           }
@@ -114,7 +125,7 @@
     return { passages, flags: findFlags(passages), absences: findAbsences(passages) };
   }
 
-  const api = { splitPassages, findFlags, findAbsences, analyse, analysePages, patternToRegExp };
+  const api = { extendToWordEnd, splitPassages, findFlags, findAbsences, analyse, analysePages, patternToRegExp };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.RiskLensEngine = api;
 })(typeof window !== "undefined" ? window : globalThis);

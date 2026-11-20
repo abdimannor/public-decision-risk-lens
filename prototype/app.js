@@ -607,7 +607,7 @@
       el("ul", { class: "p-cats" }, ...cats.map(({ c, n, d }) => el("li", { "data-cat": c.id, class: d === n ? "done" : "", title: t("catProgress", { cat: c.label, d, n }) },
         el("span", { class: "sw", "aria-hidden": "true" }), el("span", { class: "visually-hidden" }, t("catProgress", { cat: c.label, d, n })),
         el("span", { "aria-hidden": "true" }, `${c.label} ${d}/${n}`)))),
-      done === total && total ? el("p", { class: "p-all" }, t("allReviewed")) : null);
+      ...(done === total && total ? [el("p", { class: "p-all" }, t("allReviewed"))] : []));
   }
   function nextUnreviewed() {
     const list = flagNodes();

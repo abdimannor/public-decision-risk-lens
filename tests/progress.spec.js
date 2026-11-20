@@ -26,4 +26,5 @@ test("a flag without a reviewer question does not print the text null", async ({
   await page.goto("/prototype/");
   await page.getByRole("button", { name: "Load fictional sample" }).click();
   await expect(page.locator("#flag-groups .flag").first()).not.toContainText("null");
+  await expect(page.locator("#progress")).not.toContainText("null");
 });

@@ -242,3 +242,4 @@ kbd { display: inline-block; min-width: 1.8em; text-align: center; font: 600 .85
 .keys-btn { display: inline-flex; align-items: center; gap: .25rem; }
 #next-unreviewed[disabled] { opacity: .55; cursor: default; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#flag-groups .flag { scroll-margin-top: calc(var(--banner-h, 3rem) + 15rem); scroll-margin-bottom: 1rem; }

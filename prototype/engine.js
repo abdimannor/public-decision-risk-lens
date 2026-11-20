@@ -60,6 +60,15 @@
     return end;
   }
 
+  // Every [start, end] range where a pattern matches, extended to word end.
+  function matchRanges(text, pattern) {
+    const re = patternToRegExp(pattern);
+    const ranges = [];
+    let m;
+    while ((m = re.exec(text)) !== null) ranges.push([m.index, extendToWordEnd(text, m.index + m[0].length)]);
+    return ranges;
+  }
+
   // Return one flag per passage, category and matched term. Each flag keeps
   // the rule that fired and the character ranges, so it can be traced.
   function findFlags(passages, taxonomy = taxonomyApi.TAXONOMY, extraRules = []) {
@@ -69,12 +78,7 @@
       for (const category of taxonomy) {
         for (const lang of Object.keys(category.patterns)) {
           for (const pattern of category.patterns[lang]) {
-            const re = patternToRegExp(pattern);
-            const ranges = [];
-            let m;
-            while ((m = re.exec(passage.text)) !== null) {
-              ranges.push([m.index, extendToWordEnd(passage.text, m.index + m[0].length)]);
-            }
+            const ranges = matchRanges(passage.text, pattern);
             if (!ranges.length) continue;
             flags.push({
               id: `p${passage.index}-${category.id}-${lang}-${pattern}`.replace(/\s+/g, "_"),
@@ -90,12 +94,7 @@
       // Reviewer-defined rules run after the taxonomy and are marked as such
       // in the flag and its rule text, so a log never mixes them up.
       for (const r of rules) {
-        const re = patternToRegExp(r.term);
-        const ranges = [];
-        let m;
-        while ((m = re.exec(passage.text)) !== null) {
-          ranges.push([m.index, extendToWordEnd(passage.text, m.index + m[0].length)]);
-        }
+        const ranges = matchRanges(passage.text, r.term);
         if (!ranges.length) continue;
         flags.push({
           id: `p${passage.index}-${r.category}-reviewer-${r.term}`.replace(/\s+/g, "_"),

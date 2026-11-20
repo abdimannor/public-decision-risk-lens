@@ -9,108 +9,129 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a class="skip" href="#flags">Skip to flags</a>
-  <aside class="banner" aria-label="Advisory notice">
-    <strong>Advisory discussion aid.</strong>
+  <a class="skip" href="#flags" data-i18n="skip">Skip to flags</a>
+  <aside class="banner" aria-label="Advisory notice" data-i18n-attr="aria-label:bannerLabel"><p data-i18n-html="banner"><strong>Advisory discussion aid.</strong>
     This early prototype matches visible words and phrases. It can miss risks and it will produce false positives.
-    It does not decide anything and does not assess people. Every flag needs a human reviewer.
+    It does not decide anything and does not assess people. Every flag needs a human reviewer.</p>
+    <div class="lang" role="group" aria-label="Language" data-i18n-attr="aria-label:langLabel">
+      <button type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
+      <button type="button" data-lang="sv" lang="sv" aria-pressed="false">Svenska</button>
+    </div>
   </aside>
 
   <header class="top">
-    <h1>Public Decision Risk Lens <span class="tag">prototype</span></h1>
-    <p class="lede">Paste a public decision document or load a .txt or PDF file. PDF text is read in this browser and every passage keeps its page number. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
+    <h1>Public Decision Risk Lens <span class="tag" data-i18n="tag">prototype</span></h1>
+    <p class="lede" data-i18n="lede">Paste a public decision document or load a .txt or PDF file. PDF text is read in this browser and every passage keeps its page number. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
   </header>
 
   <main>
     <section class="input" aria-labelledby="input-h">
-      <h2 id="input-h">1. Document</h2>
-      <label for="doc">Document text</label>
-      <textarea id="doc" rows="10" spellcheck="false" placeholder="Paste text here"></textarea>
+      <h2 id="input-h" data-i18n="inputH">1. Document</h2>
+      <label for="doc" data-i18n="docLabel">Document text</label>
+      <textarea id="doc" rows="10" spellcheck="false" placeholder="Paste text here" data-i18n-attr="placeholder:docPlaceholder"></textarea>
       <div class="row">
-        <button id="analyse" type="button" class="primary">Analyse text</button>
-        <button id="load-sample" type="button">Load fictional sample</button>
-        <label class="file">Load .txt or .pdf <input id="file" type="file" accept=".txt,text/plain,.pdf,application/pdf"></label>
-        <button id="clear" type="button" class="danger" hidden>Clear review</button>
+        <button id="analyse" type="button" class="primary" data-i18n="analyse">Analyse text</button>
+        <button id="load-sample" type="button" data-i18n="loadSample">Load fictional sample</button>
+        <label class="file"><span data-i18n="loadFile">Load .txt or .pdf</span> <input id="file" type="file" accept=".txt,text/plain,.pdf,application/pdf"></label>
+        <button id="clear" type="button" class="danger" hidden data-i18n="clear">Clear review</button>
       </div>
-      <p class="hint">Your text, decisions and notes are saved in this browser only (local storage) so they survive a reload. Use Clear review to remove them.</p>
+      <p class="hint" data-i18n="storageHint">Your text, decisions and notes are saved in this browser only (local storage) so they survive a reload. Use Clear review to remove them.</p>
       <p id="status" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <section class="rules" id="rules" aria-labelledby="rules-h">
-      <h2 id="rules-h">Your own rules</h2>
-      <p class="hint">Add a word or phrase you want to watch for. Your rules run next to the built-in taxonomy, are marked <span class="badge">Reviewer-added</span> in flags, exports and the printed report, and are saved in this browser. Share them as a JSON rule pack.</p>
+      <h2 id="rules-h" data-i18n="rulesH">Your own rules</h2>
+      <p class="hint" data-i18n-html="rulesHint">Add a word or phrase you want to watch for. Your rules run next to the built-in taxonomy, are marked <span class="badge">Reviewer-added</span> in flags, exports and the printed report, and are saved in this browser. Share them as a JSON rule pack.</p>
       <form id="rule-form" class="rule-form">
-        <div class="field"><label for="rule-term">Term or phrase</label><input id="rule-term" type="text" required maxlength="120" autocomplete="off"></div>
-        <div class="field"><label for="rule-cat">Category</label><select id="rule-cat"></select></div>
-        <div class="field wide"><label for="rule-q">Review question (optional)</label><input id="rule-q" type="text" maxlength="400" autocomplete="off"></div>
-        <button type="submit" class="primary">Add rule</button>
+        <div class="field"><label for="rule-term" data-i18n="ruleTerm">Term or phrase</label><input id="rule-term" type="text" required maxlength="120" autocomplete="off"></div>
+        <div class="field"><label for="rule-cat" data-i18n="ruleCat">Category</label><select id="rule-cat"></select></div>
+        <div class="field wide"><label for="rule-q" data-i18n="ruleQ">Review question (optional)</label><input id="rule-q" type="text" maxlength="400" autocomplete="off"></div>
+        <button type="submit" class="primary" data-i18n="addRule">Add rule</button>
       </form>
       <ul id="rule-list" class="rule-list"></ul>
       <div class="row">
-        <button id="rules-export" type="button">Export rule pack</button>
-        <label class="file">Import rule pack <input id="rules-import" type="file" accept=".json,application/json"></label>
+        <button id="rules-export" type="button" data-i18n="rulesExport">Export rule pack</button>
+        <label class="file"><span data-i18n="rulesImport">Import rule pack</span> <input id="rules-import" type="file" accept=".json,application/json"></label>
       </div>
       <p id="rules-status" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <section class="riskmap-wrap" id="riskmap-section" aria-labelledby="rm-h" hidden>
-      <h2 id="rm-h">Risk map</h2>
-      <p class="hint">Where trigger terms appear across the document, by category. Each lit cell is a passage; select it to jump there. Counts are matches, not severity.</p>
+      <h2 id="rm-h" data-i18n="rmH">Risk map</h2>
+      <p class="hint" data-i18n="rmHint">Where trigger terms appear across the document, by category. Each lit cell is a passage; select it to jump there. Counts are matches, not severity.</p>
       <div id="riskmap" class="riskmap"></div>
     </section>
 
     <div class="workspace" hidden id="workspace">
       <section class="doc-view" aria-labelledby="doc-h">
-        <h2 id="doc-h">2. Passages</h2>
+        <h2 id="doc-h" data-i18n="passagesH">2. Passages</h2>
         <ol id="passages" class="passages"></ol>
       </section>
 
       <section class="flags" id="flags" aria-labelledby="flags-h" tabindex="-1">
-        <h2 id="flags-h">3. Review</h2>
+        <h2 id="flags-h" data-i18n="reviewH">3. Review</h2>
+        <div id="progress" class="progress" role="group" aria-label="Review progress" data-i18n-attr="aria-label:progressLabel"></div>
         <div class="field">
-          <label for="reviewer">Reviewer (role or initials, optional)</label>
+          <label for="reviewer" data-i18n="reviewerLabel">Reviewer (role or initials, optional)</label>
           <input id="reviewer" type="text" autocomplete="off">
         </div>
         <div id="absences"></div>
         <div id="flag-groups"></div>
         <div class="export">
-          <h3>Export review log</h3>
-          <p class="hint">The log records each rule that fired, the passage text and your decision. Nothing leaves this browser unless you save the file.</p>
+          <h3 data-i18n="exportH">Export review log</h3>
+          <p class="hint" data-i18n="exportHint">The log records each rule that fired, the passage text and your decision. Nothing leaves this browser unless you save the file.</p>
           <div class="row">
-            <button id="export-json" type="button">Export JSON</button>
-            <button id="export-md" type="button">Export Markdown</button>
-            <button id="print-report" type="button" class="primary">Print review report</button>
+            <button id="export-json" type="button" data-i18n="exportJson">Export JSON</button>
+            <button id="export-md" type="button" data-i18n="exportMd">Export Markdown</button>
+            <button id="print-report" type="button" class="primary" data-i18n="printReport">Print review report</button>
           </div>
         </div>
       </section>
     </div>
     <section class="compare" id="compare" aria-labelledby="cmp-h">
-      <h2 id="cmp-h">Compare two versions</h2>
-      <p class="hint">Paste or load an earlier version A and a revised version B. Flags are paired by rule and by how similar the passage wording is (shared words, at least half). The result shows which flags appear, disappear or persist. A flag that disappears may mean the wording changed, not that a concern was addressed: read both passages.</p>
+      <h2 id="cmp-h" data-i18n="cmpH">Compare two versions</h2>
+      <p class="hint" data-i18n="cmpHint">Paste or load an earlier version A and a revised version B. Flags are paired by rule and by how similar the passage wording is (shared words, at least half). The result shows which flags appear, disappear or persist. A flag that disappears may mean the wording changed, not that a concern was addressed: read both passages.</p>
       <div class="cmp-inputs">
         <div class="field">
-          <label for="ver-a">Version A (earlier)</label>
+          <label for="ver-a" data-i18n="verA">Version A (earlier)</label>
           <textarea id="ver-a" rows="6" spellcheck="false"></textarea>
-          <label class="file">Load .txt for A <input id="ver-a-file" type="file" accept=".txt,text/plain"></label>
+          <label class="file"><span data-i18n="verAFile">Load .txt for A</span> <input id="ver-a-file" type="file" accept=".txt,text/plain"></label>
         </div>
         <div class="field">
-          <label for="ver-b">Version B (revised)</label>
+          <label for="ver-b" data-i18n="verB">Version B (revised)</label>
           <textarea id="ver-b" rows="6" spellcheck="false"></textarea>
-          <label class="file">Load .txt for B <input id="ver-b-file" type="file" accept=".txt,text/plain"></label>
+          <label class="file"><span data-i18n="verBFile">Load .txt for B</span> <input id="ver-b-file" type="file" accept=".txt,text/plain"></label>
         </div>
       </div>
       <div class="row">
-        <button id="compare-run" type="button" class="primary">Compare versions</button>
-        <button id="compare-use-doc" type="button">Use current document as A</button>
+        <button id="compare-run" type="button" class="primary" data-i18n="compareRun">Compare versions</button>
+        <button id="compare-use-doc" type="button" data-i18n="compareUseDoc">Use current document as A</button>
       </div>
       <p id="compare-status" class="status" role="status" aria-live="polite"></p>
       <div id="compare-out" class="cmp-out"></div>
     </section>
   </main>
 
-  <section id="report" class="report" aria-label="Printable review report"></section>
+  <section id="report" class="report" aria-label="Printable review report" data-i18n-attr="aria-label:reportLabel"></section>
 
 
+  <dialog id="shortcuts" class="shortcuts" aria-labelledby="shortcuts-h">
+    <h2 id="shortcuts-h" data-i18n="shortcutsH">Keyboard shortcuts</h2>
+    <p class="hint" data-i18n="shortcutsHint">Shortcuts work when the focus is not in a text field.</p>
+    <dl class="keys">
+      <dt><kbd>j</kbd></dt><dd data-i18n="kNext">Next flag</dd>
+      <dt><kbd>k</kbd></dt><dd data-i18n="kPrev">Previous flag</dd>
+      <dt><kbd>a</kbd></dt><dd data-i18n="kAccept">Accept the current flag</dd>
+      <dt><kbd>r</kbd></dt><dd data-i18n="kReject">Reject the current flag</dd>
+      <dt><kbd>c</kbd></dt><dd data-i18n="kContext">Contextualise the current flag</dd>
+      <dt><kbd>n</kbd></dt><dd data-i18n="kNote">Write a note on the current flag</dd>
+      <dt><kbd>?</kbd></dt><dd data-i18n="kHelp">Open this sheet</dd>
+      <dt><kbd>Esc</kbd></dt><dd data-i18n="kEsc">Close this sheet, or leave a note field</dd>
+    </dl>
+    <form method="dialog"><button type="submit" class="primary" data-i18n="close">Close</button></form>
+  </dialog>
+
+  <script src="i18n.js"></script>
   <script src="taxonomy.js"></script>
   <script src="engine.js"></script>
   <script src="sample.js"></script>

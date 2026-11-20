@@ -207,3 +207,10 @@ button.primary:hover { background: var(--ink-mid); }
 @media print { .rules, .compare { display: none !important; } }
 .rule-form label { margin: 0; }
 .cmp-inputs .file { align-self: flex-start; }
+
+/* Language switch in the advisory banner */
+.banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; }
+.banner p { margin: 0; flex: 1 1 32rem; }
+.lang { display: inline-flex; border: 1px solid rgba(232, 238, 252, .45); border-radius: 999px; overflow: hidden; }
+.lang button { background: transparent; color: #e8eefc; border: 0; border-radius: 0; padding: .3rem .8rem; font: inherit; font-size: .85rem; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--signal); color: var(--ink-deep); font-weight: 700; }

@@ -205,3 +205,5 @@ button.primary:hover { background: var(--ink-mid); }
   .why dl { grid-template-columns: 1fr; }
 }
 @media print { .rules, .compare { display: none !important; } }
+.rule-form label { margin: 0; }
+.cmp-inputs .file { align-self: flex-start; }

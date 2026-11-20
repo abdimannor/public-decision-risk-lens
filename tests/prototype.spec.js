@@ -115,3 +115,17 @@ test("PDF upload extracts text per page and keeps page numbers", async ({ page, 
   expect(log.flags.some((f) => f.page === 2)).toBe(true);
   expect(log.flags.every((f) => f.page === 1 || f.page === 2)).toBe(true);
 });
+
+test("risk map counts flags per category and jumps to a passage", async ({ page }) => {
+  await loadSample(page);
+  await expect(page.locator("#riskmap-section")).toBeVisible();
+  const total = await page.locator(".flag").count();
+  const counts = await page.locator(".rm-key").evaluateAll((n) => n.map((k) => Number(k.dataset.count)));
+  expect(counts.reduce((a, b) => a + b, 0)).toBe(total);
+  const cell = page.locator(".rm-cell.on").last();
+  const label = await cell.getAttribute("aria-label");
+  const index = label.match(/Passage (\d+)/)[1];
+  await cell.click();
+  await expect(page.locator(`#passage-${index}`)).toHaveClass(/active/);
+  await expect(page.locator(`#passage-${index}`)).toBeFocused();
+});

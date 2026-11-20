@@ -45,6 +45,7 @@
     $("reviewer").value = "";
     $("file").value = "";
     $("workspace").hidden = true;
+    $("riskmap-section").hidden = true;
     $("clear").hidden = true;
     $("status").textContent = "Review cleared. Nothing is stored in this browser.";
   }
@@ -96,6 +97,43 @@
     li.classList.add("active");
     li.scrollIntoView({ block: "center" });
     li.focus({ preventScroll: true });
+  }
+
+  // Risk map: one column per passage, one row per category. Lit cells show
+  // where trigger terms cluster. It counts matches; it does not weigh them.
+  function renderRiskMap() {
+    const box = $("riskmap");
+    box.replaceChildren();
+    const n = result.passages.length;
+    const legend = el("ul", { class: "rm-legend" });
+    const grid = el("div", { class: "rm-grid", style: `--cols:${n}` });
+    for (const cat of TAXONOMY) {
+      const hits = new Set(result.flags.filter((f) => f.category === cat.id).map((f) => f.passageIndex));
+      const count = result.flags.filter((f) => f.category === cat.id).length;
+      legend.append(el("li", { class: "rm-key", "data-cat": cat.id, "data-count": String(count) },
+        el("span", { class: "sw", "aria-hidden": "true" }), cat.label, " ", el("b", {}, String(count))));
+      const row = el("div", { class: "rm-row", "data-cat": cat.id, role: "group", "aria-label": `${cat.label}: ${count} flags` });
+      row.append(el("span", { class: "rm-label" }, cat.label));
+      const cells = el("div", { class: "rm-cells" });
+      for (const p of result.passages) {
+        if (hits.has(p.index)) {
+          cells.append(el("button", {
+            type: "button", class: "rm-cell on", title: `${cat.label}: ${passageLabel(p.index)}`,
+            "aria-label": `${cat.label} in ${passageLabel(p.index)}`, onclick: () => goToPassage(p.index)
+          }));
+        } else cells.append(el("span", { class: "rm-cell", "aria-hidden": "true" }));
+      }
+      row.append(cells);
+      grid.append(row);
+    }
+    const pageTicks = el("div", { class: "rm-pages", "aria-hidden": "true" });
+    let lastPage = null;
+    for (const p of result.passages) {
+      pageTicks.append(el("span", { class: p.page && p.page !== lastPage ? "tick" : "" }, p.page && p.page !== lastPage ? `p${p.page}` : ""));
+      lastPage = p.page || lastPage;
+    }
+    if (lastPage) grid.append(el("div", { class: "rm-row" }, el("span", { class: "rm-label" }, "Page"), pageTicks));
+    box.append(legend, grid);
   }
 
   function renderAbsences() {
@@ -183,9 +221,11 @@
     result = pages ? Engine.analysePages(pages) : Engine.analyse(text);
     reviews = savedReviews && typeof savedReviews === "object" && !(savedReviews instanceof Event) ? savedReviews : {};
     renderPassages();
+    renderRiskMap();
     renderAbsences();
     renderFlags();
     $("workspace").hidden = false;
+    $("riskmap-section").hidden = false;
     $("clear").hidden = false;
     updateStatus();
     save();

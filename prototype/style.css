@@ -82,3 +82,29 @@ button.danger { border-color: var(--reject); color: var(--reject); }
 @media (max-width: 860px) {
   .banner { position: static; font-size: .9rem; }
 }
+
+/* Risk map */
+.riskmap { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1rem; overflow-x: auto; }
+.rm-legend { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem 1rem; padding: 0; margin: 0 0 .8rem; font-size: .9rem; }
+.rm-key { display: inline-flex; align-items: center; gap: .4rem; }
+.rm-key[data-count="0"] { opacity: .55; }
+.rm-key .sw { width: .8rem; height: .8rem; border-radius: 2px; background: var(--cat); }
+.rm-grid { display: grid; gap: 3px; min-width: max-content; }
+.rm-row { display: grid; grid-template-columns: 9.5rem 1fr; align-items: center; gap: .5rem; }
+.rm-label { font-size: .8rem; color: var(--muted); white-space: nowrap; }
+.rm-cells, .rm-pages { display: grid; grid-template-columns: repeat(var(--cols), minmax(10px, 1fr)); gap: 2px; }
+.rm-cell { height: 16px; border-radius: 2px; background: var(--cell-off); border: 0; padding: 0; margin: 0; }
+.rm-cell.on { background: var(--cat); cursor: pointer; }
+.rm-cell.on:hover { transform: scaleY(1.25); }
+.rm-pages span { font-size: .65rem; color: var(--muted); border-left: 1px solid transparent; }
+.rm-pages .tick { border-left-color: var(--muted); padding-left: 2px; }
+/* Signal colour per category (used by the risk map, flags and report) */
+:root { --cell-off: #e3e8f0; }
+[data-cat="transparency"] { --cat: #2f7df6; }
+[data-cat="accountability"] { --cat: #8b5cf6; }
+[data-cat="discrimination"] { --cat: #e5484d; }
+[data-cat="privacy"] { --cat: #0ea5a4; }
+[data-cat="contestability"] { --cat: #f59e0b; }
+[data-cat="human-oversight"] { --cat: #16a34a; }
+[data-cat="security"] { --cat: #db2777; }
+[data-cat="misuse"] { --cat: #ea580c; }

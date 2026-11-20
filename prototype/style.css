@@ -87,7 +87,7 @@ button.danger { border-color: var(--reject); color: var(--reject); }
 .riskmap { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1rem; overflow-x: auto; }
 .rm-legend { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem 1rem; padding: 0; margin: 0 0 .8rem; font-size: .9rem; }
 .rm-key { display: inline-flex; align-items: center; gap: .4rem; }
-.rm-key[data-count="0"] { opacity: .55; }
+.rm-key[data-count="0"] .sw { opacity: .4; }
 .rm-key .sw { width: .8rem; height: .8rem; border-radius: 2px; background: var(--cat); }
 .rm-grid { display: grid; gap: 3px; min-width: max-content; }
 .rm-row { display: grid; grid-template-columns: 9.5rem 1fr; align-items: center; gap: .5rem; }

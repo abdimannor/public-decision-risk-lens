@@ -370,6 +370,7 @@
           el("dt", {}, t("generated")), el("dd", {}, new Date(log.exportedAt).toLocaleString(I18N.lang === "sv" ? "sv-SE" : undefined)),
           el("dt", {}, t("reviewed")), el("dd", {}, t("reviewedOf", { d: decided, n: log.flags.length })))),
       ...(log.sourceDetails ? [el("h2", {}, t("srcMetaH")), metaList(log.sourceDetails), el("p", { class: "r-rule" }, log.sourceDetails.note)] : []),
+      el("section", { class: "r-summary" }, el("h2", {}, t("sumH")), ...summaryNodes("h3")),
       el("h2", {}, t("byCatH")),
       el("ul", { class: "r-counts" }, ...counts.map(([c, n]) => el("li", { "data-cat": c.id }, el("span", { class: "sw" }), `${c.label}: ${n}`))));
     if (!counts.length) box.append(el("p", {}, t("noFlags")));
@@ -628,7 +629,49 @@
 
   // Reviewer progress meter: sticky at the top of the review column. Counts
   // decisions, not risk; it says nothing about the document itself.
+  // Review summary: decisions, categories, reviewer-added rules that fired and
+  // absence checks. The same data feeds the card and the printed report.
+  function summaryData() {
+    const dec = (f) => (reviews[f.id] && DECISIONS.includes(reviews[f.id].decision) ? reviews[f.id].decision : "notReviewed");
+    const decisions = [...DECISIONS, "notReviewed"].map((d) => ({ d, n: result.flags.filter((f) => dec(f) === d).length }));
+    const cats = TAXONOMY.map(L).map((c) => {
+      const fs = result.flags.filter((f) => f.category === c.id);
+      return { c, n: fs.length, by: Object.fromEntries([...DECISIONS, "notReviewed"].map((d) => [d, fs.filter((f) => dec(f) === d).length])) };
+    }).filter((x) => x.n);
+    const used = [];
+    for (const f of result.flags.filter((x) => x.source === "reviewer")) {
+      const u = used.find((x) => x.term === f.matchedTerm.toLowerCase() && x.cat === f.category);
+      if (u) u.n++; else used.push({ term: f.matchedTerm.toLowerCase(), cat: f.category, n: 1 });
+    }
+    return { total: result.flags.length, decisions, cats, used, absences: result.absences.map(I18N.check) };
+  }
+  function summaryNodes(level) {
+    const s = summaryData();
+    const h = (txt) => el(level, {}, txt);
+    const decLabel = (d) => (d === "notReviewed" ? t("notReviewed") : t(d));
+    return [
+      h(t("sumDecH")),
+      el("ul", { class: "sum-dec" }, ...s.decisions.map(({ d, n }) => el("li", { "data-decision": d }, `${decLabel(d)}: ${n}`))),
+      h(t("sumCatH")),
+      s.cats.length ? el("table", { class: "sum-table" },
+        el("thead", {}, el("tr", {}, el("th", { scope: "col" }, t("category")), el("th", { scope: "col" }, t("sumTotal")), ...[...DECISIONS, "notReviewed"].map((d) => el("th", { scope: "col" }, decLabel(d))))),
+        el("tbody", {}, ...s.cats.map(({ c, n, by }) => el("tr", { "data-cat": c.id }, el("th", { scope: "row" }, c.label), el("td", {}, String(n)), ...[...DECISIONS, "notReviewed"].map((d) => el("td", {}, String(by[d]))))))) : el("p", {}, t("noFlags")),
+      h(t("sumRulesH")),
+      s.used.length ? el("ul", { class: "sum-rules" }, ...s.used.map((u) => el("li", {}, t("sumRuleLine", { term: u.term, cat: catLabel(u.cat), n: u.n })))) : el("p", {}, t("sumNoRules")),
+      h(t("notFoundH")),
+      s.absences.length ? el("ul", { class: "sum-abs" }, ...s.absences.map((a) => el("li", {}, a.label))) : el("p", {}, t("noneP"))
+    ];
+  }
+  function renderSummary() {
+    const box = $("summary");
+    if (!result) { box.hidden = true; box.replaceChildren(); return; }
+    box.hidden = false;
+    box.replaceChildren(el("h3", { id: "summary-h" }, t("sumH")), el("p", { class: "hint" }, t("sumHint")),
+      el("div", { class: "sum-body" }, ...summaryNodes("h4")));
+  }
+
   function renderProgress() {
+    renderSummary();
     const box = $("progress");
     if (!result) { box.replaceChildren(); return; }
     const total = result.flags.length;

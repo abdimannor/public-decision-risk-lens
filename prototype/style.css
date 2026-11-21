@@ -253,3 +253,16 @@ kbd { display: inline-block; min-width: 1.8em; text-align: center; font: 600 .85
 .meta-list dt { font-weight: 700; }
 .meta-list dd { margin: 0; overflow-wrap: anywhere; }
 @media (max-width: 600px) { .meta-list { grid-template-columns: 1fr; } .meta-list dd { margin-bottom: .3rem; } }
+
+/* Review summary card */
+.summary { border: 1px solid var(--muted); border-radius: 8px; padding: .6rem .9rem; margin: .8rem 0; }
+.summary h3 { margin: .2rem 0; }
+.summary h4 { margin: .7rem 0 .3rem; font-size: .95rem; }
+.sum-dec { display: flex; flex-wrap: wrap; gap: .3rem 1rem; list-style: none; padding: 0; margin: 0; }
+.sum-table { border-collapse: collapse; font-size: .9rem; width: 100%; }
+.sum-table th, .sum-table td { border-bottom: 1px solid var(--muted); padding: .2rem .4rem; text-align: left; }
+.sum-table td { text-align: right; }
+.summary ul { margin: 0; padding-left: 1.2rem; }
+.summary .sum-dec { padding-left: 0; }
+.r-summary .sum-table { font-size: 9pt; }
+.sum-body { overflow-x: auto; }

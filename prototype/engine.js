@@ -60,12 +60,48 @@
     return end;
   }
 
+  // Negation: "inte automatiserat", "aldrig profilering", "not automated".
+  // A match is skipped when a negating word stands right before it, or with
+  // at most one word in between. Only the words before the match count, so a
+  // later "not" in the sentence has no effect. Patterns that themselves start
+  // with a negation ("without human") or a hedge ("fully automated") are
+  // never skipped. ("utan" is not a negator here: "utan mänsklig granskning"
+  // describes a missing safeguard and stays flagged.)
+  // A hedge or limiter between the negator and the term keeps the flag:
+  // "inte alltid automatiserat", "inte helt automatiserat", "not fully
+  // automated", "no longer fully automated" all describe automation that
+  // still happens, so they must not be hidden. "no" followed by a number or
+  // a dot ("No. 5", "no 2016") is an abbreviation, not a negation.
+  // Negation only removes terms that describe a risky practice (automation,
+  // profiling, data sharing...). A negated SAFEGUARD is itself a warning
+  // sign ("there is no appeal", "no human review"), so contestability,
+  // accountability and the human-oversight safeguard terms are never skipped.
+  const SAFEGUARD_CATEGORIES = new Set(["contestability", "accountability", "human-oversight"]);
+  const RISK_TERM_IN_SAFEGUARD = /automat/i;
+  const HEDGE = "alltid|helt|bara|enbart|endast|längre|nödvändigtvis|always|only|just|fully|entirely|solely|longer|necessarily";
+  const NEGATION = new RegExp(
+    "(?:^|[^\\p{L}\\p{N}])(?:inte|ej|icke|aldrig|not|never|no)" +
+    "(?:\\s+(?!(?:" + HEDGE + ")(?![\\p{L}\\p{N}-]))(?![\\p{N}])[\\p{L}\\p{N}-]+)?\\s+$",
+    "iu"
+  );
+  const NEGATED_PATTERN = /^(?:without|utan|no|not|inte|ej)\b/i;
+  const HEDGED_PATTERN = new RegExp("^(?:" + HEDGE + ")(?![\\p{L}\\p{N}-])", "iu");
+  function isNegated(text, start, pattern, category) {
+    if (NEGATED_PATTERN.test(pattern) || HEDGED_PATTERN.test(pattern)) return false;
+    if (SAFEGUARD_CATEGORIES.has(category) && !RISK_TERM_IN_SAFEGUARD.test(pattern)) return false;
+    return NEGATION.test(text.slice(Math.max(0, start - 40), start));
+  }
+
   // Every [start, end] range where a pattern matches, extended to word end.
-  function matchRanges(text, pattern) {
+  // Negated occurrences are left out (see isNegated).
+  function matchRanges(text, pattern, category) {
     const re = patternToRegExp(pattern);
     const ranges = [];
     let m;
-    while ((m = re.exec(text)) !== null) ranges.push([m.index, extendToWordEnd(text, m.index + m[0].length)]);
+    while ((m = re.exec(text)) !== null) {
+      if (isNegated(text, m.index, pattern, category)) continue;
+      ranges.push([m.index, extendToWordEnd(text, m.index + m[0].length)]);
+    }
     return ranges;
   }
 
@@ -78,7 +114,7 @@
       for (const category of taxonomy) {
         for (const lang of Object.keys(category.patterns)) {
           for (const pattern of category.patterns[lang]) {
-            const ranges = matchRanges(passage.text, pattern);
+            const ranges = matchRanges(passage.text, pattern, category.id);
             if (!ranges.length) continue;
             flags.push({
               id: `p${passage.index}-${category.id}-${lang}-${pattern}`.replace(/\s+/g, "_"),
@@ -94,7 +130,7 @@
       // Reviewer-defined rules run after the taxonomy and are marked as such
       // in the flag and its rule text, so a log never mixes them up.
       for (const r of rules) {
-        const ranges = matchRanges(passage.text, r.term);
+        const ranges = matchRanges(passage.text, r.term, r.category);
         if (!ranges.length) continue;
         flags.push({
           id: `p${passage.index}-${r.category}-reviewer-${r.term}`.replace(/\s+/g, "_"),
@@ -257,7 +293,7 @@
   }
 
   const api = {
-    extendToWordEnd, splitPassages, findFlags, findAbsences, analyse, analysePages, patternToRegExp,
+    extendToWordEnd, isNegated, splitPassages, findFlags, findAbsences, analyse, analysePages, patternToRegExp,
     normaliseRules, parseRulePack, rulePack, similarity, compareVersions, explainFlag
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;

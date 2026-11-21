@@ -3,10 +3,12 @@
   "private": true,
   "license": "CC-BY-4.0",
   "scripts": {
-    "test": "node --test prototype/engine.test.js",
-    "test:e2e": "playwright test"
+    "test": "node --test prototype/engine.test.js prototype/fileimport.test.js prototype/eval/eval.test.mjs",
+    "test:e2e": "playwright test",
+    "eval": "node prototype/eval/evaluate.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.60.0"
+    "@playwright/test": "1.60.0",
+    "axe-core": "^4.14.1"
   }
 }

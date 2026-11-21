@@ -168,3 +168,44 @@ test("explainFlag gives rule, context, category and related absence checks", () 
   assert.ok(x.relatedAbsenceChecks.length >= 1);
   assert.equal(x.relatedAbsenceChecks[0].status, "not found in this text");
 });
+
+test("Swedish inflections of automatiserad are matched", () => {
+  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används.", "Ärendet automatiseras."]) {
+    const cats = findFlags(splitPassages(s)).map((f) => f.category);
+    assert.ok(cats.includes("transparency") && cats.includes("human-oversight"), s);
+  }
+});
+
+test("a negated term is not flagged, a later negation does not hide it", () => {
+  assert.ok(!findFlags(splitPassages("Beslutet fattas inte automatiserat.")).some((f) => f.category === "transparency"));
+  // "not fully automated" means partly automated: the hedge keeps the flag.
+  assert.ok(findFlags(splitPassages("The decision is not fully automated by any algorithm.")).some((f) => f.rule.includes('"fully automated"')));
+  assert.ok(findFlags(splitPassages("An algorithm is used, which is not ideal.")).some((f) => f.rule.includes('"algorithm"')));
+  assert.ok(findFlags(splitPassages("It runs without human review.")).some((f) => f.rule.includes('"without human"')));
+  // A negated safeguard is still a reason to look closer.
+  assert.ok(findFlags(splitPassages("There is no appeal.")).some((f) => f.category === "contestability"));
+  assert.ok(findFlags(splitPassages("Ingen handläggare granskar, beslutet kan inte överklagas.")).some((f) => f.category === "contestability"));
+});
+
+test("a hedge after the negation keeps the flag (partial automation is still automation)", () => {
+  const cats = (s) => findFlags(splitPassages(s)).map((f) => f.category);
+  const a = cats("Beslut fattas inte alltid automatiserat.");
+  assert.ok(a.includes("transparency") && a.includes("human-oversight"), a.join());
+  assert.ok(cats("Beslutet fattas inte helt automatiserat, men ofta.").length > 0);
+  assert.ok(cats("Decisions are no longer fully automated except in simple cases.").length > 0);
+});
+
+test("\"no\" before a number or a dot is an abbreviation, not a negation", () => {
+  assert.ok(findFlags(splitPassages("Regulation no 2016 algorithm")).some((f) => f.rule.includes('"algorithm"')));
+  assert.ok(findFlags(splitPassages("Regulation No. 5 algorithm")).some((f) => f.rule.includes('"algorithm"')));
+});
+
+test("negated safeguards stay flagged after the hedge fix", () => {
+  const has = (s, c) => findFlags(splitPassages(s)).some((f) => f.category === c);
+  assert.ok(has("There is no human review.", "human-oversight"));
+  assert.ok(has("Det sker utan mänsklig granskning.", "human-oversight"));
+  assert.ok(has("There is no appeal.", "contestability"));
+  assert.ok(has("Beslutet kan inte överklagas.", "contestability"));
+  // A plain negation still hides the risk term.
+  assert.ok(!has("Beslutet fattas inte automatiserat.", "transparency"));
+});

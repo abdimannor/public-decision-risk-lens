@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How well does it work? Public Decision Risk Lens</title>
+  <meta name="description" content="Measured precision and recall of the Risk Lens flags on a small hand-annotated gold set, with the method and its limits.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .eval { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; line-height: 1.55; }
+    .eval table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-variant-numeric: tabular-nums; }
+    .eval th, .eval td { padding: .35rem .5rem; border-bottom: 1px solid currentColor; text-align: right; }
+    .eval th[scope=row], .eval thead th:first-child { text-align: left; }
+    .eval tfoot { font-weight: 700; }
+    .eval section + section { margin-top: 3rem; padding-top: 2rem; border-top: 2px solid currentColor; }
+  </style>
+</head>
+<body>
+<main class="eval">
+  <p><a href="index.html">Back to the tool</a> · <a href="#sv" lang="sv">På svenska</a></p>
+
+  <section id="en" lang="en">
+    <h1>How well does it work?</h1>
+    <p>The tool flags passages with visible word patterns. To see how often those flags are right, every passage of the three built-in samples (Förvaltningslagen 28 to 33 §§, AI Act articles 14 and 86, and the fictional home-care decision; 54 passages in all) was read and labelled by hand: for each passage, which of the eight categories a reviewer would genuinely want to ask about. Then the engine ran on the same passages.</p>
+    <p><strong>Precision</strong>: of the flags the tool raised, how many were right. <strong>Recall</strong>: of the things that deserved a flag, how many the tool caught. A flag counts once per passage and category.</p>
+    <table>
+      <caption>Before and after the fixes from the error analysis (51 expected labels)</caption>
+      <thead><tr><th>Category</th><th>Labels</th><th>Precision before</th><th>Recall before</th><th>Precision after</th><th>Recall after</th></tr></thead>
+      <tbody><tr><th scope=row>transparency</th><td>13</td><td>55%</td><td>46%</td><td>71%</td><td>92%</td></tr><tr><th scope=row>accountability</th><td>9</td><td>100%</td><td>22%</td><td>100%</td><td>22%</td></tr><tr><th scope=row>discrimination</th><td>4</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr><tr><th scope=row>privacy</th><td>3</td><td>50%</td><td>33%</td><td>50%</td><td>33%</td></tr><tr><th scope=row>contestability</th><td>9</td><td>100%</td><td>89%</td><td>100%</td><td>89%</td></tr><tr><th scope=row>human-oversight</th><td>10</td><td>100%</td><td>30%</td><td>100%</td><td>70%</td></tr><tr><th scope=row>security</th><td>1</td><td>50%</td><td>100%</td><td>50%</td><td>100%</td></tr><tr><th scope=row>misuse</th><td>2</td><td>50%</td><td>50%</td><td>67%</td><td>100%</td></tr></tbody>
+      <tfoot><tr><th scope=row>All</th><td>51</td><td>76%</td><td>51%</td><td>82%</td><td>73%</td></tr></tfoot>
+    </table>
+    <h2>What was changed</h2>
+    <ul>
+      <li>Swedish inflection: the phrase patterns "automatiserat beslut" and "automatiserad behandling" missed "beslut ... fattas automatiserat". They were replaced by the stem "automatiser", which covers automatiserad, automatiserat, automatiserade and automatiseras.</li>
+      <li>Negation: "inte automatiserat" or "no profiling" is no longer flagged. A negated safeguard is still flagged, because "there is no appeal" is exactly what a reviewer must see. A hedge keeps the flag: "inte alltid automatiserat", "not fully automated" and "no longer fully automated" describe automation that still happens. "No." or "no" before a number is read as an abbreviation.</li>
+      <li>Missing core terms: "oversight" (human oversight), "misuse" and "missbruk" (misuse), and the notification words already used by the transparency absence check ("underrätt", "notif").</li>
+    </ul>
+    <h2>Limits, plainly</h2>
+    <ul>
+      <li>The gold set is small and was labelled by one annotator, an AI agent, so there is no agreement measure between people. The labels have not been checked by a lawyer.</li>
+      <li>The fixes were made after looking at the same passages, so the "after" numbers are optimistic. A fresh set of documents would give a fairer figure.</li>
+      <li>Some categories have only one to three labels: their percentages can swing on a single passage.</li>
+      <li>Known misses: accountability phrased as "who took the decision", and "natural persons" for human review. Known false alarms: "AI system" in every AI Act sentence, "monitor" used about operating a system, "rikets säkerhet" (national security) and "border control".</li>
+      <li>The negation rule can wrongly hide a real risk: a negator one word before a risk term hides it, so a sentence such as "inte automatiserat i första hand" or a double negation ("not without automated steps") can drop a flag that a reader would want. Hedges such as "alltid", "helt", "fully" and "longer" are handled; other limiting words may not be.</li>
+      <li>A high score would still not make a flag a finding. Every flag is a prompt for a person to read the passage.</li>
+    </ul>
+    <p>Reproduce: <code>npm run eval</code>. The gold set with a reason for every label is in <code>prototype/eval/gold.json</code>.</p>
+  </section>
+
+  <section id="sv" lang="sv">
+    <h2>Hur bra fungerar det?</h2>
+    <p>Verktyget flaggar stycken med synliga ordmönster. För att se hur ofta flaggorna stämmer lästes alla stycken i de tre inbyggda exemplen (förvaltningslagen 28 till 33 §§, AI-förordningen artikel 14 och 86 samt det påhittade hemtjänstbeslutet, 54 stycken totalt) och märktes för hand: vilka av de åtta kategorierna en granskare verkligen skulle vilja fråga om. Sedan kördes motorn på samma stycken.</p>
+    <p><strong>Precision</strong>: hur många av verktygets flaggor som var riktiga. <strong>Täckning</strong> (recall): hur många av de ställen som förtjänade en flagga som verktyget hittade.</p>
+    <table>
+      <caption>Före och efter rättningarna från felanalysen (51 förväntade etiketter)</caption>
+      <thead><tr><th>Kategori</th><th>Etiketter</th><th>Precision före</th><th>Täckning före</th><th>Precision efter</th><th>Täckning efter</th></tr></thead>
+      <tbody><tr><th scope=row>Transparens</th><td>13</td><td>55%</td><td>46%</td><td>71%</td><td>92%</td></tr><tr><th scope=row>Ansvar</th><td>9</td><td>100%</td><td>22%</td><td>100%</td><td>22%</td></tr><tr><th scope=row>Diskriminering</th><td>4</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr><tr><th scope=row>Integritet</th><td>3</td><td>50%</td><td>33%</td><td>50%</td><td>33%</td></tr><tr><th scope=row>Möjlighet att överklaga</th><td>9</td><td>100%</td><td>89%</td><td>100%</td><td>89%</td></tr><tr><th scope=row>Mänsklig kontroll</th><td>10</td><td>100%</td><td>30%</td><td>100%</td><td>70%</td></tr><tr><th scope=row>Säkerhet</th><td>1</td><td>50%</td><td>100%</td><td>50%</td><td>100%</td></tr><tr><th scope=row>Missbruk</th><td>2</td><td>50%</td><td>50%</td><td>67%</td><td>100%</td></tr></tbody>
+      <tfoot><tr><th scope=row>Alla</th><td>51</td><td>76%</td><td>51%</td><td>82%</td><td>73%</td></tr></tfoot>
+    </table>
+    <h3>Vad som ändrades</h3>
+    <ul>
+      <li>Böjning: "automatiserat beslut" missade "fattas automatiserat". Stammen "automatiser" täcker nu alla böjningsformer.</li>
+      <li>Negation: "inte automatiserat" flaggas inte längre. En nekad skyddsmekanism flaggas fortfarande, eftersom "kan inte överklagas" är just det en granskare behöver se. Ett förbehåll behåller flaggan: "inte alltid automatiserat", "inte helt automatiserat" och "not fully automated" beskriver automatisering som ändå sker. "No." eller "no" före en siffra läses som en förkortning.</li>
+      <li>Saknade kärnord: "oversight", "misuse", "missbruk" och underrättelseorden som redan fanns i frånvarokontrollen.</li>
+    </ul>
+    <h3>Begränsningar</h3>
+    <ul>
+      <li>Guldstandarden är liten och märktes av en enda annoterare, en AI-agent. Det finns inget mått på överensstämmelse mellan personer, och ingen jurist har granskat etiketterna.</li>
+      <li>Rättningarna gjordes efter att ha sett samma stycken, så siffrorna efter är optimistiska. En ny uppsättning dokument skulle ge en rättvisare siffra.</li>
+      <li>Vissa kategorier har bara en till tre etiketter, så procenten kan svänga på ett enda stycke.</li>
+      <li>Kända missar: ansvar uttryckt som "vem som har fattat beslutet", och "natural persons" för mänsklig granskning. Kända falsklarm: "AI system" i varje mening i AI-förordningen, "monitor" om att driva ett system, "rikets säkerhet" och "border control".</li>
+      <li>Negationsregeln kan felaktigt dölja en verklig risk: ett nekande ord upp till ett ord före en riskterm döljer den, så en mening som "inte automatiserat i första hand" eller en dubbel negation ("inte utan automatiska steg") kan tappa en flagga som läsaren skulle vilja se. Förbehåll som "alltid", "helt", "fully" och "longer" hanteras, men andra begränsande ord kanske inte gör det.</li>
+      <li>En flagga är aldrig ett avgörande, hur bra siffrorna än blir. Den är en uppmaning till en människa att läsa stycket.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

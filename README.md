@@ -113,7 +113,7 @@ Labels follow the [annotation guide](docs/annotation-guide.md): a definition per
 | Set (after the guide) | Labels | Precision | Recall |
 | --- | ---: | ---: | ---: |
 | Tuning, relabelled | 47 | 89% (74% with the previous engine) | 66% (68%) |
-| Held-out, development data | 57 | 70% (65%) | 82% (82%) |
+| Held-out, development data | 57 | 69% (65%) | 82% (82%) |
 | **Frozen test set, labels from before the guide** | 43 | **48%** (42%) | **70%** (72%) |
 
 Caveat: the frozen test set was labelled before the guide existed and its labels stay frozen, so it still counts some bare mentions as concerns. The gap between the development sets and the frozen set is partly that, partly patterns that still fire on words that do not carry the concern. The frozen set has now been scored twice; the next honest number needs a new blind test set labelled with the guide.

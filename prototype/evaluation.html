@@ -76,10 +76,10 @@
       <caption>After the annotation guide (precision / recall)</caption>
       <thead><tr><th>Set</th><th>Labels</th><th>Previous engine, previous labels</th><th>Previous engine, guide labels</th><th>New engine, guide labels</th></tr></thead>
       <tbody><tr><th scope=row>Tuning</th><td>47 (was 51)</td><td>84% / 71%</td><td>74% / 68%</td><td>89% / 66%</td></tr>
-      <tr><th scope=row>Held-out (development)</th><td>57</td><td>65% / 82%</td><td>65% / 82%</td><td>70% / 82%</td></tr>
+      <tr><th scope=row>Held-out (development)</th><td>57</td><td>65% / 82%</td><td>65% / 82%</td><td>69% / 82%</td></tr>
       <tr><th scope=row>Frozen test (labels from before the guide)</th><td>43</td><td>42% / 72%</td><td>42% / 72%</td><td>48% / 70%</td></tr></tbody>
     </table>
-    <p>On the frozen test set precision rose from 42% to 48% (ten fewer false alarms) and recall fell from 72% to 70% (one transparency label lost, where documentation of algorithms is discussed with a word form the new gate does not recognise; it was not fixed, because tuning on the frozen set is not allowed). The gap between the development sets (70% to 89% precision) and the frozen set (48%) is itself a finding: part of it is that the frozen labels were made before the guide, part is that the patterns still fire on words that do not carry the concern. The frozen set has now been seen twice, so a new blind test set labelled with the guide is needed for the next honest number.</p>
+    <p>On the frozen test set precision rose from 42% to 48% (ten fewer false alarms) and recall fell from 72% to 70% (one transparency label lost, where documentation of algorithms is discussed with a word form the new gate does not recognise; it was not fixed, because tuning on the frozen set is not allowed). The gap between the development sets (69% to 89% precision) and the frozen set (48%) is itself a finding: part of it is that the frozen labels were made before the guide, part is that the patterns still fire on words that do not carry the concern. The frozen set has now been seen twice, so a new blind test set labelled with the guide is needed for the next honest number.</p>
     <h2>What was changed</h2>
     <ul>
       <li>Swedish inflection: the phrase patterns "automatiserat beslut" and "automatiserad behandling" missed "beslut ... fattas automatiserat". They were replaced by the stem "automatiser", which covers automatiserad, automatiserat, automatiserade and automatiseras.</li>
@@ -146,7 +146,7 @@
       <caption>Efter annoteringsguiden (precision / täckning)</caption>
       <thead><tr><th>Mängd</th><th>Etiketter</th><th>Tidigare motor, tidigare etiketter</th><th>Tidigare motor, guidens etiketter</th><th>Ny motor, guidens etiketter</th></tr></thead>
       <tbody><tr><th scope=row>Justering</th><td>47 (var 51)</td><td>84 % / 71 %</td><td>74 % / 68 %</td><td>89 % / 66 %</td></tr>
-      <tr><th scope=row>Tidigare testmängd (utveckling)</th><td>57</td><td>65 % / 82 %</td><td>65 % / 82 %</td><td>70 % / 82 %</td></tr>
+      <tr><th scope=row>Tidigare testmängd (utveckling)</th><td>57</td><td>65 % / 82 %</td><td>65 % / 82 %</td><td>69 % / 82 %</td></tr>
       <tr><th scope=row>Fryst testmängd (etiketter från före guiden)</th><td>43</td><td>42 % / 72 %</td><td>42 % / 72 %</td><td>48 % / 70 %</td></tr></tbody>
     </table>
     <p>På den frysta testmängden steg precisionen från 42 % till 48 % (tio färre falsklarm) och täckningen sjönk från 72 % till 70 % (en transparensetikett förlorades). Glappet mellan utvecklingsmängderna och den frysta mängden är i sig ett resultat: delvis för att de frysta etiketterna gjordes före guiden, delvis för att mönstren fortfarande slår på ord som inte bär själva frågan. Den frysta mängden har nu setts två gånger, så nästa ärliga siffra kräver en ny blind testmängd märkt enligt guiden.</p>

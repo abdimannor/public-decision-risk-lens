@@ -1,0 +1,344 @@
+{
+  "format": "risk-lens-gold",
+  "version": 1,
+  "set": "test3",
+  "status": "frozen final test set; text only; to be labelled independently by three annotators against docs/annotation-guide.md",
+  "retrieved": "2026-11-21",
+  "annotator": "None yet. Labels are intentionally empty; three annotators will label independently.",
+  "method": "Frozen final test set from nine documents not used in gold.json, heldout.json or test2.json. Excerpts (120 to 350 words) were chosen by reading for substance (decision reasoning, safeguards, oversight, documentation, appeal, bias, data protection), plus about five passages that only describe or mention automation, AI or data without a real concern, so false alarms can be measured. Each excerpt is verbatim from the fetched document after whitespace normalisation (PDF text extracted with the vendored pdf.js; page breaks become single spaces, so running headers, page numbers, footnote numbers and text, and hyphenated line breaks such as 'handlägg- ning' can appear inside a passage; the Arbetsförmedlingen Rusta och matcha page was taken from the HTML with tags stripped, so list items run together). Nothing was removed inside an excerpt. The extractor did not label anything, did not read engine.js or the taxonomy term lists, did not run the engine and did not run evaluate.mjs. The Rusta och matcha web page is only about 330 words, so it yields 2 passages; HFD 2015 ref. 61 yields 4.",
+  "documents": {
+    "d1": {
+      "title": "HFD 2015 ref. 61 (direktåtkomst i socialförsäkringsbalken, LEFI Online)",
+      "issuer": "Högsta förvaltningsdomstolen",
+      "date": "2015",
+      "number": "HFD 2015 ref. 61",
+      "url": "https://www.domstol.se/globalassets/filer/domstol/hogstaforvaltningsdomstolen/2015/hfd-2015-ref.-61.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d2": {
+      "title": "Dom i mål M 2950-24 (anmälan om samråd för avverkning, automatgenererad GIS-analys)",
+      "issuer": "Svea hovrätt, Mark- och miljööverdomstolen",
+      "date": "2024-10-02",
+      "number": "M 2950-24",
+      "url": "https://www.domstol.se/globalassets/filer/domstol/markochmiljooverdomstolen/avgoranden/2024/m-2950-24-dom-2024-10-02.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d3": {
+      "title": "Arbetsförmedlingens nya modell för bedömning av arbetssökandes stödbehov",
+      "issuer": "Arbetsförmedlingen",
+      "date": "2023-09-05",
+      "number": "Analys 2023:11",
+      "url": "https://arbetsformedlingen.se/download/18.6546760718a1c207b931ed0/1694504706728/arbetsformedlingens-nya-bedomningsmodell.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d4": {
+      "title": "Så här gör vi vår bedömning om Rusta och matcha",
+      "issuer": "Arbetsförmedlingen",
+      "date": "",
+      "number": "",
+      "url": "https://arbetsformedlingen.se/om-webbplatsen/juridisk-information/sa-har-gor-vi-var-bedomning-om-rusta-och-matcha",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d5": {
+      "title": "Automatisering och AI i socialförsäkringen",
+      "issuer": "Inspektionen för socialförsäkringen (ISF)",
+      "date": "2026-01",
+      "number": "Rapport 2026:1",
+      "url": "https://isf.se/download/18.26d2d71919b2bcf428897df6/1769438520024/Rapport%202026-1%20Automatisering%20och%20AI%20i%20socialf%C3%B6rs%C3%A4kringen.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d6": {
+      "title": "Beslut efter tillsyn enligt dataskyddsförordningen – Barn- och utbildningsnämnden i Östersunds kommun",
+      "issuer": "Integritetsskyddsmyndigheten (IMY)",
+      "date": "2023-11-28",
+      "number": "IMY-2023-1647",
+      "url": "https://www.imy.se/globalassets/dokument/beslut/2023/beslut-om-tillsyn-barn-och-utbildningsforvaltningen-ostersunds-kommun.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d7": {
+      "title": "Awarding GCSE, AS, A level, advanced extension awards and extended project qualifications in summer 2020: interim report",
+      "issuer": "Ofqual",
+      "date": "2020-08-13",
+      "number": "",
+      "url": "https://assets.publishing.service.gov.uk/media/5f3571778fa8f5173f593d61/6656-1_Awarding_GCSE__AS__A_level__advanced_extension_awards_and_extended_project_qualifications_in_summer_2020_-_interim_report.pdf",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "Open Government Licence v3.0"
+    },
+    "d8": {
+      "title": "Ensuring statistical models command public confidence",
+      "issuer": "Office for Statistics Regulation",
+      "date": "2021-03",
+      "number": "",
+      "url": "https://osr.statisticsauthority.gov.uk/wp-content/uploads/sites/3/2021/03/Ensuring_statistical_models_command_public_confidence.pdf",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "Open Government Licence v3.0"
+    },
+    "d9": {
+      "title": "Artificial Intelligence and Public Standards",
+      "issuer": "Committee on Standards in Public Life",
+      "date": "2020-02-10",
+      "number": "",
+      "url": "https://assets.publishing.service.gov.uk/media/5e553b3486650c10ec300a0c/Web_Version_AI_and_Public_Standards.PDF",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "Open Government Licence v3.0"
+    }
+  },
+  "skipped": [],
+  "passages": [
+    {
+      "sample": "test3-HFD-2015-ref61",
+      "index": 1,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Datainspektionen beslutade den 1 april 2011 att förelägga Försäkringskassan att upphöra med att medge socialnämnderna åtkomst till uppgifterna ur socialförsäkringsdatabasen via LEFI Online till dess att Försäkringskassan försäkrat sig om att handläggare hos socialnämnderna bara kunde ta del av uppgifter om personer som var aktuella i ärenden hos nämnden. Som skäl för beslutet angavs bl.a. att socialnämndernas tillgång till uppgifterna genom LEFI Online innebär att nämnderna har direktåtkomst till socialförsäkringsdatabasen. Enligt 114 kap. 22 § socialförsäkringsbalken får en socialnämnd ha direktåtkomst först sedan Försäkringskassan har försäkrat sig om att handläggare hos socialnämnd bara kan ta del av uppgifter om personer som är aktuella i ärenden hos nämnden. Försäkringskassan har inte inhämtat någon försäkran från socialnämnderna i enlighet med 114 kap. 22 § socialförsäkringsbalken. Försäkringskassan överklagade Datainspektionens beslut hos förvaltningsrätten och yrkade att beslutet skulle upphävas. Kassan anförde bl.a. följande. Datainspektionens beslut förutsätter att LEFI Online är ett system som innebär direktåtkomst. LEFI Online är ett system som innebär att uppgifter lämnas ut på medium. Socialnämnderna ges inte direktåtkomst till uppgifter ur socialförsäkringsdatabasen. Försäkringskassan har full kontroll över vilka uppgifter som lämnas ut och det sker en automatiserad prövning i varje enskilt fall innan uppgifterna lämnas ut till kommunen.",
+      "labels": []
+    },
+    {
+      "sample": "test3-HFD-2015-ref61",
+      "index": 2,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Kammarrättens bedömning – För att det ska vara fråga om ett utlämnande på medium för automatiserad behandling krävs antingen att det är fråga om en s.k. batch-körning, som utgörs av ett automatiskt utlämnande efter en sökning och sammanställning där svaret lämnas med viss tidsfördröjning, eller att utlämnandet baseras på en reell prövning i det enskilda fallet. Med en reell prövning avses att den utlämnande myndigheten i varje enskilt fall gör en sekretessprövning av om uppgifter kan lämnas ut. – Kammarrätten konstaterar att det vid ett utlämnande av de i målet aktuella uppgifterna inte är fråga om en batch-körning som sker med en viss tidsfördröjning mellan mottagarens frågefil och Försäkringskassans svarsfil i LEFI Online. – Vad gäller frågan om en reell sekretessprövning görs vid utlämnande av uppgifterna, har Försäkringskassan anfört dels att det i praktiken fattas ett automatiserat förvaltningsbeslut i varje enskilt fall, dels att det sker en automatiserad prövning i varje enskilt fall. Av handlingarna i målet framgår emellertid att Försäkringskassan inte fattar något individuellt beslut, automatiserat eller inte, för varje enskild begäran. – Kammarrätten anser vid en sammantagen bedömning att de behörighets- och de sekretesskontroller som utförs i systemet LEFI Online av de fördefinierade uppgifterna inte kan anses tillräckliga för att det ska anses som att det sker ett utlämnande på medium för automatiserad behandling, utan att det elektroniska utlämnandet via LEFI Online sker genom direktåtkomst. – Det förhållandet att Försäkringskassan inte har förvissat sig om att handläggare hos socialnämnd bara kan ta del av uppgifter om personer som är aktuella i ärenden hos nämnden strider mot bestämmelsen i 114 kap. 22 § socialförsäkringsbalken. – Kammarrätten kommer, med beaktande av det anförda, till samma slutsats som förvaltningsrätten, dvs. att Datainspektionen har haft fog för sitt föreläggande. – Kammarrätten avslår överklagandet.",
+      "labels": []
+    },
+    {
+      "sample": "test3-HFD-2015-ref61",
+      "index": 3,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Högsta förvaltningsdomstolens bedömning Elektronisk överföring av uppgifter mellan myndigheter sker i form av direktåtkomst eller utlämnande på medium för automatiserad behandling. Någon legaldefinition av dessa begrepp finns inte. Bestämmelsen om att socialnämnden får ha direktåtkomst till uppgifter i socialförsäkringsdatabasen infördes ursprungligen i lagen (2003:763) om behandling av personuppgifter inom socialförsäkringens administration. Regleringen syftade till att öka det elektroniska informationsutbytet mellan vissa myndigheter bl.a. för att minska felaktiga utbetalningar från välfärdssystemen (prop. 2007/08:160 s. 39). Lagen upphävdes i samband med tillkomsten av socialförsäkringsbalken. Regler med motsvarande innehåll finns nu i 114 kap. socialförsäkringsbalken. Med direktåtkomst avses enligt förarbetena till lagen om behandling av personuppgifter inom socialförsäkringens administration att den som använder registret på egen hand kan söka i detta och få svar på frågor, dock utan att själv kunna bearbeta eller på annat sätt påverka innehållet, samt att uppgifter i registret på det beskrivna sättet lämnas ut utan att den ansvariga myndigheten i det enskilda fallet har kontroll över vilka uppgifter som lämnas ut (prop. 2002/03:135 s. 88).",
+      "labels": []
+    },
+    {
+      "sample": "test3-HFD-2015-ref61",
+      "index": 4,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Kammarrätten har ansett att de behörighets- och sekretesskontroller som utförs i systemet LEFI Online inte kan anses tillräckliga för att det ska anses ske ett utlämnande på medium för automatiserad behandling. Den prövning som kan krävas av Försäkringskassan vid ett utlämnande enligt SoL och förordningen om uppgiftsskyldighet i vissa fall enligt socialtjänstlagen (2001:453) är emellertid enbart av formell art – att den efterfrågade uppgiften omfattas av uppgiftsskyldigheten – och kan enligt Högsta förvaltningsdomstolens mening inte ligga till grund för att ange en skiljelinje mellan direktåtkomst och utlämnande på medium för automatiserad behandling. Något annat särskiljande drag som kännetecknar direktåtkomst måste användas för att bestämma innebörden i begreppet. De allmänna handlingar hos en myndighet som en annan myndighet genom direktåtkomst får tillgång till utgör allmänna handlingar även hos denna myndighet (prop. 2002/03:135 s. 90). Av 2 kap. 3 § andra stycket tryckfrihetsförordningen framgår att en upptagning anses förvarad hos myndighet, om upptagningen är tillgänglig för myndigheten med tekniskt hjälpmedel som myndigheten själv utnyttjar för överföring i sådan form att den kan läsas, avlyssnas eller på annat sätt uppfattas. Den avgränsning som på detta sätt görs av begreppet direktåtkomst genom tillämpning av tryckfrihetsförordningens bestämmelser om allmänna handlingars offentlighet kan användas även för att bestämma innehållet i detta begrepp i 114 kap. 22 § socialförsäkringsbalken. Det avgörande blir om upptagningen kan anses förvarad hos socialnämnderna i tryckfrihetsförordningens mening.",
+      "labels": []
+    },
+    {
+      "sample": "test3-MOD-M2950-24",
+      "index": 1,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "UTVECKLING AV TALAN I MARK- OCH MILJÖÖVERDOMSTOLEN Skogsstyrelsen har i huvudsak anfört följande. Skogsstyrelsen bestrider att det vid tid- punkten för föreningens överklagande förelåg ett förvaltningsbeslut. Om det förelåg ett förvaltningsbeslut var det i vart fall inte överklagbart. Protokollet från den automatge- nererade GIS-analysen visar endast resultatet av analysen och innebär inte att den an- mälda åtgärden får påbörjas innan sex veckor har passerat från det att anmälan gjorts. Det innebär inte heller något slutligt ställningstagande från Skogsstyrelsens sida att inte ingripa med stöd av 12 kap. 6 § miljöbalken. Det kan inte anses föreligga något beslut förrän sexveckorsfristen har löpt ut och anmälaren har rätt att påbörja den an- mälda åtgärden. Sveaskog Förvaltnings Aktiebolag har i allt väsentligt anfört detsamma som i mark- och miljödomstolen. Svenska Naturskyddsföreningen har anfört detsamma som i mark- och miljödomsto- len med i huvudsak följande tillägg. Det är endast de ärenden som handläggs manuellt Sid 3 SVEA HOVRÄTT DOM M 2950-24 Mark- och miljööverdomstolen av en tjänsteman som kan resultera i ett rättsligt bindande beslut om att anpassa eller förbjuda den planerade avverkningen av hänsyn till miljövärden eller fridlysta arter i skogen. Dessa får statusen ”bearbetat” i Skogsstyrelsens ärendehanteringssystem. Ett ärende som vid den automatiserade GIS-analysen inte väljs ut för manuell handlägg- ning får statusen ”handlagt”.",
+      "labels": []
+    },
+    {
+      "sample": "test3-MOD-M2950-24",
+      "index": 2,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "I ett ärende som inte handläggs manuellt kan Skogsstyrel - sen inte meddela förelägganden eller förbud för att säkerställa att förbuden i artskydds- förordningen (2007:845) eller kraven i 5 kap. 4 § miljöbalken efterlevs. Den automa- tiska granskningen, sedd tillsammans med kvittomailet och att ärendet fått statusen ” handlagt ” , måste anses utgöra ett beslut av Skogsstyrelsen att inte vidta ytterligare handläggningsåtgärder i ärendet. Beslutet har fattats efter det att den automatiska granskningen bedömt vilken miljöpåverkan de anmälda skogsbruksåtgärderna kan komma att få. Granskningen omfattar en bedömning av påverkan på fridlysta arter. Skogsstyrelsen har därigenom försökt fullgöra den bedömningsskyldighet som myn- digheten har enligt MÖD 2020:45. Föreningen instämmer mot denna bakgrund i mark- och miljödomstolens slutsats att Skogsstyrelsen i ärendet fattat ett beslut och inte endast underlåtit att fatta ett beslut.",
+      "labels": []
+    },
+    {
+      "sample": "test3-MOD-M2950-24",
+      "index": 3,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Av utredningen framgår att Svenska Naturskyddsföreningen överklagade tidigare än sex veckor efter det att Sveaskog Förvaltnings Aktiebolag lämnade in anmälan om av- verkning till Skogsstyrelsen. Vid tidpunkten för överklagandet hade Skogsstyrelsen varken beslutat att avverkning fick ske tidigare än sex veckor från anmälan eller med- delat att myndigheten inte skulle komma att vidta någon åtgärd med anledning av an- mälan. Den omständigheten att anmälan hade passerat den automatgenererade GIS- analysen och i systemet fått statusen ”handlagt” har inte medfört en rätt för Sveaskog Förvaltnings Aktiebolag att påbörja den anmälda avverkningen. Eftersom sexveckors- fristen fortfarande löpte hade Skogsstyrelsen alltjämt möjlighet att besluta om försik- tighetsåtgärder och förbud. Skogsstyrelsens handläggningsåtgärder i form av den automatgenererade GIS-analysen och mottagningsbekräftelsen, benämnd kvittomail, har således varken för sig eller till- sammans varit handlingsdirigerande för Sveaskog Förvaltnings Aktiebolag (jfr HFD 2020 ref. 12 och där hänvisade rättsfall). Skogsstyrelsen har därmed inte fattat ett förvaltningsbeslut. Den omständigheten att Skogsstyrelsen hade markerat ärendet som ”handlagt” i sitt ärende hanteringssystem saknar betydelse för bedömningen. Vidare kan Skogsstyrelsens handläggningsåtgärder inte heller anses vara av sådan karaktär att en överklagbarhet skulle kunna uppkomma eftersom de saknar en självständig rätts- följd (jfr HFD 2024 ref. 1). Svenska Naturskyddsföreningens möjlighet att ta till vara de intressen föreningen bevakar har således inte påverkats av handläggningsåtgär- derna. Mot denna bakgrund har det vid tidpunkten för Svenska Naturskyddsförening- ens överklagande inte funnits något överklagbart förvaltningsbeslut. Mark- och miljödomstolens dom ska därför upphävas och Svenska Naturskyddsföre- ningens överklagande till mark- och miljödomstolen avvisas.",
+      "labels": []
+    },
+    {
+      "sample": "test3-AF-Analys-2023:11",
+      "index": 1,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Arbetsförmedlingen använder sedan 2020 ett statistiskt bedömningsverktyg som stöd för handläggarna i bedömningen av vilka arbetssökande som ska anvisas till tjänsten Rusta och matcha. Verktyget består av två huvudsakliga delar: den första delen är en prediktionsmodell som bedömer framtida jobbchans. Detta kombineras med den andra delen: en nivåindelning som avgör vilka jobbchanser som leder till Rusta och matcha, och i så fall till vilket spår. Den arbetssökandes bedömda jobbchans faller inom en nivå som leder till en av följande rekommendationer: ”för nära arbetsmarknaden”, tre olika spår inom tjänsten med olika ersättningsnivå till fristående lev erantörer, samt ”för långt från arbetsmarknaden för Rusta och matcha”. 1 Olika granskningar (Arbetsförmedlingen 2022, Arbetsförmedlingen 2021b, IFAU 2021) pekade på att den första versionen av verktyget kunde förbättras på flera punkter, bland annat: • Den första versionen av verktyget (i bruk fram till april 2023) var anpassad för att bedöma nyinskrivna sökande, något som inte var optimalt sett till myndighetens behov av att även bedöma sökande med längre pågående inskrivningstider. Modellen överskattade jobbchansen för de med längre inskrivningstider, något som kompenserades för i efterhand med en regelbaserad lösning i spårindelningen till Rusta och matcha. ● Den första versionen av verktyget var svår att utvärdera på grund av den särskilda regelbaserade kompensationen för inskrivningstid i spårindelningen. ● Bedömd jobbchans var inte informativ om faktisk jobbchans: modellens prediktioner var inte kalibrerade mot verkliga genomsnittliga arbetsmarknadsutfall. ● Den första versionen av verktyget hade ingen rutin för att löpande kunna kontrollera hur modellen presterade. Med anledning av de förbättringsförslag som lyfts fram har myndigheten tagit fram en ny bedömningsmodell, vilken började användas i verksamheten i april 2023. I den nya modellen är de identifierade bristerna som beskrevs ovan åtgärdade.",
+      "labels": []
+    },
+    {
+      "sample": "test3-AF-Analys-2023:11",
+      "index": 2,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Syftet med denna rapport är att beskriva och utvärdera den nya bedömningsmodellen. Vi noterar att det befintliga förslaget till en ny EU-förordning, som ska reglera användning och utveckling av AI, innehåller flera punkter kring transparens, dokumentation, kvalitetssäkring och krav på att åtgärda identifierade brister ( EUR-Lex - 52021PC0206 - EN - EUR-Lex (europa.eu) ). Ambitionen med denna rapport är att 1 Se Rusta och matcha 2 - Arbetsförmedlingen (arbetsformedlingen.se) för mer information om tjänsten. Arbetsförmedlingens nya modell för bedömning av arbetssökandes stödbehov Inledning 10 vara transparenta kring modell, data och urvalshantering. Modellen som beskrivs i denna rapport har genomgått en utvärdering innan driftsättning, vilken redovisas i avsnitt 4 . 2 Utvärderingen följer en kvalitetsäkringsrutin som är tänkt att användas regelbundet, vid förändringar av olika slag. I nästa avsnitt beskrivs mer i detalj vad vi vill uppnå med den nya modellen. Modeller med liknande syften används på flera andra arbetsförmedlingar runt om i världen: en sammanställning finns i Desière med flera (2019). De kan rent tekniskt fungera på något skilda sätt även om mycket ofta är gemensamt, och är i de flesta fall i huvudsak inriktade på att bedöma risken för långtidsarbetslöshet bland nyinskrivna. Den typ av modell som vi har valt är en överlevnadsmodell som ligger nära den modell som beskrivs i Bennmarker med flera (2007), och ger möjligheten att ta hänsyn till insatser mellan startdatum och utfall.",
+      "labels": []
+    },
+    {
+      "sample": "test3-AF-Analys-2023:11",
+      "index": 3,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Modellens prestation har undersökts på ett antal olika sätt för att belysa hur väl modellen rangordnar sökande och i vilken mån de skattade sannolikheterna överensstämmer med utfallen, både för populationen som helhet och för ett antal grupper. Den gruppvisa analysen är gjord för att studera likabehandling och icke- diskriminering, vilket diskuteras i rapporten. Resultaten visar att modellen presterar väl jämfört med den tidigare modellen, och med andra liknande modeller från Sverige och andra länder. Ett perspektiv är hur modellen presterar i sin helhet om den betraktas som en modell för så kallad binär klassificering: en modell som delar in arbetssökande i två grupper: ”nära” respektive ”långt ifrån” arbetsmarknaden. Modellen är egentligen int e utformad för binär klassificering utan genererar mer detaljerade resultat, men genom att dela in de arbetssökande utifrån om deras jobbchans är under eller över ett visst tröskelvärde fås en sådan klassificering. Modellens klassificering kan sedan jämföras med faktiska utfall. Ett lättbegripligt och ofta förekommande mått är så kallad accuracy : andelen ”korrekta” klassificeringar: 76 procent för denna modell. Detta mått är mycket känsligt för den så kallade skevheten hos klassificeringsproblemet och är bland annat därför svårt att jämföra mot andra modeller, men när vi korrigerar för skevheten för att göra mer rättvisande jämförelser står sig modellen mycket väl mot andra modeller.",
+      "labels": []
+    },
+    {
+      "sample": "test3-AF-Analys-2023:11",
+      "index": 4,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Det är inte självklart vad som menas med att bedöma avståndet till arbetsmarknaden. Här håller vi oss till att skatta sannolikheten för att få ett positivt utfall (exempelvis ett arbete med en viss hållbarhet) under en viss tidsperiod. Detta sätt att bedöma framtida arbetsmarknadsutfall hos individen är intuitivt enkelt, men det finns också viktiga avvägningar att göra. En central fråga är huruvida den skattade sannolikheten ska inkludera påverkan av insatser. En sådan sannolikhet är mer rättfram att skatta, men svarar på en annan fråga än den vi i första hand önskar svar på. I första hand är vi intresserade av vilka förutsättningar de arbetssökande har opåverkade av insatser. Anledningen till detta är att vi vill undvika att sammanblanda de resurser som arbetssökande tilldelats historiskt med de förutsättningar den arbetssökande har själv. Därför försöker vi hantera detta med denna modell.",
+      "labels": []
+    },
+    {
+      "sample": "test3-AF-Rusta-och-matcha",
+      "index": 1,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Arbetsförmedlaren gör en samlad bedömning utifrån all information vi har om dig för att se vilket stöd som passar dig bäst. En komponent i bedömningen om du är lämplig för tjänsten Rusta och matcha är en rekommendation från vad Arbetsförmedlingen kallar det statistiska bedömningsstödet. Utfallet från det statistiska bedömningsstödet du bedöms stå för nära arbetsmarknaden för Rusta och matcha du bedöms som lämplig för Rusta och matcha. Resultatet innehåller också nivå av stöd hos tjänsteleverantören du bedöms behöva fördjupat stöd som Arbetsförmedlingen kommer att utreda vidare. Randomisering Det förekommer randomisering i det statistiska bedömningsstödet. Det innebär att utfallet av bedömningsstödet i vissa ärenden (ärenden som ligger på gränsen mellan olika rekommendationer) inte helt motsvarar hur långt en arbetssökande står från arbetsmarknaden. Randomisering används för att utvärdera tjänsten Rusta och matcha. Det är viktigt att tänka på att utfallet av det statistiska bedömningsstödet endast används som ett stöd för bedömning. Det är slutligen en arbetsförmedlare som avgör om det är motiverat att erbjuda Rusta och matcha.",
+      "labels": []
+    },
+    {
+      "sample": "test3-AF-Rusta-och-matcha",
+      "index": 2,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Att använda det statistiska bedömningsstödet innebär en automatisk behandling av uppgifter som Arbetsförmedlingen har om dig i våra system. Behandlingen kallas profilering och innebär i juridisk mening en automatisk behandling av personuppgifter som utförs för att bedöma dina förutsättningar till sysselsättning, utifrån hur det gått för andra med motsvarande egenskaper. Så behandlar vi dina personuppgifter De här uppgifterna använder vi i det statistiska bedömningsstödet: a-kassatillhörighet arbetsutbud (den tid som arbetssökande angivit att den kan arbeta) erfarenhet i sökta yrkesgrupper födelseland (information från Migrationverket) inskrivningstid interlokalt sökande kod för funktionsnedsättning som innebär minskad arbetsförmåga. kommuntillhörighet kön sökandekategori sökta yrkesgrupper (upp till 4 stycken) tidpunkt på året för inskrivning ubildning för sökta yrkesgrupper utbildningsinriktning utbildningsnivå ålder Mer information All personuppgiftshantering måste ha en rättslig grund i reglerna om personuppgifter. Arbetsförmedlingen gör profileringen med stöd av den rättsliga grunden ”allmänt intresse” och ”myndighetsutövning”. Ändamålet med behandlingen av personuppgifterna är handläggning av ärenden. Med profilering avses i juridisk mening automatisk behandling av personuppgifter som används för att bedöma vissa personliga egenskaper hos en fysisk person, i synnerhet för att analysera eller förutsäga exempelvis ekonomisk situation, preferenser, intressen, beteende eller vistelseort.",
+      "labels": []
+    },
+    {
+      "sample": "test3-ISF-2026:1",
+      "index": 1,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Den här rapporten redovisar Inspektionen för socialförsäkringens (ISF) granskning av digitaliseringens förutsättningar i socialför- säkringen. En stor del av digitaliseringsinsatserna inom social- försäkringen har varit att automatisera handläggningen av förmåner. Rapportens fokus är därför automatisering som har genomförts inom handläggningen av socialförsäkringsförmånerna. Digitalisering riskerar att misslyckas när kunskap brister om förutsättningarna för dess genomförande. Den här rapporten bidrar till att belysa de förutsättningar som finns inom socialförsäkringen. Rapporten identifierar förutsättningar som har varit viktiga för att kunna automatisera förmånshandläggningen på Försäkringskassan och Pensionsmyndigheten. Den visar också hur förutsättningarna ser ut för fortsatt automatisering. Vi ser att viktiga förutsättningar för fortsatt automatisering i Försäkringskassans och Pensionsmyndig- hetens förmånshandläggning i dag inte är uppfyllda. Vi bedömer att det finns visst utrymme för ytterligare automatisering av moment i förmånshandläggning, men att mer omfattande automatisering, framför allt av beslutsfattande, nu och framöver har begränsat utrymme. Vår granskning visar att en omfattande automatisering redan har genomförts inom flera stora förmåner i socialförsäkringen. Omfattande automatisering har sedan tidigt 2000-tal bland annat genomförts inom hanteringen av föräldrapenningförmånerna och av den allmänna pensionen. Men vi ser också att myndigheternas automatiseringsarbete under de senaste åren har bytt karaktär. Det handlar nu mer om att automatisera moment i handläggningen, och om att förvalta den automatisering och digitalisering som redan har genomförts.",
+      "labels": []
+    },
+    {
+      "sample": "test3-ISF-2026:1",
+      "index": 2,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Både riksdagen och regeringen styr mot att öka digitaliseringen i den offentliga förvaltningen och har antagit målet att Sverige ska bli ”bäst i världen på att ta tillvara digitaliseringens möjligheter”. Socialförsäk- ringsområdet är inget undantag. Vår granskning visar att det finns en risk att regeringens förväntningar på ökad digitalisering och automati- sering inte motsvaras av de förutsättningar som myndigheterna har. Viktiga förutsättningar för fortsatt automatisering är inte uppfyllda Vi drar slutsatsen att viktiga förutsättningar för fortsatt automatise- ring av förmånshandläggningen inte är uppfyllda, utifrån de historiska förutsättningar som var viktiga för att möjliggöra automatisering i Försäkringskassans och Pensionsmyndighetens förmånshandläggning och de förutsättningar som myndigheterna har i dag. De stora auto- matiseringsvinsterna som är möjliga utifrån de förutsättningar som råder på myndigheterna i dag har i hög grad redan uppnåtts. Åtminstone fem förutsättningar gjorde myndigheternas automatiseringar möjliga Våra resultat visar att åtminstone fem övergripande förutsättningar har varit viktiga för automatiseringen av de förmåner som hittills har genomförts på Försäkringskassan och Pensionsmyndigheten. – Regeringens styrning mot kostnadseffektivitet. – Myndigheterna förväntade sig att automatisering var en insats som skulle svara mot styrningen mot kostnadseffektivitet. Denna bedömning grundade sig i prognosen att kostnaden för automatiseringsinsatserna långsiktigt skulle understiga de summor som sparas genom minskade personalkostnader.",
+      "labels": []
+    },
+    {
+      "sample": "test3-ISF-2026:1",
+      "index": 3,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Det går att göra insatser för att digitalisera för att uppnå en rad olika syften, och syften som ibland är direkt motsägelsefulla. Därför är sådana projekt inte neutrala. 13 Tvärtom har de både förväntade och oväntade sociala och politiska effekter. För att vi ska kunna förstå och kunna hantera dessa behöver de undersökas närmare. 14 – Olika typer av lagstiftning syftar till att uppnå olika typer av mål. Hur lagstiftningen är utformad kan påverka vad som är möjligt att digitalisera. Men automatisering kan också ha följdverkningar för principer som rättssäkerheten. 15 Det skiljer sig dessutom mellan förmåner exakt vilka mål det är som lagstiftningen ska bidra till att nå och hur regelverken kring förmånerna är konstruerade. Forskningen har länge poängterat att digitala system inte bara för- ändrar organisationer, utan att de digitala systemen samtidigt måste anpassas till de specifika organisationer där digitaliseringen ska ske. 16 Därför är det viktigt att förstå hur organisationerna fungerar, både för att de digitala systemen ska kunna fylla den funktion som de är avsedda att fylla och för att minska risken för att systemen får oönskade konsekvenser. Denna rapport bidrar till att öka förståelsen för vilka förutsättningar som gäller för digital teknik inom just socialförsäkringens område. 1.2.2 Reglernas konstruktion sätter ramarna för möjligheten att automatisera Rättsreglernas konstruktion i de olika förmånerna inom social- försäkringen är mer eller mindre lämpliga för en automatiserad handläggning. ISF har tidigare konstaterat att tydliga regler är en förutsättning för att automatisering ska kunna bli rättssäker.",
+      "labels": []
+    },
+    {
+      "sample": "test3-ISF-2026:1",
+      "index": 4,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "I granskningen har vi använt flera metoder, huvudsakligen intervjuer och dokumentstudier samt en analys av rättsläget. Vi har använt dokumentstudier och intervjuer för att bilda oss en uppfattning om vilka automatiseringsinsatser som redan har genom- förts på myndigheterna. Vi har även använt intervju- och dokumentstudier för att beskriva den digitalisering, i första hand automatisering, som pågår just nu på myndigheterna, samt hur myndigheterna ser på gränserna för den fortsatta automatiseringen. Dokumenten är också viktiga utgångs- punkter för de intervjuer som vi har genomfört. Sammanlagt har vi genomfört 21 intervjuer. Intervjuerna genom- fördes mellan oktober 2024 och maj 2025. Den kortaste varade 45 minuter medan de flesta pågick under cirka 90 minuter. Personerna som vi har intervjuat har haft olika tjänster på myndigheterna. Vi har exempelvis intervjuat enhetschefer, it-strateger, it-arkitekter, domän- arkitekter, ekonomichefer, jurister, it-jurister, verksamhetsutvecklare och tjänstepersoner i ledningsstaber. Flera av intervjupersonerna har varit ansvariga för enskilda digitaliserings- och automatiserings- initiativ. De citat från intervjuerna som vi redovisar i rapporten är språkligt redigerade för att bli tydligare, och i viss mån nedkortade, men vi har inte ändrat innebörden i vad de intervjuade personerna har sagt. Försäkringskassan och Pensionsmyndigheten har faktagranskat våra resultatkapitel. När vi i resultatkapitlet skriver att Försäkrings- kassan i korrespondens med oss lämnat uppgifter hänvisar det till information som myndigheten lämnat i faktagranskningen. Vi vill påpeka att det är betydligt enklare med metoderna som vi har använt att fånga upp och beskriva de förutsättningar för automati- sering som råder i dag, jämfört med bakåt i tiden. Därför är våra beskrivningar av den automatisering som genomförts tidigare varken heltäckande eller uttömmande. Detta gäller framför allt i kapitel 2.",
+      "labels": []
+    },
+    {
+      "sample": "test3-IMY-2023-1647",
+      "index": 1,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "Integritetsskyddsmyndigheten konstaterar att Barn- och utbildningsnämnden i Östersunds kommun (nämnden) brustit i sin skyldighet enligt artikel 35.1 i dataskyddsförordningen 1 att genomföra en konsekvensbedömning innan tjänsten Google Workspace for Education (Google Workspace) började användas i 24 av kommunens skolor hösten 2020. Integritetsskyddsmyndigheten beslutar med stöd av 6 kap. 2 § dataskyddslagen 2 och artiklarna 58.2 och 83 i dataskyddsförordningen att Barn- och utbildningsnämnden i Östersunds kommun ska betala en administrativ sanktionsavgift på 300 000 (trehundratusen) kronor för överträdelsen av artikel 35.1 i dataskyddsförordningen. Redogörelse för tillsynsärendet Integritetsskyddsmyndigheten (IMY) har inlett tillsyn mot nämnden i syfte att granska om nämnden brustit i sin skyldighet enligt artikel 35.1 i dataskyddsförordningen att genomföra en konsekvensbedömning innan tjänsten Google Workspace började användas i 24 av kommunens skolor under hösten 2020. Nämnden har i yttrande till IMY den 1 mars 2023, som kompletterades den 23 mars 2023, i huvudsak uppgett följande. Under 2014 genomförde Regionförbundet i Jämtlands län en PUL-bedömning och riskanalys av Google Apps for Education, numera Google Workspace for Education. Sammanfattningsvis konstaterades att riskanalysen inte påvisade tillräckliga risker som kunde motivera att verksamheten skulle avstå från att använda molntjänsten. I maj 2020 fattade kommunen beslut om att migrera tjänsten till en egen domän och i juni 2020 startades tjänsten upp i kommunens egna IT-miljö.",
+      "labels": []
+    },
+    {
+      "sample": "test3-IMY-2023-1647",
+      "index": 2,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "Google Workspace har använts för undervisning och kommunikation. Personalen delar ut planering och uppgifter till elever och elever ges möjlighet att lämna in skoluppgifter. Under pandemin har även funktionen Meet använts i viss utsträckning för att möjliggöra fjärrundervisning. Tjänsten används även för kommunikation mellan pedagoger och elever i syfte att kunna ge återkopplingar rörande skoluppgifter om exempelvis något saknas, behöver utvecklas, kompletteras eller liknande. Inga summativa bedömningar eller betyg lämnas genom tjänsten. Tjänsten används även för kommunikation mellan elever gällande skoluppgifter. Viss kommunikation kan även bestå av mer generell information till elever rörande lektioner. Personuppgifter i form av förnamn, efternamn, e-postadress, klasstillhörighet och grupptillhörighet behandlas i tjänsten. I tjänsten behandlas uppgifter om 5 945 elever och 1 303 anställda. Ansvarig klasslärare kan bjuda in vårdnadshavare, som själv väljer om de vill acceptera eller neka inbjudan, till tjänsten för att ta del av klassuppgifter och veckosammanställningar.",
+      "labels": []
+    },
+    {
+      "sample": "test3-IMY-2023-1647",
+      "index": 3,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "IMY konstaterar att den i ärendet aktuella behandlingen är en sådan behandling som anges i det nämnda exemplet. Behandlingen utförs i skolverksamhet och rör ett stort antal registrerade som i huvudsak är barn. Barnen befinner sig i egenskap av elever i en utsatt position i förhållande till den personuppgiftsansvarige. Vidare har behandlingen avsett anställda som befinner sig i ett beroendeförhållande gentemot nämnden. Behandlingen har dessutom till viss del innefattat återkoppling på skoluppgifter vilket får anses utgöra en utvärdering av de registrerades prestationer. IMY bedömer att den aktuella behandlingen, med beaktande av dess art, omfattning, sammanhang och ändamål, sannolikt har inneburit en hög risk för de registrerades fri- och rättigheter. Nämnden hade således en skyldighet att genomföra en konsekvensbedömning innan behandlingen inleddes hösten 2020. Av utredningen framgår att nämnden inte utförde en konsekvensbedömning innan Google Workspace började användas i de aktuella skolorna hösten 2020 samt att arbetet med att genomföra en konsekvensbedömning ännu inte slutförts. IMY bedömer mot den bakgrunden att nämnden brustit i sin skyldighet enligt artikel 35.1 i dataskyddsförordningen att genomföra en konsekvensbedömning innan tjänsten Google Workspace började användas i 24 skolor i Östersunds kommun under hösten 2020.",
+      "labels": []
+    },
+    {
+      "sample": "test3-IMY-2023-1647",
+      "index": 4,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "Sanktionsavgift ska påföras IMY har bedömt att nämnden har brustit i sin skyldighet enligt artikel 35.1 i dataskyddsförordningen att genomföra en konsekvensbedömning innan tjänsten Google Workspace började användas. IMY konstaterar att behandlingen har innefattat 5 945 barn, vars personuppgifter är särskilt skyddsvärda samt att uppgifterna behandlas i ett sammanhang där barnen i egenskap av elever befinner sig i beroendeställning till den personuppgiftsansvarige. Vidare beaktar IMY att konsekvensbedömningen ännu inte slutförts trots att ca tre år har gått sedan behandlingen inleddes hösten 2020. IMY konstaterar vidare att underlåtelsen inneburit en förhållandevis hög grad av oaktsamhet eftersom det varit tydligt att behandlingen omfattades av kravet på konsekvensbedömning bland annat utifrån IMY:s förteckning enligt artikel 35.4. IMY bedömer därför att nämnden ska påföras en administrativ sanktionsavgift för överträdelsen.",
+      "labels": []
+    },
+    {
+      "sample": "test3-Ofqual-2020",
+      "index": 1,
+      "doc": "d7",
+      "lang": "en",
+      "text": "In April and May we worked with technical experts across the sector to test a range of different statistical standardisation models using data from previous years. In selecting the final model, we chose the one that most accurately predicted students’ grades in a way that did not systematically affect groups of students with particular protected characteristics. We also considered operational issues – how easy it was to implement the approaches consistently across all four exam boards – and transparency – how easy it was to explain to schools and colleges how the model worked. Our preferred model – known as the Direct Centre Performance model (DCP) – works by predicting the distribution of grades for each individual school or college. That prediction is based on the historical performance of the school or college in that subject taking into account any changes in the prior attainment of candidates entering this year compared to previous years. This was fine-tuned to take account of known issues such as centres with small cohorts of students, small-entry subjects, and tiered subjects. Decisions were also made on the number of years of historical data included in the model. The details of these decisions are set out in this report and are formalised in the regulations 4 we put in place for summer 2020. Where schools and colleges had a relatively small cohort for a subject – fewer than 15 students when looking across the current entry and the historical data – the standardisation model put more weight on the CAGs. Since small teaching groups are more common for AS and A level than for GCSE, and given that the CAGs tended to be optimistic, it means that the outcomes in some AS and A level subjects are much higher this year. However, there is no statistical model that can reliably predict grades for particularly small groups of students. We have therefore used the most reliable evidence available, which is the CAGs.",
+      "labels": []
+    },
+    {
+      "sample": "test3-Ofqual-2020",
+      "index": 2,
+      "doc": "d7",
+      "lang": "en",
+      "text": "Our initial analysis of the CAGs showed that they were, in general, optimistic (although not always) and the combined effect would be likely to lead to overall national results that were implausibly high. If we had awarded grades based on CAGs we would have seen overall results increase by far more than we have ever seen in a single year. At A level 3 , we would have seen the percentage of A* grades go up by 6 percentage points from 7.7% of grades in 2019 to 13.9% of grades this year, and the percentage of grades that were B and above increase by over 13 percentage points from 51.1% in 2019 to 65% this year. This optimism was not surprising. It is what is suggested in the research literature and data published every year by UCAS – schools and colleges tend to be optimistic when estimating the grades that students are likely to achieve. Our interviews with teachers, after CAGs had been submitted, confirmed this trend. Almost all the teachers we interviewed told us that they had generally predicted how the students would perform on a ‘good day’. Although they knew that every year some students underperform or have a bad day, this was not the basis of their judgements. This might be as expected, but the cumulative effect of this optimism, if reflected in the final results, would have undermined confidence in those results.",
+      "labels": []
+    },
+    {
+      "sample": "test3-Ofqual-2020",
+      "index": 3,
+      "doc": "d7",
+      "lang": "en",
+      "text": "It is also important to note that the evidence presented above was based on estimated grades generated as part of business as usual from a year unaffected by the issue that was being investigated. And, while summer 2020 results are not being used for the purposes of school accountability 20 , evidence suggests that estimated grades will tend towards over-estimation. This is merely human nature but is particularly likely to be the case given the prominent role that these estimates have in the awarding of grades this summer. 3.2 Equalities considerations It is also important to consider the implications of using teacher estimates from an equalities perspective. In April, we published a review of the literature 21 considering the nature and extent of any bias that might arise in CAGs this summer. 22 In summary, studies of potential bias in teacher assessment suggest that differences between teacher assessment and exam assessment results can sometimes be linked to student characteristics, including gender, age within year group, ethnicity, special educational needs, and having English as an additional language. However, such effects are not always seen, and when they are, they tend to be small and inconsistent across subjects.",
+      "labels": []
+    },
+    {
+      "sample": "test3-OSR-2021",
+      "index": 1,
+      "doc": "d8",
+      "lang": "en",
+      "text": "Throughout this report we have used the terms statistical model and algorithm when describing the various aspects of the models used to deliver grades. It should be noted, however, that terms such as statistical model, statistical algorithm, data-driven algorithms, machine learning, predictive analytics, automated decision making and artificial intelligence (AI), are frequently used interchangeably, often with different terms being used to describe the same process. We consider that the findings of this review apply to all these data-driven approaches to supporting decisions in the public sector whatever the context. Our approach: Lessons on building public confidence This review centres on the importance of public confidence in the use of statistical models and algorithms and looks in detail at what it takes to achieve public confidence. The primary audiences for this review are public sector organisations with an interest in the use of models to support the delivery of public policy, both in the field of education and more broadly. This includes statisticians and analysts; regulators; and policy makers who commission statistical models to support decisions.",
+      "labels": []
+    },
+    {
+      "sample": "test3-OSR-2021",
+      "index": 2,
+      "doc": "d8",
+      "lang": "en",
+      "text": "Overall, what is striking is that, while the approaches and models in the four countries had similarities and differences, all four failed to command public confidence. This demonstrates that there are key lessons to be learned for government and public bodies looking to develop statistical models to support decisions. These lessons apply to those that develop statistical models, policy makers who commission statistical models and the centre of government. Lessons for those developing statistical models Our review found that achieving public confidence is not just about delivering the key technical aspects of a model or the quality of the communication strategy. Rather, it arises through considering public confidence as part of an end-to-end process, from deciding to use a statistical model through to deploying it. We have identified that public confidence in statistical models is supported by the following three principles: • Be open and trustworthy – ensuring transparency about the aims of the model and the model itself (including limitations), being open to and acting on feedback and ensuring the use of the model is ethical and legal. • Be rigorous and ensure quality throughout – establishing clear governance and accountability, involving the full range of subject matter and technical experts when developing the model and ensuring the data and outputs of the model are fully quality assured. • Meet the need and provide public value – engaging with commissioners of the model throughout, fully considering whether a model is the right approach, testing acceptability of the model with all affected groups and being clear on the timing and grounds for appeal against decisions supported by the model.",
+      "labels": []
+    },
+    {
+      "sample": "test3-OSR-2021",
+      "index": 3,
+      "doc": "d8",
+      "lang": "en",
+      "text": "There are two main types of models in existence: models where the output is the decision, and models where the output informs human decision-making. In models where the output is the decision there is simply no final human judgement involved and whatever decision the model has made becomes the final decision. In models where the output informs human decision-making the model itself is there to spot things which humans might miss but is not trusted in and of itself to make the final decision: that is left to human experts. This human involvement is known as having a ‘human in the loop’. In both types of model there needs to be human involvement in the development of the model in selecting the data, setting the assumptions, coding the algorithm and in quality assurance. This can also be referred to as ‘human in the loop’. To avoid confusion we have used the terms ‘human verification’ and ‘human review’ in this report.",
+      "labels": []
+    },
+    {
+      "sample": "test3-CSPL-2020",
+      "index": 1,
+      "doc": "d9",
+      "lang": "en",
+      "text": "The public can only scrutinise and understand the decisions of government and public bodies if they have access to information about the evidence, assumptions and principles on which policy decisions have been made. Citizens should have access to information about government policies that affect their lives. “When decision systems are introduced into public contexts such as criminal justice, it is important they are subject to the scrutiny expected in a democratic society. Algorithmic systems have been criticised on this front, as when developed in secretive circumstances or outsourced to private entities, they can be construed as rulemaking not subject to appropriate procedural safeguards or societal oversight.” 17 Law Society Report, Algorithms in the Criminal Justice System Access to this information also facilitates fair and informed public debate. Democratic society cannot make meaningful decisions if the government and the wider public sector are not open about their processes, capabilities and functions. 17 The Law Society (2019), Algorithms in the Criminal Justice System. Available at: https://www.lawsociety.org.uk/support-services/research- trends/documents/algorithm-use-in-the-criminal-justice-system-report/ 18 Council of Europe (2018), Draft Recommendation of the Committee of Ministers to member States on human rights impacts of algorithmic systems’. Available at: https://rm.coe.int/draft-recommendation-on-human-rights-impacts-of-algorithmic-systems/16808ef256 The use of artificial intelligence in the public sector may also change the relationship between citizens and the state. Surveillance technologies like facial recognition could increase the power of the state and other actors to monitor citizens’ lives. Machine learning systems are also likely to shift the impetus of public service delivery from reaction and redress to prediction and prevention. These are not just questions of policy. These issues raise fundamental questions about democracy and human rights. The Committee considers that government openness about its use of AI is essential.",
+      "labels": []
+    },
+    {
+      "sample": "test3-CSPL-2020",
+      "index": 2,
+      "doc": "d9",
+      "lang": "en",
+      "text": "The Committee heard from some experts that ‘human-in-the-loop’ models are helpful for retaining a degree of human control over an automated decision-making system. In a ‘human-in-the loop’ system, a public official can intervene in the decision-making process of a machine. This means that AI works more or less autonomously, but that a human can observe how different variables are weighted and intervene where necessary. In these systems, humans are likely to be involved in the training process of the algorithm, continuously testing and tuning the data in order to achieve better results. Others rejected the concept of ‘human-in-the- loop’ as too AI-centric. Some contributors argued that these models portrayed AI as immutable, because they ask individuals to shoehorn human judgement into machine learning systems so that human responsibility is protected. This was seen as inverting a ‘human-centric’ approach. Contributors 23 N. R. Jennings, L. Moreau, D. Nicholson, S. Ramchurn, S. Roberts, T. Rodden and A. Rogers (2014) “On human-agent collectives” Communications of ACM 57 (12) 80-88 spoke instead of a more interactive partnership between human and machine, where the outcome of an automated decision is the equal product of human and AI involvement. 23 This was seen as useful for eradicating the potential flaws of both human and AI decision-making processes, and for enhancing the quality and accuracy of the decision as a whole.",
+      "labels": []
+    },
+    {
+      "sample": "test3-CSPL-2020",
+      "index": 3,
+      "doc": "d9",
+      "lang": "en",
+      "text": "Ultimately, AI systems are only as good as the data we put into them. ‘Bad’ data can contain implicit and explicit racial, gender or ideological biases. When this data is used to train machine learning algorithms, these biases find their way into the AI systems we design, which can result in discriminatory decisions. The Committee heard that machine learning systems could potentially discriminate on the basis of any variable it identifies when processing data. “Decision-making, algorithmic or otherwise, can of course also be biased against characteristics which may not be protected in law, but which may be considered unfair, such as socio-economic background. In addition, the use of algorithms increases the chances of discrimination against characteristics that are not obvious or visible. For example, an algorithm might be effective at identifying people who lack financial literacy and use this to set interest rates or repayment terms.” 31 Centre for Data Ethics and Innovation, Interim Report on Data Bias 2.5.2. How will data bias affect objectivity? The principle of objectivity requires government and public bodies to act and take decisions impartially, without discrimination or bias. Data bias therefore poses a direct risk to public standards. The introduction of automated machine learning systems in areas such as policing, immigration and healthcare risks inadvertently introducing or amplifying discrimination in sensitive policy areas. From a standards perspective, and in the eyes of the law, discrimination via algorithm is no less of an offence than discrimination by a public official.",
+      "labels": []
+    }
+  ]
+}

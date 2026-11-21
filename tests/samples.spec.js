@@ -59,7 +59,7 @@ test("review summary counts decisions, categories, reviewer rules and absences",
   await page.locator("#flag-groups .flag").first().getByRole("radio", { name: "Accept" }).check();
   await expect(sum.locator('[data-decision="accept"]')).toHaveText("Accept: 1");
   await expect(sum.locator('[data-decision="notReviewed"]')).toHaveText(`not reviewed: ${total - 1}`);
-  await expect(sum.locator(".sum-table tbody tr").first()).toBeVisible();
+  await expect(sum.locator(".sum-cats")).toContainText("1 accepted");
   await expect(sum.locator(".sum-rules")).toContainText('"framework agreement"');
   await expect(sum).toContainText("Not found in this text");
   await page.getByRole("button", { name: "Svenska" }).click();

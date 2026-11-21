@@ -2,7 +2,7 @@ const { test, expect } = require("@playwright/test");
 
 test("j/k move between flags, a/r/c decide, n opens the note, ? shows the sheet", async ({ page }) => {
   await page.goto("/prototype/");
-  await page.getByRole("button", { name: "Load fictional sample" }).click();
+  await page.getByRole("button", { name: "Load sample", exact: true }).click();
   const flags = page.locator("#flag-groups .flag");
   await page.locator("body").click({ position: { x: 5, y: 5 } });
   await page.keyboard.press("j");

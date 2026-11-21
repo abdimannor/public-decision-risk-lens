@@ -243,3 +243,13 @@ kbd { display: inline-block; min-width: 1.8em; text-align: center; font: 600 .85
 #next-unreviewed[disabled] { opacity: .55; cursor: default; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 #flag-groups .flag { scroll-margin-top: calc(var(--banner-h, 3rem) + 15rem); scroll-margin-bottom: 1rem; }
+
+/* Sample menu and source record */
+.sample-pick { display: inline-flex; align-items: center; gap: .4rem; }
+.sample-pick select { font: inherit; padding: .35rem .4rem; max-width: 100%; }
+.source-meta { border-left: 4px solid var(--muted); padding: .4rem .8rem; margin: .6rem 0; }
+.source-meta h3 { margin: .2rem 0 .4rem; font-size: 1rem; }
+.meta-list { display: grid; grid-template-columns: max-content 1fr; gap: .2rem .8rem; margin: 0; font-size: .92rem; }
+.meta-list dt { font-weight: 700; }
+.meta-list dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .meta-list { grid-template-columns: 1fr; } .meta-list dd { margin-bottom: .3rem; } }

@@ -31,12 +31,19 @@
       <textarea id="doc" rows="10" spellcheck="false" placeholder="Paste text here" data-i18n-attr="placeholder:docPlaceholder"></textarea>
       <div class="row">
         <button id="analyse" type="button" class="primary" data-i18n="analyse">Analyse text</button>
-        <button id="load-sample" type="button" data-i18n="loadSample">Load fictional sample</button>
+        <span class="sample-pick"><label for="sample-pick" data-i18n="samplePick">Sample</label>
+          <select id="sample-pick">
+            <option value="fictional" data-i18n="sampleFictional">Fictional example</option>
+            <option value="sv" data-i18n="sampleSv">Swedish real: Förvaltningslag 28-33 §§</option>
+            <option value="eu" data-i18n="sampleEu">EU real: AI Act Articles 14 and 86</option>
+          </select></span>
+        <button id="load-sample" type="button" data-i18n="loadSample">Load sample</button>
         <label class="file"><span data-i18n="loadFile">Load .txt or .pdf</span> <input id="file" type="file" accept=".txt,text/plain,.pdf,application/pdf"></label>
         <button id="clear" type="button" class="danger" hidden data-i18n="clear">Clear review</button>
       </div>
       <p class="hint" data-i18n="storageHint">Your text, decisions and notes are saved in this browser only (local storage) so they survive a reload. Use Clear review to remove them.</p>
       <p id="status" class="status" role="status" aria-live="polite"></p>
+      <div id="source-meta" class="source-meta" hidden></div>
     </section>
 
     <section class="rules" id="rules" aria-labelledby="rules-h">

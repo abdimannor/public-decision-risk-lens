@@ -105,6 +105,21 @@
     return ranges;
   }
 
+  // Context gates. Some terms only name a topic ("automated decision",
+  // "profiling", "GDPR") and say nothing about a risk on their own. A
+  // category can list such terms under gated.terms (one gate or a list of gates); they only raise a flag
+  // when one of gated.cues (a word that points at the actual concern, e.g.
+  // explanation for transparency, a protected ground for discrimination)
+  // appears in the same passage. Returns "" for ungated terms, the cue that
+  // was found for gated terms, or null when the gate stays closed.
+  function contextCue(text, category, pattern) {
+    const gates = [].concat(category.gated || []);
+    const gate = gates.find((g) => g.terms.includes(pattern));
+    if (!gate) return "";
+    for (const c of gate.cues) if (patternToRegExp(c).test(text)) return c;
+    return null;
+  }
+
   // Return one flag per passage, category and matched term. Each flag keeps
   // the rule that fired and the character ranges, so it can be traced.
   function findFlags(passages, taxonomy = taxonomyApi.TAXONOMY, extraRules = []) {
@@ -116,12 +131,15 @@
           for (const pattern of category.patterns[lang]) {
             const ranges = matchRanges(passage.text, pattern, category.id);
             if (!ranges.length) continue;
+            const cue = contextCue(passage.text, category, pattern);
+            if (cue === null) continue;
             flags.push({
               id: `p${passage.index}-${category.id}-${lang}-${pattern}`.replace(/\s+/g, "_"),
               passageIndex: passage.index,
               category: category.id,
               matchedTerm: passage.text.slice(ranges[0][0], ranges[0][1]),
-              rule: `${category.id}/${lang}: "${pattern}" (word start, highlighted to word end, any case)`,
+              rule: `${category.id}/${lang}: "${pattern}" (word start, highlighted to word end, any case)` +
+                (cue ? `, with context cue "${cue}" in the same passage` : ""),
               ranges
             });
           }

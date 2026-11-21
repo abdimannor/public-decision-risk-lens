@@ -9,7 +9,11 @@ import { evaluate, loadSet } from "./evaluate.mjs";
 // Recall went from 0.74 to 0.725 when förvaltningslag #13 got the
 // accountability label it shares with #11 and #12 (one more miss), not
 // because the engine got worse.
-const BASELINE = { recall: 0.72, precision: 0.82 };
+// Precision round (context gates, see taxonomy.js): measured recall 0.706
+// (36 of 51), precision 0.837. Recall fell from 0.725 by one label (the
+// AI Act #4 "AI system" mention no longer flags transparency without a cue);
+// tuning and held-out were both used as development data in that round.
+const BASELINE = { recall: 0.70, precision: 0.83 };
 
 test("overall recall on the gold set does not drop below the baseline", () => {
   const r = evaluate();
@@ -35,4 +39,25 @@ test("the held-out evaluation runs on all 30 passages", () => {
   assert.equal(r.passages, 30);
   assert.equal(r.overall.support, 57);
   assert.ok(r.overall.recall >= 0.6, `held-out recall ${r.overall.recall.toFixed(3)} < 0.6`);
+});
+
+// After the precision round the held-out set was used for development, so it
+// is no longer an independent test. Measured: precision 0.653 (47 of 72),
+// recall 0.825 (47 of 57). Floors guard the gain; the frozen test set is the
+// independent check.
+test("held-out (now development) precision and recall stay at the measured level", () => {
+  const r = evaluate(loadSet("heldout"));
+  assert.ok(r.overall.precision >= 0.65, `held-out precision ${r.overall.precision.toFixed(3)} < 0.65`);
+  assert.ok(r.overall.recall >= 0.80, `held-out recall ${r.overall.recall.toFixed(3)} < 0.80`);
+});
+
+// Frozen final test set (test2.json): labelled blind on a separate branch and
+// scored once after the precision round: precision 0.42 (31 of 73 flags),
+// recall 0.72 (31 of 43). It must never be used to tune the engine; this test
+// only guards against regressions, with floors just below the measured values.
+test("frozen test set: scores, and does not fall below its one-time measurement", () => {
+  const r = evaluate(loadSet("test2"));
+  assert.equal(r.passages, 26);
+  assert.ok(r.overall.precision >= 0.41, `precision ${r.overall.precision}`);
+  assert.ok(r.overall.recall >= 0.70, `recall ${r.overall.recall}`);
 });

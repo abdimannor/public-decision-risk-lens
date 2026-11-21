@@ -90,7 +90,7 @@ async function makePdf(browser) {
     <p>The municipality introduces a new service for housing support applications.</p>
     <p>Applications are sorted by an algorithm supplied by a third-party supplier.</p>
     <div style="page-break-before: always"></div>
-    <p>The system uses automated profiling of applicants to set priority.</p>
+    <p>The system uses automated profiling of applicants by age group to set priority.</p>
   </body></html>`);
   const pdf = await p.pdf({ format: "A4" });
   await p.close();

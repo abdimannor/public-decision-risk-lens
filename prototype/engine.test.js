@@ -28,7 +28,8 @@ test("flags English and Swedish terms with passage, category and rule", () => {
 });
 
 test("matches at word start only and ignores case", () => {
-  const flags = findFlags(splitPassages("PROFILING is used. Remodel the office."));
+  // Profiling needs a group or protected-ground cue since the precision round.
+  const flags = findFlags(splitPassages("PROFILING by ethnic group is used. Remodel the office."));
   assert.ok(flags.some((f) => f.matchedTerm === "PROFILING"));
   assert.ok(!flags.some((f) => f.rule.includes('"model"')), "'model' inside 'Remodel' must not match");
 });
@@ -68,7 +69,7 @@ test("analysePages keeps page numbers and runs passage numbers on", () => {
   const { analysePages } = require("./engine.js");
   const r = analysePages([
     { page: 1, text: "Intro paragraph.\n\nThe vendor runs an algorithm." },
-    { page: 2, text: "Automated profiling of applicants." }
+    { page: 2, text: "Automated profiling of applicants by age group." }
   ]);
   assert.deepEqual(r.passages.map((p) => [p.index, p.page]), [[1, 1], [2, 1], [3, 2]]);
   const onPage2 = r.flags.filter((f) => f.passageIndex === 3);
@@ -170,10 +171,17 @@ test("explainFlag gives rule, context, category and related absence checks", () 
 });
 
 test("Swedish inflections of automatiserad are matched", () => {
-  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används.", "Ärendet automatiseras."]) {
+  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används utan mänsklig granskning.", "Ärendet automatiseras och beslutet fattas utan handläggare."]) {
     const cats = findFlags(splitPassages(s)).map((f) => f.category);
     assert.ok(cats.includes("transparency") && cats.includes("human-oversight"), s);
   }
+});
+
+test("a bare mention of automation, profiling or GDPR is context, not a flag", () => {
+  const cats = findFlags(splitPassages("Ärendehanteringen automatiseras. The GDPR covers profiling.")).map((f) => f.category);
+  for (const c of ["transparency", "human-oversight", "discrimination", "privacy"]) assert.ok(!cats.includes(c), c);
+  const rule = findFlags(splitPassages("Profiling may disadvantage an ethnic group.")).find((f) => f.category === "discrimination").rule;
+  assert.match(rule, /context cue "ethnic"/);
 });
 
 test("a negated term is not flagged, a later negation does not hide it", () => {

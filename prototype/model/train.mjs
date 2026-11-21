@@ -17,7 +17,7 @@ const { TAXONOMY } = require(join(here, "..", "taxonomy.js"));
 export const CATS = TAXONOMY.map((c) => c.id);
 export const SETS = ["gold", "heldout", "test2", "test3"];
 
-export const CONFIG = { epochs: 150, lr: 2.0, l2: 1e-3, minDf: 2, innerFolds: 4, seed: 20261121 };
+export const CONFIG = { epochs: +(process.env.RL_EPOCHS || 150), lr: +(process.env.RL_LR || 2.0), l2: 1e-3, minDf: 2, innerFolds: 4, seed: 20261121 };
 
 // ---------- data ----------
 const GOLD_LANG = { "sv-forvaltningslag": "sv", "eu-ai-act": "en", "fictional-home-care": "en" };

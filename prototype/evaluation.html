@@ -96,6 +96,15 @@
       <tr><th scope=row>Earlier frozen set, relabelled</th><td>26</td><td>45</td><td>53%</td><td>73%</td><td>62%</td></tr></tbody>
     </table>
     <p>The new test set is now the number to quote: about half of the flags on unseen documents point at a real concern, and about two in three real concerns are flagged. The weakest categories are human oversight (precision 25%, recall 33%) and accountability (22% precision): the two court rulings and the ISF review talk about automated examination and responsibility in ways the patterns misread. These are tasks for the next round, which will need yet another unseen set.</p>
+    <h3>A second fresh test set</h3>
+    <p>To check that one test set was not a fluke, a second one was built the same way: 30 passages from eight further documents (JO's review of Domstolsverket's DiBa system and of Migrationsverket's handling of delay complaints, two decisions by the Irish Data Protection Commission on council surveillance, the Norwegian Data Protection Authority on AI and privacy, DIGG and Lantmäteriet on automation, the UK Public Accounts Committee on AI in government, and the European Data Protection Supervisor on explainable AI), labelled by three new independent annotators. Their agreement was lower, 0.84 pooled, and lowest for transparency (0.69): texts about explainability sit right on the guide's line between mentioning automation and raising a concern.</p>
+    <table>
+      <caption>Engine on two fresh test sets, each scored once</caption>
+      <thead><tr><th>Set</th><th>Documents</th><th>Labels</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+      <tbody><tr><th scope=row>test3</th><td>9</td><td>40</td><td>48%</td><td>63%</td><td>54%</td></tr>
+      <tr><th scope=row>test4</th><td>8</td><td>47</td><td>45%</td><td>57%</td><td>50%</td></tr></tbody>
+    </table>
+    <p>The two sets agree. On documents it has not seen, about half of the tool's flags point at a real concern, and it finds roughly three in five of the concerns a reviewer would want flagged. For an advisory tool whose flags a person reviews one by one, that is useful as a first pass and not good enough to rely on alone. A small learned model was tried next to the rules and did clearly worse on this little data (<a href="https://github.com/abdimannor/public-decision-risk-lens/blob/main/docs/model-experiment.md">the experiment</a>).</p>
 
     <h2>What was changed</h2>
     <ul>
@@ -183,6 +192,15 @@
       <tr><th scope=row>Tidigare fryst mängd, ommärkt</th><td>26</td><td>45</td><td>53 %</td><td>73 %</td><td>62 %</td></tr></tbody>
     </table>
     <p>Den nya testmängden är nu siffran som gäller: ungefär hälften av flaggorna på okända dokument pekar på en verklig fråga, och ungefär två av tre verkliga frågor flaggas. Svagast är mänsklig kontroll (precision 25 %, täckning 33 %) och ansvar (precision 22 %): de två domarna och ISF:s granskning talar om automatiserad prövning och ansvar på sätt som mönstren läser fel. Det är uppgifter för nästa runda, som då behöver ännu en okänd mängd.</p>
+    <h3>En andra ny testmängd</h3>
+    <p>För att pröva att en testmängd inte var en slump byggdes en till på samma sätt: 30 stycken ur åtta nya dokument (JO:s granskning av Domstolsverkets DiBa och av Migrationsverkets hantering av dröjsmålstalan, två beslut från irländska Data Protection Commission om kommunal övervakning, norska Datatilsynet om AI och integritet, DIGG och Lantmäteriet om automatisering, brittiska Public Accounts Committee om AI i staten och Europeiska datatillsynsmannen om förklarbar AI), märkta av tre nya oberoende annoterare. Överensstämmelsen var lägre, 0,84 sammantaget, och lägst för transparens (0,69): texter om förklarbarhet ligger precis på guidens gräns mellan att nämna automatisering och att väcka en fråga.</p>
+    <table>
+      <caption>Motorn på två nya testmängder, var och en mätt en gång</caption>
+      <thead><tr><th>Mängd</th><th>Dokument</th><th>Etiketter</th><th>Precision</th><th>Täckning</th><th>F1</th></tr></thead>
+      <tbody><tr><th scope=row>test3</th><td>9</td><td>40</td><td>48 %</td><td>63 %</td><td>54 %</td></tr>
+      <tr><th scope=row>test4</th><td>8</td><td>47</td><td>45 %</td><td>57 %</td><td>50 %</td></tr></tbody>
+    </table>
+    <p>De två mängderna stämmer överens. På dokument som verktyget inte har sett pekar ungefär hälften av flaggorna på en verklig fråga, och det hittar ungefär tre av fem frågor som en granskare skulle vilja se flaggade. För ett rådgivande verktyg där en människa går igenom varje flagga är det användbart som en första genomgång, men inte tillräckligt för att lita på ensamt. En liten inlärd modell prövades bredvid reglerna och var tydligt sämre på så lite data (<a href="https://github.com/abdimannor/public-decision-risk-lens/blob/main/docs/model-experiment.md">experimentet</a>).</p>
 
     <h3>Vad som ändrades</h3>
     <ul>

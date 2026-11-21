@@ -114,9 +114,18 @@ Labels follow the [annotation guide](docs/annotation-guide.md): a definition per
 | --- | ---: | ---: | ---: |
 | Tuning, relabelled | 47 | 89% (74% with the previous engine) | 66% (68%) |
 | Held-out, development data | 57 | 69% (65%) | 82% (82%) |
-| **Frozen test set, labels from before the guide** | 43 | **48%** (42%) | **70%** (72%) |
+| Frozen test set, labels from before the guide | 43 | 48% (42%) | 70% (72%) |
 
 Caveat: the frozen test set was labelled before the guide existed and its labels stay frozen, so it still counts some bare mentions as concerns. The gap between the development sets and the frozen set is partly that, partly patterns that still fire on words that do not carry the concern. The frozen set has now been scored twice; the next honest number needs a new blind test set labelled with the guide.
+
+**Three annotators and a fresh test set.** Three independent annotators (AI instances with different instructions, working only from the guide and the texts) labelled a new test set (`prototype/eval/test3.json`: 30 passages from nine further documents, among them two Swedish court rulings on automated decisions, Arbetsförmedlingen's profiling model and three UK reports on the 2020 grading algorithm and AI in public life) and relabelled the earlier frozen set; a label counts when two of three give it. Agreement: Fleiss' kappa 0.93 pooled, lowest for accountability (0.73); `npm run agreement` recomputes it from `prototype/eval/annotations/`. Shared-model annotators overstate agreement compared with people. Scored once against the majority:
+
+| Set | Passages | Labels | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| **New test set (the number to quote)** | 30 | 40 | **48%** | **63%** | **54%** |
+| Earlier frozen set, relabelled by three annotators | 26 | 45 | 53% | 73% | 62% |
+
+Human oversight and accountability are the weakest categories on the new set.
 
 Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
 

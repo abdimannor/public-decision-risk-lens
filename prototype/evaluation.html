@@ -80,6 +80,23 @@
       <tr><th scope=row>Frozen test (labels from before the guide)</th><td>43</td><td>42% / 72%</td><td>42% / 72%</td><td>48% / 70%</td></tr></tbody>
     </table>
     <p>On the frozen test set precision rose from 42% to 48% (ten fewer false alarms) and recall fell from 72% to 70% (one transparency label lost, where documentation of algorithms is discussed with a word form the new gate does not recognise; it was not fixed, because tuning on the frozen set is not allowed). The gap between the development sets (69% to 89% precision) and the frozen set (48%) is itself a finding: part of it is that the frozen labels were made before the guide, part is that the patterns still fire on words that do not carry the concern. The frozen set has now been seen twice, so a new blind test set labelled with the guide is needed for the next honest number.</p>
+    <h2>Three annotators and a fresh test: the current honest number</h2>
+    <p>Every earlier set was labelled by one annotator. To check whether the guide gives the same labels in other hands, three annotators labelled 56 passages independently: a new test set of 30 passages from nine further documents (two Swedish court rulings on automated decisions, Arbetsförmedlingen's own description of its profiling model and its public page about it, an ISF review of automation in social insurance, an IMY decision about a municipal school platform, and three UK reports on the 2020 exam-grading algorithm and on AI in public life), and the 26 passages of the earlier frozen set. They worked only from the guide, the category definitions and the texts, each in a different random order, without the engine, the old labels or each other's work. A label counts when two of three give it. The raw annotations are in <code>prototype/eval/annotations/</code>; <code>npm run agreement</code> recomputes the agreement.</p>
+    <table>
+      <caption>Agreement between three annotators (56 passages): Fleiss' kappa</caption>
+      <thead><tr><th>Category</th><th>Kappa</th><th>All three agree</th></tr></thead>
+      <tbody><tr><th scope=row>transparency</th><td>0.97</td><td>98%</td></tr><tr><th scope=row>accountability</th><td>0.73</td><td>95%</td></tr><tr><th scope=row>discrimination</th><td>0.95</td><td>96%</td></tr><tr><th scope=row>privacy</th><td>0.88</td><td>93%</td></tr><tr><th scope=row>contestability</th><td>1.00</td><td>100%</td></tr><tr><th scope=row>human-oversight</th><td>0.89</td><td>95%</td></tr><tr><th scope=row>security</th><td>1.00</td><td>100%</td></tr><tr><th scope=row>misuse</th><td>0.90</td><td>98%</td></tr></tbody>
+      <tfoot><tr><th scope=row>All, pooled</th><td>0.93</td><td></td></tr></tfoot>
+    </table>
+    <p>Read this agreement with care. All three annotators are instances of the same AI model with different instructions, so they share blind spots; three people would almost certainly agree less. What it does show is that the guide is precise enough to give the same answer when read again, and that accountability is the least settled category. On the earlier frozen set the majority differed from the single annotator in 16 of 208 judgements, mostly discrimination added and accountability removed.</p>
+    <table>
+      <caption>Engine scored against the majority labels (scored once)</caption>
+      <thead><tr><th>Set</th><th>Passages</th><th>Labels</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+      <tbody><tr><th scope=row>New test set, nine documents</th><td>30</td><td>40</td><td>48%</td><td>63%</td><td>54%</td></tr>
+      <tr><th scope=row>Earlier frozen set, relabelled</th><td>26</td><td>45</td><td>53%</td><td>73%</td><td>62%</td></tr></tbody>
+    </table>
+    <p>The new test set is now the number to quote: about half of the flags on unseen documents point at a real concern, and about two in three real concerns are flagged. The weakest categories are human oversight (precision 25%, recall 33%) and accountability (22% precision): the two court rulings and the ISF review talk about automated examination and responsibility in ways the patterns misread. These are tasks for the next round, which will need yet another unseen set.</p>
+
     <h2>What was changed</h2>
     <ul>
       <li>Swedish inflection: the phrase patterns "automatiserat beslut" and "automatiserad behandling" missed "beslut ... fattas automatiserat". They were replaced by the stem "automatiser", which covers automatiserad, automatiserat, automatiserade and automatiseras.</li>
@@ -150,6 +167,23 @@
       <tr><th scope=row>Fryst testmängd (etiketter från före guiden)</th><td>43</td><td>42 % / 72 %</td><td>42 % / 72 %</td><td>48 % / 70 %</td></tr></tbody>
     </table>
     <p>På den frysta testmängden steg precisionen från 42 % till 48 % (tio färre falsklarm) och täckningen sjönk från 72 % till 70 % (en transparensetikett förlorades). Glappet mellan utvecklingsmängderna och den frysta mängden är i sig ett resultat: delvis för att de frysta etiketterna gjordes före guiden, delvis för att mönstren fortfarande slår på ord som inte bär själva frågan. Den frysta mängden har nu setts två gånger, så nästa ärliga siffra kräver en ny blind testmängd märkt enligt guiden.</p>
+    <h3>Tre annoterare och en ny testmängd: den aktuella ärliga siffran</h3>
+    <p>Alla tidigare mängder märktes av en enda annoterare. För att pröva om guiden ger samma etiketter i andra händer märkte tre annoterare 56 stycken oberoende av varandra: en ny testmängd med 30 stycken ur nio nya dokument (två svenska domar om automatiserade beslut, Arbetsförmedlingens egen beskrivning av sin profileringsmodell och dess sida om den, en granskning från ISF av automatisering i socialförsäkringen, ett beslut från IMY om en kommunal skolplattform och tre brittiska rapporter om betygsalgoritmen 2020 och AI i offentlig verksamhet) och de 26 styckena i den tidigare frysta mängden. De arbetade bara utifrån guiden, kategoriernas definitioner och texterna, var och en i sin egen slumpade ordning, utan motorn, de gamla etiketterna eller varandras arbete. En etikett gäller när två av tre sätter den. Råfilerna finns i <code>prototype/eval/annotations/</code>; <code>npm run agreement</code> räknar om överensstämmelsen.</p>
+    <table>
+      <caption>Överensstämmelse mellan tre annoterare (56 stycken): Fleiss kappa</caption>
+      <thead><tr><th>Kategori</th><th>Kappa</th><th>Alla tre eniga</th></tr></thead>
+      <tbody><tr><th scope=row>Transparens</th><td>0,97</td><td>98 %</td></tr><tr><th scope=row>Ansvar</th><td>0,73</td><td>95 %</td></tr><tr><th scope=row>Diskriminering</th><td>0,95</td><td>96 %</td></tr><tr><th scope=row>Integritet</th><td>0,88</td><td>93 %</td></tr><tr><th scope=row>Möjlighet att överklaga</th><td>1,00</td><td>100 %</td></tr><tr><th scope=row>Mänsklig kontroll</th><td>0,89</td><td>95 %</td></tr><tr><th scope=row>Säkerhet</th><td>1,00</td><td>100 %</td></tr><tr><th scope=row>Missbruk</th><td>0,90</td><td>98 %</td></tr></tbody>
+      <tfoot><tr><th scope=row>Alla, sammantaget</th><td>0,93</td><td></td></tr></tfoot>
+    </table>
+    <p>Läs siffran med försiktighet. Alla tre annoterare är samma AI-modell med olika instruktioner och delar därför blinda fläckar; tre människor skulle nästan säkert vara mindre eniga. Det som syns är att guiden är tillräckligt precis för att ge samma svar vid omläsning, och att ansvar är den minst avgjorda kategorin. På den tidigare frysta mängden skilde sig majoriteten från den ensamma annoteraren i 16 av 208 bedömningar, främst fler diskrimineringsetiketter och färre ansvarsetiketter.</p>
+    <table>
+      <caption>Motorn mätt mot majoritetsetiketterna (en gång)</caption>
+      <thead><tr><th>Mängd</th><th>Stycken</th><th>Etiketter</th><th>Precision</th><th>Täckning</th><th>F1</th></tr></thead>
+      <tbody><tr><th scope=row>Ny testmängd, nio dokument</th><td>30</td><td>40</td><td>48 %</td><td>63 %</td><td>54 %</td></tr>
+      <tr><th scope=row>Tidigare fryst mängd, ommärkt</th><td>26</td><td>45</td><td>53 %</td><td>73 %</td><td>62 %</td></tr></tbody>
+    </table>
+    <p>Den nya testmängden är nu siffran som gäller: ungefär hälften av flaggorna på okända dokument pekar på en verklig fråga, och ungefär två av tre verkliga frågor flaggas. Svagast är mänsklig kontroll (precision 25 %, täckning 33 %) och ansvar (precision 22 %): de två domarna och ISF:s granskning talar om automatiserad prövning och ansvar på sätt som mönstren läser fel. Det är uppgifter för nästa runda, som då behöver ännu en okänd mängd.</p>
+
     <h3>Vad som ändrades</h3>
     <ul>
       <li>Böjning: "automatiserat beslut" missade "fattas automatiserat". Stammen "automatiser" täcker nu alla böjningsformer.</li>

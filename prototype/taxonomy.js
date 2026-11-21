@@ -42,9 +42,26 @@
       description: "Who is responsible for the tool, its outputs and its errors.",
       question: "Is it clear which named role or body answers for this decision and for mistakes?",
       patterns: {
-        en: ["responsible", "responsibility", "liability", "third-party supplier", "supplier", "vendor", "contractor", "outsourc", "delegat", "accountab"],
-        sv: ["ansvar", "ansvarig", "personuppgiftsansvarig", "leverantör", "underleverantör", "upphandl", "delegation", "delegera"]
-      }
+        en: ["responsible", "responsibility", "liability", "third-party supplier", "supplier", "vendor", "contractor", "outsourc", "delegat", "accountab",
+             "answerable", "who is responsible", "provider", "deployer", "regulators", "democratic oversight", "third-party audit", "independent audit"],
+        sv: ["ansvar", "ansvarig", "personuppgiftsansvarig", "leverantör", "underleverantör", "upphandl", "delegation", "delegera",
+             "ansvarsfördelning", "oklart vem", "otydligt vem", "vem som har fattat", "vem eller vilka", "reservera sig", "avvikande mening", "beslutsfattarens namn"]
+      },
+      // A body named as responsible, or "responsible use", is not yet an
+      // accountability concern (docs/annotation-guide.md: a body named only
+      // as author does not count). These words flag only when the passage
+      // also says responsibility is unclear, shared, split, shifted or
+      // tied to an error. "provider" and "deployer" flag only together:
+      // the split between who builds and who uses the tool.
+      gated: [{
+        terms: ["ansvar", "ansvarig", "personuppgiftsansvarig", "responsible", "responsibility"],
+        cues: ["oklar", "otydlig", "vem ", "vilken", "fördel", "delat", "gemensam", "mellan", "bär", "ytterst", "skyldig", "se till", "kritik", "misstag", "felaktig", "leverantör", "upphandl", "överlåt", "ligger", "var ansvaret", "peka ut",
+               "unclear", "who ", "which body", "shared", "split", "between", "rests with", "lies", "liab", "answer", "criticis", "error", "mistake", "supplier", "vendor", "contractor", "transfer", "ensure"]
+      }, {
+        terms: ["provider"], cues: ["deployer", "user of the system"]
+      }, {
+        terms: ["deployer"], cues: ["provider"]
+      }]
     },
     {
       id: "discrimination",

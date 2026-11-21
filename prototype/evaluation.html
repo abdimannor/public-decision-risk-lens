@@ -7,6 +7,7 @@
   <meta name="description" content="Measured precision and recall of the Risk Lens flags on a hand-annotated tuning set and on a blind-labelled held-out set of new documents, with the method and its limits.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.dataset.motion = localStorage.getItem('risk-lens-motion') === 'off' ? 'off' : 'on';</script>
   <style>
     .eval { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; line-height: 1.55; }
     .eval table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-variant-numeric: tabular-nums; }
@@ -14,11 +15,13 @@
     .eval th[scope=row], .eval thead th:first-child { text-align: left; }
     .eval tfoot { font-weight: 700; }
     .eval section + section { margin-top: 3rem; padding-top: 2rem; border-top: 2px solid currentColor; }
+    .eval-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .eval-nav .ctl-btn { text-decoration: none; }
   </style>
 </head>
 <body>
 <main class="eval">
-  <p><a href="index.html">Back to the tool</a> · <a href="#sv" lang="sv">På svenska</a></p>
+  <p class="eval-nav"><a href="index.html">Back to the tool</a> <a class="ctl-btn ctl-lang" href="#sv" aria-label="Switch to Swedish, SV" title="Switch to Swedish"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><span class="ctl-code" lang="sv">SV</span></a></p>
 
   <section id="en" lang="en">
     <h1>How well does it work?</h1>

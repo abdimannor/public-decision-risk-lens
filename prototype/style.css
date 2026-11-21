@@ -70,7 +70,7 @@ mark { background: var(--mark); color: inherit; padding: 0 .1em; border-radius: 
 .absence strong { display: block; }
 .hint { color: var(--muted); font-size: .92rem; }
 .foot { color: var(--muted); font-size: .9rem; padding-top: 2rem; padding-bottom: 2rem; }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+:root[data-motion="on"] { scroll-behavior: smooth; }
 button.danger { border-color: var(--reject); color: var(--reject); }
 [hidden] { display: none !important; }
 /* Layout fixes from screenshot review */
@@ -208,12 +208,21 @@ button.primary:hover { background: var(--ink-mid); }
 .rule-form label { margin: 0; }
 .cmp-inputs .file { align-self: flex-start; }
 
-/* Language switch in the advisory banner */
+/* Quiet icon control in the advisory banner: switches to the other language. */
 .banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; }
 .banner p { margin: 0; flex: 1 1 32rem; }
-.lang { display: inline-flex; border: 1px solid rgba(232, 238, 252, .45); border-radius: 999px; overflow: hidden; }
-.lang button { background: transparent; color: #e8eefc; border: 0; border-radius: 0; padding: .3rem .8rem; font: inherit; font-size: .85rem; cursor: pointer; }
-.lang button[aria-pressed="true"] { background: var(--signal); color: var(--ink-deep); font-weight: 700; }
+.ctl-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .3rem;
+  inline-size: 34px; block-size: 34px; padding: 0; flex: none;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: 999px;
+  background: transparent; color: inherit; font: inherit; cursor: pointer;
+  transition: background-color 150ms;
+}
+.ctl-btn svg { flex: none; }
+.ctl-btn:hover, .ctl-btn:focus-visible { background: color-mix(in srgb, currentColor 10%, transparent); }
+.ctl-btn:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.ctl-lang { inline-size: auto; padding-inline: .55rem .65rem; }
+.ctl-code { font-size: 11px; font-weight: 600; letter-spacing: .06em; line-height: 1; }
 
 /* Keyboard-first review */
 .flag:focus { outline: none; }

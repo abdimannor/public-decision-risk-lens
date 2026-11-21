@@ -742,7 +742,9 @@
   // otherwise; an explicit choice is remembered in this browser.
   function applyLanguage() {
     I18N.applyStatic(document);
-    document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === I18N.lang)));
+    const other = I18N.lang === "sv" ? "en" : "sv";
+    const code = document.querySelector("#lang-toggle .ctl-code");
+    if (code) { code.textContent = other.toUpperCase(); code.lang = other; }
     renderRuleCats();
     renderRules();
     renderSourceMeta();
@@ -762,7 +764,7 @@
   window.addEventListener("resize", syncBannerHeight);
   I18N.onChange(syncBannerHeight);
   syncBannerHeight();
-  document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("click", () => I18N.setLang(b.dataset.lang)));
+  document.getElementById("lang-toggle")?.addEventListener("click", () => I18N.setLang(I18N.lang === "sv" ? "en" : "sv"));
   I18N.onChange(applyLanguage);
   applyLanguage();
 

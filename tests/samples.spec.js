@@ -62,10 +62,10 @@ test("review summary counts decisions, categories, reviewer rules and absences",
   await expect(sum.locator(".sum-cats")).toContainText("1 accepted");
   await expect(sum.locator(".sum-rules")).toContainText('"framework agreement"');
   await expect(sum).toContainText("Not found in this text");
-  await page.getByRole("button", { name: "Svenska" }).click();
+  await page.getByRole("button", { name: "Switch to Swedish" }).click();
   await expect(sum.getByRole("heading", { name: "Sammanfattning av granskningen" })).toBeVisible();
   await expect(sum.locator('[data-decision="accept"]')).toHaveText("Godta: 1");
-  await page.getByRole("button", { name: "English" }).click();
+  await page.getByRole("button", { name: "Byt till engelska" }).click();
   await page.getByRole("button", { name: "Print review report" }).evaluate((b) => { window.print = () => {}; b.click(); });
   const report = page.locator("#report .r-summary");
   await expect(report).toContainText("Review summary");

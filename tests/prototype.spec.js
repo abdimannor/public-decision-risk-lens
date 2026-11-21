@@ -1,4 +1,4 @@
-const { test, expect } = require("@playwright/test");
+const { test, expect, chromium } = require("@playwright/test");
 const fs = require("fs");
 
 async function loadSample(page) {
@@ -71,12 +71,15 @@ test("file upload analyses the file", async ({ page }) => {
   await expect(page.locator(".passages li")).toHaveCount(2);
 });
 
-test("keyboard: Tab reaches the decision radios", async ({ page }) => {
+test("keyboard: Tab reaches the decision radios", async ({ page, browserName }) => {
   await loadSample(page);
   await page.locator("#reviewer").focus();
+  // WebKit (as Safari by default) moves Tab between text fields only;
+  // Option+Tab is its key for every focusable control.
+  const tab = browserName === "webkit" ? "Alt+Tab" : "Tab";
   let reached = false;
   for (let i = 0; i < 40 && !reached; i++) {
-    await page.keyboard.press("Tab");
+    await page.keyboard.press(tab);
     reached = await page.evaluate(() => document.activeElement?.matches(".flag input[type=radio]") ?? false);
   }
   expect(reached).toBe(true);
@@ -85,7 +88,11 @@ test("keyboard: Tab reaches the decision radios", async ({ page }) => {
 });
 
 async function makePdf(browser) {
-  const p = await browser.newPage();
+  // page.pdf() exists only in Chromium, so the fixture PDF is always printed
+  // there; the upload itself runs in the engine under test.
+  const own = browser.browserType().name() === "chromium";
+  const printer = own ? browser : await chromium.launch();
+  const p = await printer.newPage();
   await p.setContent(`<html><body style="font: 14px sans-serif">
     <p>The municipality introduces a new service for housing support applications.</p>
     <p>Applications are sorted by an algorithm supplied by a third-party supplier.</p>
@@ -94,6 +101,7 @@ async function makePdf(browser) {
   </body></html>`);
   const pdf = await p.pdf({ format: "A4" });
   await p.close();
+  if (!own) await printer.close();
   return pdf;
 }
 

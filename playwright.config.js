@@ -10,7 +10,7 @@ module.exports = defineConfig({
   },
   projects: [
     { name: "chromium", use: { browserName: "chromium" } },
-    { name: "firefox", use: { browserName: "firefox" }, testMatch: /cross-browser\.spec\.js/ },
-    { name: "webkit", use: { browserName: "webkit" }, testMatch: /cross-browser\.spec\.js/ }
+    { name: "firefox", use: { browserName: "firefox" } },
+    { name: "webkit", use: { browserName: "webkit" } }
   ]
 });

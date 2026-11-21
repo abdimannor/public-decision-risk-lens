@@ -3,10 +3,11 @@
   "private": true,
   "license": "CC-BY-4.0",
   "scripts": {
-    "test": "node --test prototype/engine.test.js prototype/fileimport.test.js prototype/eval/eval.test.mjs",
+    "test": "node --test prototype/engine.test.js prototype/fileimport.test.js prototype/eval/eval.test.mjs prototype/model/model.test.mjs",
     "test:e2e": "playwright test",
     "eval": "node prototype/eval/evaluate.mjs",
-    "agreement": "node prototype/eval/agreement.mjs"
+    "agreement": "node prototype/eval/agreement.mjs",
+    "model:cv": "node prototype/model/train.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",

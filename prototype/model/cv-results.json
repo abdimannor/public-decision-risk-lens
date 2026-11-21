@@ -1,0 +1,2109 @@
+{
+ "description": "Leave-one-document-out cross-validation: every passage is scored by a model that never saw any passage from its document. Thresholds chosen per category by grouped inner CV on the training documents only. Unit: (passage, category).",
+ "config": {
+  "epochs": 150,
+  "lr": 2,
+  "l2": 0.001,
+  "minDf": 2,
+  "innerFolds": 4,
+  "seed": 20261121
+ },
+ "passages": 140,
+ "documents": 25,
+ "languages": {
+  "sv": 92,
+  "en": 48
+ },
+ "results": {
+  "all": {
+   "rules": {
+    "micro": {
+     "tp": 136,
+     "fp": 81,
+     "fn": 53,
+     "support": 189,
+     "precision": 0.6267281105990783,
+     "recall": 0.7195767195767195,
+     "f1": 0.6699507389162561
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 40,
+      "tp": 30,
+      "fp": 21,
+      "fn": 10,
+      "precision": 0.5882352941176471,
+      "recall": 0.75,
+      "f1": 0.6593406593406593
+     },
+     {
+      "category": "accountability",
+      "support": 20,
+      "tp": 10,
+      "fp": 10,
+      "fn": 10,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+     },
+     {
+      "category": "discrimination",
+      "support": 28,
+      "tp": 23,
+      "fp": 6,
+      "fn": 5,
+      "precision": 0.7931034482758621,
+      "recall": 0.8214285714285714,
+      "f1": 0.8070175438596491
+     },
+     {
+      "category": "privacy",
+      "support": 26,
+      "tp": 18,
+      "fp": 13,
+      "fn": 8,
+      "precision": 0.5806451612903226,
+      "recall": 0.6923076923076923,
+      "f1": 0.631578947368421
+     },
+     {
+      "category": "contestability",
+      "support": 26,
+      "tp": 22,
+      "fp": 7,
+      "fn": 4,
+      "precision": 0.7586206896551724,
+      "recall": 0.8461538461538461,
+      "f1": 0.8
+     },
+     {
+      "category": "human-oversight",
+      "support": 34,
+      "tp": 26,
+      "fp": 15,
+      "fn": 8,
+      "precision": 0.6341463414634146,
+      "recall": 0.7647058823529411,
+      "f1": 0.6933333333333334
+     },
+     {
+      "category": "security",
+      "support": 7,
+      "tp": 5,
+      "fp": 4,
+      "fn": 2,
+      "precision": 0.5555555555555556,
+      "recall": 0.7142857142857143,
+      "f1": 0.625
+     },
+     {
+      "category": "misuse",
+      "support": 8,
+      "tp": 2,
+      "fp": 5,
+      "fn": 6,
+      "precision": 0.2857142857142857,
+      "recall": 0.25,
+      "f1": 0.26666666666666666
+     }
+    ]
+   },
+   "model": {
+    "micro": {
+     "tp": 127,
+     "fp": 487,
+     "fn": 62,
+     "support": 189,
+     "precision": 0.20684039087947884,
+     "recall": 0.671957671957672,
+     "f1": 0.3163138231631382
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 40,
+      "tp": 26,
+      "fp": 45,
+      "fn": 14,
+      "precision": 0.36619718309859156,
+      "recall": 0.65,
+      "f1": 0.46846846846846846
+     },
+     {
+      "category": "accountability",
+      "support": 20,
+      "tp": 19,
+      "fp": 111,
+      "fn": 1,
+      "precision": 0.14615384615384616,
+      "recall": 0.95,
+      "f1": 0.25333333333333335
+     },
+     {
+      "category": "discrimination",
+      "support": 28,
+      "tp": 21,
+      "fp": 69,
+      "fn": 7,
+      "precision": 0.23333333333333334,
+      "recall": 0.75,
+      "f1": 0.3559322033898305
+     },
+     {
+      "category": "privacy",
+      "support": 26,
+      "tp": 17,
+      "fp": 20,
+      "fn": 9,
+      "precision": 0.4594594594594595,
+      "recall": 0.6538461538461539,
+      "f1": 0.5396825396825397
+     },
+     {
+      "category": "contestability",
+      "support": 26,
+      "tp": 16,
+      "fp": 46,
+      "fn": 10,
+      "precision": 0.25806451612903225,
+      "recall": 0.6153846153846154,
+      "f1": 0.36363636363636365
+     },
+     {
+      "category": "human-oversight",
+      "support": 34,
+      "tp": 18,
+      "fp": 24,
+      "fn": 16,
+      "precision": 0.42857142857142855,
+      "recall": 0.5294117647058824,
+      "f1": 0.47368421052631576
+     },
+     {
+      "category": "security",
+      "support": 7,
+      "tp": 6,
+      "fp": 117,
+      "fn": 1,
+      "precision": 0.04878048780487805,
+      "recall": 0.8571428571428571,
+      "f1": 0.09230769230769231
+     },
+     {
+      "category": "misuse",
+      "support": 8,
+      "tp": 4,
+      "fp": 55,
+      "fn": 4,
+      "precision": 0.06779661016949153,
+      "recall": 0.5,
+      "f1": 0.11940298507462686
+     }
+    ]
+   },
+   "both": {
+    "micro": {
+     "tp": 135,
+     "fp": 136,
+     "fn": 54,
+     "support": 189,
+     "precision": 0.4981549815498155,
+     "recall": 0.7142857142857143,
+     "f1": 0.5869565217391305
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 40,
+      "tp": 30,
+      "fp": 21,
+      "fn": 10,
+      "precision": 0.5882352941176471,
+      "recall": 0.75,
+      "f1": 0.6593406593406593
+     },
+     {
+      "category": "accountability",
+      "support": 20,
+      "tp": 10,
+      "fp": 11,
+      "fn": 10,
+      "precision": 0.47619047619047616,
+      "recall": 0.5,
+      "f1": 0.4878048780487805
+     },
+     {
+      "category": "discrimination",
+      "support": 28,
+      "tp": 23,
+      "fp": 6,
+      "fn": 5,
+      "precision": 0.7931034482758621,
+      "recall": 0.8214285714285714,
+      "f1": 0.8070175438596491
+     },
+     {
+      "category": "privacy",
+      "support": 26,
+      "tp": 18,
+      "fp": 13,
+      "fn": 8,
+      "precision": 0.5806451612903226,
+      "recall": 0.6923076923076923,
+      "f1": 0.631578947368421
+     },
+     {
+      "category": "contestability",
+      "support": 26,
+      "tp": 22,
+      "fp": 8,
+      "fn": 4,
+      "precision": 0.7333333333333333,
+      "recall": 0.8461538461538461,
+      "f1": 0.7857142857142857
+     },
+     {
+      "category": "human-oversight",
+      "support": 34,
+      "tp": 25,
+      "fp": 13,
+      "fn": 9,
+      "precision": 0.6578947368421053,
+      "recall": 0.7352941176470589,
+      "f1": 0.6944444444444444
+     },
+     {
+      "category": "security",
+      "support": 7,
+      "tp": 5,
+      "fp": 4,
+      "fn": 2,
+      "precision": 0.5555555555555556,
+      "recall": 0.7142857142857143,
+      "f1": 0.625
+     },
+     {
+      "category": "misuse",
+      "support": 8,
+      "tp": 2,
+      "fp": 60,
+      "fn": 6,
+      "precision": 0.03225806451612903,
+      "recall": 0.25,
+      "f1": 0.05714285714285714
+     }
+    ]
+   },
+   "union": {
+    "micro": {
+     "tp": 171,
+     "fp": 524,
+     "fn": 18,
+     "support": 189,
+     "precision": 0.2460431654676259,
+     "recall": 0.9047619047619048,
+     "f1": 0.38687782805429866
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 40,
+      "tp": 35,
+      "fp": 51,
+      "fn": 5,
+      "precision": 0.4069767441860465,
+      "recall": 0.875,
+      "f1": 0.5555555555555556
+     },
+     {
+      "category": "accountability",
+      "support": 20,
+      "tp": 20,
+      "fp": 112,
+      "fn": 0,
+      "precision": 0.15151515151515152,
+      "recall": 1,
+      "f1": 0.2631578947368421
+     },
+     {
+      "category": "discrimination",
+      "support": 28,
+      "tp": 26,
+      "fp": 73,
+      "fn": 2,
+      "precision": 0.26262626262626265,
+      "recall": 0.9285714285714286,
+      "f1": 0.4094488188976378
+     },
+     {
+      "category": "privacy",
+      "support": 26,
+      "tp": 23,
+      "fp": 29,
+      "fn": 3,
+      "precision": 0.4423076923076923,
+      "recall": 0.8846153846153846,
+      "f1": 0.5897435897435898
+     },
+     {
+      "category": "contestability",
+      "support": 26,
+      "tp": 24,
+      "fp": 50,
+      "fn": 2,
+      "precision": 0.32432432432432434,
+      "recall": 0.9230769230769231,
+      "f1": 0.48
+     },
+     {
+      "category": "human-oversight",
+      "support": 34,
+      "tp": 30,
+      "fp": 36,
+      "fn": 4,
+      "precision": 0.45454545454545453,
+      "recall": 0.8823529411764706,
+      "f1": 0.6
+     },
+     {
+      "category": "security",
+      "support": 7,
+      "tp": 7,
+      "fp": 117,
+      "fn": 0,
+      "precision": 0.056451612903225805,
+      "recall": 1,
+      "f1": 0.10687022900763359
+     },
+     {
+      "category": "misuse",
+      "support": 8,
+      "tp": 6,
+      "fp": 56,
+      "fn": 2,
+      "precision": 0.0967741935483871,
+      "recall": 0.75,
+      "f1": 0.17142857142857143
+     }
+    ]
+   }
+  },
+  "sv": {
+   "rules": {
+    "micro": {
+     "tp": 72,
+     "fp": 51,
+     "fn": 38,
+     "support": 110,
+     "precision": 0.5853658536585366,
+     "recall": 0.6545454545454545,
+     "f1": 0.6180257510729614
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 24,
+      "tp": 18,
+      "fp": 13,
+      "fn": 6,
+      "precision": 0.5806451612903226,
+      "recall": 0.75,
+      "f1": 0.6545454545454545
+     },
+     {
+      "category": "accountability",
+      "support": 13,
+      "tp": 5,
+      "fp": 6,
+      "fn": 8,
+      "precision": 0.45454545454545453,
+      "recall": 0.38461538461538464,
+      "f1": 0.4166666666666667
+     },
+     {
+      "category": "discrimination",
+      "support": 12,
+      "tp": 8,
+      "fp": 5,
+      "fn": 4,
+      "precision": 0.6153846153846154,
+      "recall": 0.6666666666666666,
+      "f1": 0.64
+     },
+     {
+      "category": "privacy",
+      "support": 18,
+      "tp": 12,
+      "fp": 5,
+      "fn": 6,
+      "precision": 0.7058823529411765,
+      "recall": 0.6666666666666666,
+      "f1": 0.6857142857142857
+     },
+     {
+      "category": "contestability",
+      "support": 17,
+      "tp": 14,
+      "fp": 3,
+      "fn": 3,
+      "precision": 0.8235294117647058,
+      "recall": 0.8235294117647058,
+      "f1": 0.8235294117647058
+     },
+     {
+      "category": "human-oversight",
+      "support": 15,
+      "tp": 11,
+      "fp": 12,
+      "fn": 4,
+      "precision": 0.4782608695652174,
+      "recall": 0.7333333333333333,
+      "f1": 0.5789473684210527
+     },
+     {
+      "category": "security",
+      "support": 6,
+      "tp": 4,
+      "fp": 3,
+      "fn": 2,
+      "precision": 0.5714285714285714,
+      "recall": 0.6666666666666666,
+      "f1": 0.6153846153846154
+     },
+     {
+      "category": "misuse",
+      "support": 5,
+      "tp": 0,
+      "fp": 4,
+      "fn": 5,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0
+     }
+    ]
+   },
+   "model": {
+    "micro": {
+     "tp": 72,
+     "fp": 317,
+     "fn": 38,
+     "support": 110,
+     "precision": 0.18508997429305912,
+     "recall": 0.6545454545454545,
+     "f1": 0.28857715430861725
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 24,
+      "tp": 13,
+      "fp": 24,
+      "fn": 11,
+      "precision": 0.35135135135135137,
+      "recall": 0.5416666666666666,
+      "f1": 0.4262295081967213
+     },
+     {
+      "category": "accountability",
+      "support": 13,
+      "tp": 12,
+      "fp": 71,
+      "fn": 1,
+      "precision": 0.14457831325301204,
+      "recall": 0.9230769230769231,
+      "f1": 0.25
+     },
+     {
+      "category": "discrimination",
+      "support": 12,
+      "tp": 8,
+      "fp": 44,
+      "fn": 4,
+      "precision": 0.15384615384615385,
+      "recall": 0.6666666666666666,
+      "f1": 0.25
+     },
+     {
+      "category": "privacy",
+      "support": 18,
+      "tp": 17,
+      "fp": 11,
+      "fn": 1,
+      "precision": 0.6071428571428571,
+      "recall": 0.9444444444444444,
+      "f1": 0.7391304347826086
+     },
+     {
+      "category": "contestability",
+      "support": 17,
+      "tp": 12,
+      "fp": 39,
+      "fn": 5,
+      "precision": 0.23529411764705882,
+      "recall": 0.7058823529411765,
+      "f1": 0.35294117647058826
+     },
+     {
+      "category": "human-oversight",
+      "support": 15,
+      "tp": 0,
+      "fp": 3,
+      "fn": 15,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0
+     },
+     {
+      "category": "security",
+      "support": 6,
+      "tp": 6,
+      "fp": 78,
+      "fn": 0,
+      "precision": 0.07142857142857142,
+      "recall": 1,
+      "f1": 0.13333333333333333
+     },
+     {
+      "category": "misuse",
+      "support": 5,
+      "tp": 4,
+      "fp": 47,
+      "fn": 1,
+      "precision": 0.0784313725490196,
+      "recall": 0.8,
+      "f1": 0.14285714285714285
+     }
+    ]
+   },
+   "both": {
+    "micro": {
+     "tp": 72,
+     "fp": 98,
+     "fn": 38,
+     "support": 110,
+     "precision": 0.4235294117647059,
+     "recall": 0.6545454545454545,
+     "f1": 0.5142857142857142
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 24,
+      "tp": 18,
+      "fp": 13,
+      "fn": 6,
+      "precision": 0.5806451612903226,
+      "recall": 0.75,
+      "f1": 0.6545454545454545
+     },
+     {
+      "category": "accountability",
+      "support": 13,
+      "tp": 5,
+      "fp": 6,
+      "fn": 8,
+      "precision": 0.45454545454545453,
+      "recall": 0.38461538461538464,
+      "f1": 0.4166666666666667
+     },
+     {
+      "category": "discrimination",
+      "support": 12,
+      "tp": 8,
+      "fp": 5,
+      "fn": 4,
+      "precision": 0.6153846153846154,
+      "recall": 0.6666666666666666,
+      "f1": 0.64
+     },
+     {
+      "category": "privacy",
+      "support": 18,
+      "tp": 12,
+      "fp": 5,
+      "fn": 6,
+      "precision": 0.7058823529411765,
+      "recall": 0.6666666666666666,
+      "f1": 0.6857142857142857
+     },
+     {
+      "category": "contestability",
+      "support": 17,
+      "tp": 14,
+      "fp": 4,
+      "fn": 3,
+      "precision": 0.7777777777777778,
+      "recall": 0.8235294117647058,
+      "f1": 0.8
+     },
+     {
+      "category": "human-oversight",
+      "support": 15,
+      "tp": 10,
+      "fp": 10,
+      "fn": 5,
+      "precision": 0.5,
+      "recall": 0.6666666666666666,
+      "f1": 0.5714285714285714
+     },
+     {
+      "category": "security",
+      "support": 6,
+      "tp": 4,
+      "fp": 3,
+      "fn": 2,
+      "precision": 0.5714285714285714,
+      "recall": 0.6666666666666666,
+      "f1": 0.6153846153846154
+     },
+     {
+      "category": "misuse",
+      "support": 5,
+      "tp": 1,
+      "fp": 52,
+      "fn": 4,
+      "precision": 0.018867924528301886,
+      "recall": 0.2,
+      "f1": 0.034482758620689655
+     }
+    ]
+   },
+   "union": {
+    "micro": {
+     "tp": 98,
+     "fp": 341,
+     "fn": 12,
+     "support": 110,
+     "precision": 0.22323462414578588,
+     "recall": 0.8909090909090909,
+     "f1": 0.3570127504553734
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 24,
+      "tp": 21,
+      "fp": 28,
+      "fn": 3,
+      "precision": 0.42857142857142855,
+      "recall": 0.875,
+      "f1": 0.5753424657534246
+     },
+     {
+      "category": "accountability",
+      "support": 13,
+      "tp": 13,
+      "fp": 72,
+      "fn": 0,
+      "precision": 0.15294117647058825,
+      "recall": 1,
+      "f1": 0.2653061224489796
+     },
+     {
+      "category": "discrimination",
+      "support": 12,
+      "tp": 10,
+      "fp": 48,
+      "fn": 2,
+      "precision": 0.1724137931034483,
+      "recall": 0.8333333333333334,
+      "f1": 0.2857142857142857
+     },
+     {
+      "category": "privacy",
+      "support": 18,
+      "tp": 17,
+      "fp": 13,
+      "fn": 1,
+      "precision": 0.5666666666666667,
+      "recall": 0.9444444444444444,
+      "f1": 0.7083333333333334
+     },
+     {
+      "category": "contestability",
+      "support": 17,
+      "tp": 16,
+      "fp": 40,
+      "fn": 1,
+      "precision": 0.2857142857142857,
+      "recall": 0.9411764705882353,
+      "f1": 0.4383561643835616
+     },
+     {
+      "category": "human-oversight",
+      "support": 15,
+      "tp": 11,
+      "fp": 15,
+      "fn": 4,
+      "precision": 0.4230769230769231,
+      "recall": 0.7333333333333333,
+      "f1": 0.5365853658536586
+     },
+     {
+      "category": "security",
+      "support": 6,
+      "tp": 6,
+      "fp": 78,
+      "fn": 0,
+      "precision": 0.07142857142857142,
+      "recall": 1,
+      "f1": 0.13333333333333333
+     },
+     {
+      "category": "misuse",
+      "support": 5,
+      "tp": 4,
+      "fp": 47,
+      "fn": 1,
+      "precision": 0.0784313725490196,
+      "recall": 0.8,
+      "f1": 0.14285714285714285
+     }
+    ]
+   }
+  },
+  "en": {
+   "rules": {
+    "micro": {
+     "tp": 64,
+     "fp": 30,
+     "fn": 15,
+     "support": 79,
+     "precision": 0.6808510638297872,
+     "recall": 0.810126582278481,
+     "f1": 0.7398843930635838
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 16,
+      "tp": 12,
+      "fp": 8,
+      "fn": 4,
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1": 0.6666666666666666
+     },
+     {
+      "category": "accountability",
+      "support": 7,
+      "tp": 5,
+      "fp": 4,
+      "fn": 2,
+      "precision": 0.5555555555555556,
+      "recall": 0.7142857142857143,
+      "f1": 0.625
+     },
+     {
+      "category": "discrimination",
+      "support": 16,
+      "tp": 15,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.9375,
+      "recall": 0.9375,
+      "f1": 0.9375
+     },
+     {
+      "category": "privacy",
+      "support": 8,
+      "tp": 6,
+      "fp": 8,
+      "fn": 2,
+      "precision": 0.42857142857142855,
+      "recall": 0.75,
+      "f1": 0.5454545454545454
+     },
+     {
+      "category": "contestability",
+      "support": 9,
+      "tp": 8,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.6666666666666666,
+      "recall": 0.8888888888888888,
+      "f1": 0.7619047619047619
+     },
+     {
+      "category": "human-oversight",
+      "support": 19,
+      "tp": 15,
+      "fp": 3,
+      "fn": 4,
+      "precision": 0.8333333333333334,
+      "recall": 0.7894736842105263,
+      "f1": 0.8108108108108109
+     },
+     {
+      "category": "security",
+      "support": 1,
+      "tp": 1,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.5,
+      "recall": 1,
+      "f1": 0.6666666666666666
+     },
+     {
+      "category": "misuse",
+      "support": 3,
+      "tp": 2,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.6666666666666666,
+      "recall": 0.6666666666666666,
+      "f1": 0.6666666666666666
+     }
+    ]
+   },
+   "model": {
+    "micro": {
+     "tp": 55,
+     "fp": 170,
+     "fn": 24,
+     "support": 79,
+     "precision": 0.24444444444444444,
+     "recall": 0.6962025316455697,
+     "f1": 0.3618421052631579
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 16,
+      "tp": 13,
+      "fp": 21,
+      "fn": 3,
+      "precision": 0.38235294117647056,
+      "recall": 0.8125,
+      "f1": 0.52
+     },
+     {
+      "category": "accountability",
+      "support": 7,
+      "tp": 7,
+      "fp": 40,
+      "fn": 0,
+      "precision": 0.14893617021276595,
+      "recall": 1,
+      "f1": 0.25925925925925924
+     },
+     {
+      "category": "discrimination",
+      "support": 16,
+      "tp": 13,
+      "fp": 25,
+      "fn": 3,
+      "precision": 0.34210526315789475,
+      "recall": 0.8125,
+      "f1": 0.48148148148148145
+     },
+     {
+      "category": "privacy",
+      "support": 8,
+      "tp": 0,
+      "fp": 9,
+      "fn": 8,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0
+     },
+     {
+      "category": "contestability",
+      "support": 9,
+      "tp": 4,
+      "fp": 7,
+      "fn": 5,
+      "precision": 0.36363636363636365,
+      "recall": 0.4444444444444444,
+      "f1": 0.4
+     },
+     {
+      "category": "human-oversight",
+      "support": 19,
+      "tp": 18,
+      "fp": 21,
+      "fn": 1,
+      "precision": 0.46153846153846156,
+      "recall": 0.9473684210526315,
+      "f1": 0.6206896551724138
+     },
+     {
+      "category": "security",
+      "support": 1,
+      "tp": 0,
+      "fp": 39,
+      "fn": 1,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0
+     },
+     {
+      "category": "misuse",
+      "support": 3,
+      "tp": 0,
+      "fp": 8,
+      "fn": 3,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0
+     }
+    ]
+   },
+   "both": {
+    "micro": {
+     "tp": 63,
+     "fp": 38,
+     "fn": 16,
+     "support": 79,
+     "precision": 0.6237623762376238,
+     "recall": 0.7974683544303798,
+     "f1": 0.7
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 16,
+      "tp": 12,
+      "fp": 8,
+      "fn": 4,
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1": 0.6666666666666666
+     },
+     {
+      "category": "accountability",
+      "support": 7,
+      "tp": 5,
+      "fp": 5,
+      "fn": 2,
+      "precision": 0.5,
+      "recall": 0.7142857142857143,
+      "f1": 0.5882352941176471
+     },
+     {
+      "category": "discrimination",
+      "support": 16,
+      "tp": 15,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.9375,
+      "recall": 0.9375,
+      "f1": 0.9375
+     },
+     {
+      "category": "privacy",
+      "support": 8,
+      "tp": 6,
+      "fp": 8,
+      "fn": 2,
+      "precision": 0.42857142857142855,
+      "recall": 0.75,
+      "f1": 0.5454545454545454
+     },
+     {
+      "category": "contestability",
+      "support": 9,
+      "tp": 8,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.6666666666666666,
+      "recall": 0.8888888888888888,
+      "f1": 0.7619047619047619
+     },
+     {
+      "category": "human-oversight",
+      "support": 19,
+      "tp": 15,
+      "fp": 3,
+      "fn": 4,
+      "precision": 0.8333333333333334,
+      "recall": 0.7894736842105263,
+      "f1": 0.8108108108108109
+     },
+     {
+      "category": "security",
+      "support": 1,
+      "tp": 1,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.5,
+      "recall": 1,
+      "f1": 0.6666666666666666
+     },
+     {
+      "category": "misuse",
+      "support": 3,
+      "tp": 1,
+      "fp": 8,
+      "fn": 2,
+      "precision": 0.1111111111111111,
+      "recall": 0.3333333333333333,
+      "f1": 0.16666666666666666
+     }
+    ]
+   },
+   "union": {
+    "micro": {
+     "tp": 73,
+     "fp": 183,
+     "fn": 6,
+     "support": 79,
+     "precision": 0.28515625,
+     "recall": 0.9240506329113924,
+     "f1": 0.43582089552238806
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 16,
+      "tp": 14,
+      "fp": 23,
+      "fn": 2,
+      "precision": 0.3783783783783784,
+      "recall": 0.875,
+      "f1": 0.5283018867924528
+     },
+     {
+      "category": "accountability",
+      "support": 7,
+      "tp": 7,
+      "fp": 40,
+      "fn": 0,
+      "precision": 0.14893617021276595,
+      "recall": 1,
+      "f1": 0.25925925925925924
+     },
+     {
+      "category": "discrimination",
+      "support": 16,
+      "tp": 16,
+      "fp": 25,
+      "fn": 0,
+      "precision": 0.3902439024390244,
+      "recall": 1,
+      "f1": 0.5614035087719298
+     },
+     {
+      "category": "privacy",
+      "support": 8,
+      "tp": 6,
+      "fp": 16,
+      "fn": 2,
+      "precision": 0.2727272727272727,
+      "recall": 0.75,
+      "f1": 0.4
+     },
+     {
+      "category": "contestability",
+      "support": 9,
+      "tp": 8,
+      "fp": 10,
+      "fn": 1,
+      "precision": 0.4444444444444444,
+      "recall": 0.8888888888888888,
+      "f1": 0.5925925925925926
+     },
+     {
+      "category": "human-oversight",
+      "support": 19,
+      "tp": 19,
+      "fp": 21,
+      "fn": 0,
+      "precision": 0.475,
+      "recall": 1,
+      "f1": 0.6440677966101694
+     },
+     {
+      "category": "security",
+      "support": 1,
+      "tp": 1,
+      "fp": 39,
+      "fn": 0,
+      "precision": 0.025,
+      "recall": 1,
+      "f1": 0.04878048780487805
+     },
+     {
+      "category": "misuse",
+      "support": 3,
+      "tp": 2,
+      "fp": 9,
+      "fn": 1,
+      "precision": 0.18181818181818182,
+      "recall": 0.6666666666666666,
+      "f1": 0.2857142857142857
+     }
+    ]
+   }
+  },
+  "test3Only": {
+   "rules": {
+    "micro": {
+     "tp": 25,
+     "fp": 27,
+     "fn": 15,
+     "support": 40,
+     "precision": 0.4807692307692308,
+     "recall": 0.625,
+     "f1": 0.5434782608695652
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 6,
+      "tp": 4,
+      "fp": 7,
+      "fn": 2,
+      "precision": 0.36363636363636365,
+      "recall": 0.6666666666666666,
+      "f1": 0.47058823529411764
+     },
+     {
+      "category": "accountability",
+      "support": 2,
+      "tp": 2,
+      "fp": 7,
+      "fn": 0,
+      "precision": 0.2222222222222222,
+      "recall": 1,
+      "f1": 0.36363636363636365
+     },
+     {
+      "category": "discrimination",
+      "support": 6,
+      "tp": 4,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.8,
+      "recall": 0.6666666666666666,
+      "f1": 0.7272727272727273
+     },
+     {
+      "category": "privacy",
+      "support": 10,
+      "tp": 7,
+      "fp": 2,
+      "fn": 3,
+      "precision": 0.7777777777777778,
+      "recall": 0.7,
+      "f1": 0.7368421052631579
+     },
+     {
+      "category": "contestability",
+      "support": 4,
+      "tp": 3,
+      "fp": 2,
+      "fn": 1,
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1": 0.6666666666666666
+     },
+     {
+      "category": "human-oversight",
+      "support": 6,
+      "tp": 2,
+      "fp": 6,
+      "fn": 4,
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "f1": 0.2857142857142857
+     },
+     {
+      "category": "security",
+      "support": 5,
+      "tp": 3,
+      "fp": 0,
+      "fn": 2,
+      "precision": 1,
+      "recall": 0.6,
+      "f1": 0.75
+     },
+     {
+      "category": "misuse",
+      "support": 1,
+      "tp": 0,
+      "fp": 2,
+      "fn": 1,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0
+     }
+    ]
+   },
+   "model": {
+    "micro": {
+     "tp": 28,
+     "fp": 110,
+     "fn": 12,
+     "support": 40,
+     "precision": 0.2028985507246377,
+     "recall": 0.7,
+     "f1": 0.3146067415730337
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 6,
+      "tp": 4,
+      "fp": 10,
+      "fn": 2,
+      "precision": 0.2857142857142857,
+      "recall": 0.6666666666666666,
+      "f1": 0.4
+     },
+     {
+      "category": "accountability",
+      "support": 2,
+      "tp": 2,
+      "fp": 25,
+      "fn": 0,
+      "precision": 0.07407407407407407,
+      "recall": 1,
+      "f1": 0.13793103448275862
+     },
+     {
+      "category": "discrimination",
+      "support": 6,
+      "tp": 4,
+      "fp": 14,
+      "fn": 2,
+      "precision": 0.2222222222222222,
+      "recall": 0.6666666666666666,
+      "f1": 0.3333333333333333
+     },
+     {
+      "category": "privacy",
+      "support": 10,
+      "tp": 9,
+      "fp": 3,
+      "fn": 1,
+      "precision": 0.75,
+      "recall": 0.9,
+      "f1": 0.8181818181818182
+     },
+     {
+      "category": "contestability",
+      "support": 4,
+      "tp": 1,
+      "fp": 10,
+      "fn": 3,
+      "precision": 0.09090909090909091,
+      "recall": 0.25,
+      "f1": 0.13333333333333333
+     },
+     {
+      "category": "human-oversight",
+      "support": 6,
+      "tp": 2,
+      "fp": 7,
+      "fn": 4,
+      "precision": 0.2222222222222222,
+      "recall": 0.3333333333333333,
+      "f1": 0.26666666666666666
+     },
+     {
+      "category": "security",
+      "support": 5,
+      "tp": 5,
+      "fp": 18,
+      "fn": 0,
+      "precision": 0.21739130434782608,
+      "recall": 1,
+      "f1": 0.35714285714285715
+     },
+     {
+      "category": "misuse",
+      "support": 1,
+      "tp": 1,
+      "fp": 23,
+      "fn": 0,
+      "precision": 0.041666666666666664,
+      "recall": 1,
+      "f1": 0.08
+     }
+    ]
+   },
+   "both": {
+    "micro": {
+     "tp": 26,
+     "fp": 35,
+     "fn": 14,
+     "support": 40,
+     "precision": 0.4262295081967213,
+     "recall": 0.65,
+     "f1": 0.5148514851485149
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 6,
+      "tp": 4,
+      "fp": 7,
+      "fn": 2,
+      "precision": 0.36363636363636365,
+      "recall": 0.6666666666666666,
+      "f1": 0.47058823529411764
+     },
+     {
+      "category": "accountability",
+      "support": 2,
+      "tp": 2,
+      "fp": 7,
+      "fn": 0,
+      "precision": 0.2222222222222222,
+      "recall": 1,
+      "f1": 0.36363636363636365
+     },
+     {
+      "category": "discrimination",
+      "support": 6,
+      "tp": 4,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.8,
+      "recall": 0.6666666666666666,
+      "f1": 0.7272727272727273
+     },
+     {
+      "category": "privacy",
+      "support": 10,
+      "tp": 7,
+      "fp": 2,
+      "fn": 3,
+      "precision": 0.7777777777777778,
+      "recall": 0.7,
+      "f1": 0.7368421052631579
+     },
+     {
+      "category": "contestability",
+      "support": 4,
+      "tp": 3,
+      "fp": 2,
+      "fn": 1,
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1": 0.6666666666666666
+     },
+     {
+      "category": "human-oversight",
+      "support": 6,
+      "tp": 2,
+      "fp": 5,
+      "fn": 4,
+      "precision": 0.2857142857142857,
+      "recall": 0.3333333333333333,
+      "f1": 0.3076923076923077
+     },
+     {
+      "category": "security",
+      "support": 5,
+      "tp": 3,
+      "fp": 0,
+      "fn": 2,
+      "precision": 1,
+      "recall": 0.6,
+      "f1": 0.75
+     },
+     {
+      "category": "misuse",
+      "support": 1,
+      "tp": 1,
+      "fp": 11,
+      "fn": 0,
+      "precision": 0.08333333333333333,
+      "recall": 1,
+      "f1": 0.15384615384615385
+     }
+    ]
+   },
+   "union": {
+    "micro": {
+     "tp": 33,
+     "fp": 119,
+     "fn": 7,
+     "support": 40,
+     "precision": 0.21710526315789475,
+     "recall": 0.825,
+     "f1": 0.34375
+    },
+    "perCategory": [
+     {
+      "category": "transparency",
+      "support": 6,
+      "tp": 4,
+      "fp": 11,
+      "fn": 2,
+      "precision": 0.26666666666666666,
+      "recall": 0.6666666666666666,
+      "f1": 0.38095238095238093
+     },
+     {
+      "category": "accountability",
+      "support": 2,
+      "tp": 2,
+      "fp": 26,
+      "fn": 0,
+      "precision": 0.07142857142857142,
+      "recall": 1,
+      "f1": 0.13333333333333333
+     },
+     {
+      "category": "discrimination",
+      "support": 6,
+      "tp": 5,
+      "fp": 14,
+      "fn": 1,
+      "precision": 0.2631578947368421,
+      "recall": 0.8333333333333334,
+      "f1": 0.4
+     },
+     {
+      "category": "privacy",
+      "support": 10,
+      "tp": 10,
+      "fp": 5,
+      "fn": 0,
+      "precision": 0.6666666666666666,
+      "recall": 1,
+      "f1": 0.8
+     },
+     {
+      "category": "contestability",
+      "support": 4,
+      "tp": 3,
+      "fp": 10,
+      "fn": 1,
+      "precision": 0.23076923076923078,
+      "recall": 0.75,
+      "f1": 0.35294117647058826
+     },
+     {
+      "category": "human-oversight",
+      "support": 6,
+      "tp": 3,
+      "fp": 12,
+      "fn": 3,
+      "precision": 0.2,
+      "recall": 0.5,
+      "f1": 0.2857142857142857
+     },
+     {
+      "category": "security",
+      "support": 5,
+      "tp": 5,
+      "fp": 18,
+      "fn": 0,
+      "precision": 0.21739130434782608,
+      "recall": 1,
+      "f1": 0.35714285714285715
+     },
+     {
+      "category": "misuse",
+      "support": 1,
+      "tp": 1,
+      "fp": 23,
+      "fn": 0,
+      "precision": 0.041666666666666664,
+      "recall": 1,
+      "f1": 0.08
+     }
+    ]
+   }
+  }
+ },
+ "learnedTopFeatures": {
+  "transparency": {
+   "positive": [
+    [
+     "c:unde",
+     0.967
+    ],
+    [
+     "c:nder",
+     0.899
+    ],
+    [
+     "c:_tra",
+     0.745
+    ],
+    [
+     "c:rätt",
+     0.717
+    ],
+    [
+     "c:_und",
+     0.702
+    ],
+    [
+     "c:tran",
+     0.652
+    ],
+    [
+     "c:ansp",
+     0.652
+    ],
+    [
+     "c:aren",
+     0.627
+    ]
+   ],
+   "negative": [
+    [
+     "c:göra",
+     -0.547
+    ],
+    [
+     "c:slut",
+     -0.536
+    ],
+    [
+     "c:_bes",
+     -0.438
+    ],
+    [
+     "w:har",
+     -0.426
+    ],
+    [
+     "c:har_",
+     -0.426
+    ],
+    [
+     "c:_har",
+     -0.426
+    ],
+    [
+     "c:eslu",
+     -0.409
+    ],
+    [
+     "c:besl",
+     -0.409
+    ]
+   ]
+  },
+  "accountability": {
+   "positive": [
+    [
+     "c:_vem",
+     0.769
+    ],
+    [
+     "c:vem_",
+     0.769
+    ],
+    [
+     "w:vem",
+     0.769
+    ],
+    [
+     "b:vem eller",
+     0.662
+    ],
+    [
+     "b:vilka som",
+     0.662
+    ],
+    [
+     "w:som",
+     0.653
+    ],
+    [
+     "b:eller vilka",
+     0.648
+    ],
+    [
+     "c:_vil",
+     0.641
+    ]
+   ],
+   "negative": [
+    [
+     "c:tion",
+     -0.609
+    ],
+    [
+     "c:atio",
+     -0.522
+    ],
+    [
+     "c:ver_",
+     -0.512
+    ],
+    [
+     "c:ion_",
+     -0.476
+    ],
+    [
+     "c:inne",
+     -0.426
+    ],
+    [
+     "c:håll",
+     -0.421
+    ],
+    [
+     "w:1",
+     -0.375
+    ],
+    [
+     "c:ner_",
+     -0.374
+    ]
+   ]
+  },
+  "discrimination": {
+   "positive": [
+    [
+     "c:ions",
+     0.731
+    ],
+    [
+     "c:are_",
+     0.678
+    ],
+    [
+     "c:plic",
+     0.646
+    ],
+    [
+     "c:_dis",
+     0.588
+    ],
+    [
+     "c:lica",
+     0.56
+    ],
+    [
+     "c:rimi",
+     0.554
+    ],
+    [
+     "c:ata_",
+     0.552
+    ],
+    [
+     "c:ial_",
+     0.54
+    ]
+   ],
+   "negative": [
+    [
+     "c:_bes",
+     -0.911
+    ],
+    [
+     "c:slut",
+     -0.897
+    ],
+    [
+     "c:eslu",
+     -0.815
+    ],
+    [
+     "c:besl",
+     -0.815
+    ],
+    [
+     "c:lut_",
+     -0.59
+    ],
+    [
+     "w:beslut",
+     -0.565
+    ],
+    [
+     "c:det_",
+     -0.437
+    ],
+    [
+     "c:fatt",
+     -0.377
+    ]
+   ]
+  },
+  "privacy": {
+   "positive": [
+    [
+     "c:rson",
+     1.064
+    ],
+    [
+     "c:_per",
+     1.05
+    ],
+    [
+     "c:erso",
+     1.049
+    ],
+    [
+     "c:pers",
+     1.045
+    ],
+    [
+     "c:gift",
+     0.805
+    ],
+    [
+     "c:data",
+     0.769
+    ],
+    [
+     "c:uppg",
+     0.758
+    ],
+    [
+     "c:pgif",
+     0.745
+    ]
+   ],
+   "negative": [
+    [
+     "c:eslu",
+     -0.848
+    ],
+    [
+     "c:besl",
+     -0.848
+    ],
+    [
+     "c:slut",
+     -0.829
+    ],
+    [
+     "c:_bes",
+     -0.827
+    ],
+    [
+     "c:lut_",
+     -0.516
+    ],
+    [
+     "w:beslut",
+     -0.486
+    ],
+    [
+     "c:lute",
+     -0.395
+    ],
+    [
+     "c:utet",
+     -0.382
+    ]
+   ]
+  },
+  "contestability": {
+   "positive": [
+    [
+     "c:moti",
+     0.98
+    ],
+    [
+     "c:otiv",
+     0.98
+    ],
+    [
+     "c:iver",
+     0.93
+    ],
+    [
+     "c:tive",
+     0.926
+    ],
+    [
+     "c:veri",
+     0.882
+    ],
+    [
+     "c:gand",
+     0.823
+    ],
+    [
+     "w:motivering",
+     0.807
+    ],
+    [
+     "c:klag",
+     0.787
+    ]
+   ],
+   "negative": [
+    [
+     "c:lar_",
+     -0.454
+    ],
+    [
+     "c:serv",
+     -0.445
+    ],
+    [
+     "c:_ser",
+     -0.408
+    ],
+    [
+     "c:ervi",
+     -0.398
+    ],
+    [
+     "c:tlig",
+     -0.395
+    ],
+    [
+     "c:tet_",
+     -0.366
+    ],
+    [
+     "c:iga_",
+     -0.364
+    ],
+    [
+     "c:_när",
+     -0.34
+    ]
+   ]
+  },
+  "human-oversight": {
+   "positive": [
+    [
+     "c:_hum",
+     0.781
+    ],
+    [
+     "c:huma",
+     0.781
+    ],
+    [
+     "c:uman",
+     0.781
+    ],
+    [
+     "w:human",
+     0.781
+    ],
+    [
+     "c:man_",
+     0.728
+    ],
+    [
+     "c:stem",
+     0.724
+    ],
+    [
+     "c:syst",
+     0.724
+    ],
+    [
+     "c:yste",
+     0.724
+    ]
+   ],
+   "negative": [
+    [
+     "c:_bes",
+     -0.627
+    ],
+    [
+     "c:slut",
+     -0.604
+    ],
+    [
+     "c:eslu",
+     -0.595
+    ],
+    [
+     "c:besl",
+     -0.595
+    ],
+    [
+     "w:4",
+     -0.478
+    ],
+    [
+     "c:rand",
+     -0.426
+    ],
+    [
+     "c:håll",
+     -0.394
+    ],
+    [
+     "c:öran",
+     -0.385
+    ]
+   ]
+  },
+  "security": {
+   "positive": [
+    [
+     "c:ade_",
+     0.794
+    ],
+    [
+     "c:del_",
+     0.654
+    ],
+    [
+     "c:_hos",
+     0.627
+    ],
+    [
+     "c:mnde",
+     0.589
+    ],
+    [
+     "c:ret_",
+     0.564
+    ],
+    [
+     "c:örde",
+     0.56
+    ],
+    [
+     "c:nför",
+     0.557
+    ],
+    [
+     "c:ämnd",
+     0.555
+    ]
+   ],
+   "negative": [
+    [
+     "c:slut",
+     -0.521
+    ],
+    [
+     "c:erin",
+     -0.422
+    ],
+    [
+     "c:_rät",
+     -0.398
+    ],
+    [
+     "c:eslu",
+     -0.396
+    ],
+    [
+     "c:besl",
+     -0.396
+    ],
+    [
+     "w:4",
+     -0.364
+    ],
+    [
+     "w:to",
+     -0.348
+    ],
+    [
+     "c:_to_",
+     -0.348
+    ]
+   ]
+  },
+  "misuse": {
+   "positive": [
+    [
+     "w:other",
+     0.758
+    ],
+    [
+     "c:_may",
+     0.726
+    ],
+    [
+     "c:may_",
+     0.726
+    ],
+    [
+     "w:may",
+     0.726
+    ],
+    [
+     "c:_oth",
+     0.703
+    ],
+    [
+     "c:othe",
+     0.703
+    ],
+    [
+     "c:ndas",
+     0.696
+    ],
+    [
+     "c:ents",
+     0.692
+    ]
+   ],
+   "negative": [
+    [
+     "c:_bes",
+     -0.794
+    ],
+    [
+     "c:eslu",
+     -0.656
+    ],
+    [
+     "c:besl",
+     -0.656
+    ],
+    [
+     "c:slut",
+     -0.585
+    ],
+    [
+     "c:lut_",
+     -0.511
+    ],
+    [
+     "c:nter",
+     -0.5
+    ],
+    [
+     "w:beslut",
+     -0.493
+    ],
+    [
+     "c:else",
+     -0.429
+    ]
+   ]
+  }
+ },
+ "ruleFeatureWeightInBoth": {
+  "transparency": 2.198,
+  "accountability": 2.948,
+  "discrimination": 3.962,
+  "privacy": 2.593,
+  "contestability": 4.315,
+  "human-oversight": 2.874,
+  "security": 4.026,
+  "misuse": 2.123
+ },
+ "finalThresholds": {
+  "model": [
+   0.4,
+   0.3,
+   0.3,
+   0.4,
+   0.4,
+   0.45,
+   0.05,
+   0.05
+  ],
+  "both": [
+   0.35000000000000003,
+   0.6000000000000001,
+   0.35000000000000003,
+   0.35000000000000003,
+   0.7500000000000001,
+   0.7500000000000001,
+   0.15000000000000002,
+   0.25
+  ]
+ }
+}

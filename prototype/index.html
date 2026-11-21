@@ -19,16 +19,14 @@
   <meta name="twitter:image" content="https://abdimannor.github.io/public-decision-risk-lens/prototype/og.png">
   <meta name="twitter:image:alt" content="Screenshot of the Public Decision Risk Lens prototype">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.dataset.motion = localStorage.getItem('risk-lens-motion') === 'off' ? 'off' : 'on';</script>
 </head>
 <body>
   <a class="skip" href="#flags" data-i18n="skip">Skip to flags</a>
   <aside class="banner" aria-label="Advisory notice" data-i18n-attr="aria-label:bannerLabel"><p data-i18n-html="banner"><strong>Advisory discussion aid.</strong>
     This early prototype matches visible words and phrases. It can miss risks and it will produce false positives.
     It does not decide anything and does not assess people. Every flag needs a human reviewer.</p>
-    <div class="lang" role="group" aria-label="Language" data-i18n-attr="aria-label:langLabel">
-      <button type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
-      <button type="button" data-lang="sv" lang="sv" aria-pressed="false">Svenska</button>
-    </div>
+    <button type="button" class="ctl-btn ctl-lang" id="lang-toggle" aria-label="Switch to Swedish, SV" title="Switch to Swedish" data-i18n-attr="aria-label:langSwitchName;title:langSwitch"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><span class="ctl-code" lang="sv">SV</span></button>
   </aside>
 
   <header class="top">

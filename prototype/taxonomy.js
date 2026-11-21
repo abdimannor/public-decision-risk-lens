@@ -38,6 +38,13 @@
       patterns: {
         en: ["risk score", "risk assessment", "profiling", "postcode", "postal code", "neighbourhood", "nationality", "ethnic", "gender", "age group", "disability", "language", "prioritis", "high-risk group"],
         sv: ["riskpoäng", "riskbedömning", "profilering", "postnummer", "bostadsområde", "medborgarskap", "nationalitet", "etnisk", "kön", "ålder", "funktionsnedsättning", "språk", "prioriter"]
+      },
+      // Profiling only matters for this category when the passage also
+      // speaks of groups, protected grounds or unequal outcomes.
+      gated: {
+        terms: ["profiling", "profilering"],
+        cues: ["ethnic", "gender", "sexual", "age group", "older", "younger", "disab", "religio", "race", "racial", "nationalit", "minorit", "bias", "disparate", "group", "discriminat", "vulnerab",
+               "kön", "etnisk", "ålder", "funktionsnedsättning", "religion", "sexuell", "ras", "minoritet", "grupp", "diskriminer", "utsatt", "snedvrid"]
       }
     },
     {

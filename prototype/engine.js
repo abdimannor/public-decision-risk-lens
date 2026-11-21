@@ -60,21 +60,34 @@
     return end;
   }
 
-  // Negation: "inte automatiserat", "not fully automated", "utan sekretess".
+  // Negation: "inte automatiserat", "aldrig profilering", "not automated".
   // A match is skipped when a negating word stands right before it, or with
   // at most one word in between. Only the words before the match count, so a
   // later "not" in the sentence has no effect. Patterns that themselves start
-  // with a negation ("without human") are never skipped.
+  // with a negation ("without human") or a hedge ("fully automated") are
+  // never skipped. ("utan" is not a negator here: "utan mänsklig granskning"
+  // describes a missing safeguard and stays flagged.)
+  // A hedge or limiter between the negator and the term keeps the flag:
+  // "inte alltid automatiserat", "inte helt automatiserat", "not fully
+  // automated", "no longer fully automated" all describe automation that
+  // still happens, so they must not be hidden. "no" followed by a number or
+  // a dot ("No. 5", "no 2016") is an abbreviation, not a negation.
   // Negation only removes terms that describe a risky practice (automation,
   // profiling, data sharing...). A negated SAFEGUARD is itself a warning
   // sign ("there is no appeal", "no human review"), so contestability,
   // accountability and the human-oversight safeguard terms are never skipped.
   const SAFEGUARD_CATEGORIES = new Set(["contestability", "accountability", "human-oversight"]);
   const RISK_TERM_IN_SAFEGUARD = /automat/i;
-  const NEGATION = /(?:^|[^\p{L}\p{N}])(?:inte|ej|icke|aldrig|not|never|no)(?:\s+[\p{L}\p{N}-]+)?\s+$/iu;
+  const HEDGE = "alltid|helt|bara|enbart|endast|längre|nödvändigtvis|always|only|just|fully|entirely|solely|longer|necessarily";
+  const NEGATION = new RegExp(
+    "(?:^|[^\\p{L}\\p{N}])(?:inte|ej|icke|aldrig|not|never|no)" +
+    "(?:\\s+(?!(?:" + HEDGE + ")(?![\\p{L}\\p{N}-]))(?![\\p{N}])[\\p{L}\\p{N}-]+)?\\s+$",
+    "iu"
+  );
   const NEGATED_PATTERN = /^(?:without|utan|no|not|inte|ej)\b/i;
+  const HEDGED_PATTERN = new RegExp("^(?:" + HEDGE + ")(?![\\p{L}\\p{N}-])", "iu");
   function isNegated(text, start, pattern, category) {
-    if (NEGATED_PATTERN.test(pattern)) return false;
+    if (NEGATED_PATTERN.test(pattern) || HEDGED_PATTERN.test(pattern)) return false;
     if (SAFEGUARD_CATEGORIES.has(category) && !RISK_TERM_IN_SAFEGUARD.test(pattern)) return false;
     return NEGATION.test(text.slice(Math.max(0, start - 40), start));
   }

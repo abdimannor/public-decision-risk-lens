@@ -1,0 +1,245 @@
+{
+ "annotator": "B",
+ "labels": {
+  "test2-IMY-2025-11828#1": [
+   "privacy",
+   "discrimination"
+  ],
+  "test2-CDEI-2020#2": [
+   "discrimination"
+  ],
+  "test2-SOU-2018:25#3": [],
+  "test2-Statskontoret-OOS-51#5": [
+   "discrimination"
+  ],
+  "test2-DO-2022:1#2": [
+   "discrimination",
+   "transparency"
+  ],
+  "test3-HFD-2015-ref61#1": [
+   "privacy",
+   "security"
+  ],
+  "test2-CDEI-2020#1": [
+   "discrimination"
+  ],
+  "test3-ISF-2026:1#1": [],
+  "test2-CDEI-2020#4": [
+   "human-oversight",
+   "discrimination"
+  ],
+  "test3-MOD-M2950-24#1": [
+   "human-oversight",
+   "contestability"
+  ],
+  "test3-HFD-2015-ref61#3": [
+   "privacy",
+   "security"
+  ],
+  "test3-OSR-2021#1": [],
+  "test2-Statskontoret-OOS-51#3": [
+   "transparency",
+   "contestability"
+  ],
+  "test3-OSR-2021#2": [
+   "transparency",
+   "accountability",
+   "contestability"
+  ],
+  "test2-SOU-2018:25#1": [
+   "contestability",
+   "transparency"
+  ],
+  "test3-AF-Analys-2023:11#3": [
+   "discrimination"
+  ],
+  "test3-AF-Rusta-och-matcha#2": [
+   "privacy",
+   "discrimination",
+   "transparency"
+  ],
+  "test3-CSPL-2020#3": [
+   "discrimination"
+  ],
+  "test2-CDEI-2020#5": [
+   "discrimination"
+  ],
+  "test3-Ofqual-2020#1": [
+   "discrimination",
+   "transparency"
+  ],
+  "test2-FK-2026-000930#1": [
+   "misuse",
+   "privacy",
+   "discrimination"
+  ],
+  "test3-AF-Analys-2023:11#4": [],
+  "test2-FK-2026-000930#3": [
+   "discrimination",
+   "privacy"
+  ],
+  "test2-IMY-2025-11828#2": [
+   "contestability"
+  ],
+  "test3-Ofqual-2020#3": [
+   "discrimination"
+  ],
+  "test2-FK-2026-000930#2": [
+   "discrimination"
+  ],
+  "test3-IMY-2023-1647#2": [
+   "privacy"
+  ],
+  "test2-FK-2026-000930#6": [
+   "privacy",
+   "misuse"
+  ],
+  "test2-FK-2026-000930#5": [
+   "transparency",
+   "contestability",
+   "human-oversight"
+  ],
+  "test2-DO-2022:1#3": [
+   "transparency",
+   "contestability"
+  ],
+  "test3-MOD-M2950-24#3": [
+   "contestability"
+  ],
+  "test3-OSR-2021#3": [
+   "human-oversight"
+  ],
+  "test3-IMY-2023-1647#3": [
+   "privacy"
+  ],
+  "test3-ISF-2026:1#4": [],
+  "test2-CDEI-2020#3": [
+   "human-oversight",
+   "transparency",
+   "contestability"
+  ],
+  "test2-SOU-2018:25#4": [
+   "transparency"
+  ],
+  "test3-CSPL-2020#1": [
+   "transparency",
+   "accountability",
+   "privacy"
+  ],
+  "test2-FK-2026-000930#4": [
+   "human-oversight"
+  ],
+  "test2-DO-2022:1#4": [],
+  "test2-Statskontoret-OOS-51#1": [
+   "transparency"
+  ],
+  "test3-IMY-2023-1647#4": [
+   "privacy"
+  ],
+  "test3-HFD-2015-ref61#4": [
+   "privacy",
+   "security"
+  ],
+  "test3-IMY-2023-1647#1": [
+   "privacy",
+   "security"
+  ],
+  "test3-ISF-2026:1#2": [],
+  "test3-MOD-M2950-24#2": [
+   "human-oversight",
+   "contestability"
+  ],
+  "test3-Ofqual-2020#2": [],
+  "test2-Statskontoret-OOS-51#4": [
+   "transparency",
+   "accountability"
+  ],
+  "test2-DO-2022:1#1": [
+   "human-oversight"
+  ],
+  "test3-AF-Analys-2023:11#1": [
+   "discrimination"
+  ],
+  "test2-SOU-2018:25#2": [
+   "transparency",
+   "contestability"
+  ],
+  "test3-AF-Rusta-och-matcha#1": [
+   "human-oversight",
+   "transparency",
+   "misuse"
+  ],
+  "test3-CSPL-2020#2": [
+   "human-oversight"
+  ],
+  "test2-Statskontoret-OOS-51#2": [
+   "discrimination"
+  ],
+  "test3-HFD-2015-ref61#2": [
+   "privacy",
+   "security"
+  ],
+  "test3-ISF-2026:1#3": [],
+  "test3-AF-Analys-2023:11#2": [
+   "transparency"
+  ]
+ },
+ "reasons": {
+  "test2-IMY-2025-11828#1": "Personal data processing for ML risk profile selecting individuals for controls",
+  "test2-CDEI-2020#2": "Facial recognition bias, equality duty",
+  "test2-SOU-2018:25#3": "General definition of public documents; not tied to a decision/tool",
+  "test2-Statskontoret-OOS-51#5": "Discrimination grounds in decisions",
+  "test2-DO-2022:1#2": "Anti-discrimination in ADM; black-box phenomenon",
+  "test3-HFD-2015-ref61#1": "Social boards' access to social insurance database; access restriction",
+  "test2-CDEI-2020#1": "Bias in policing tools",
+  "test3-ISF-2026:1#1": "Bare automation overview",
+  "test2-CDEI-2020#4": "Human judgement to monitor/reject variables; bias",
+  "test3-MOD-M2950-24#1": "Cases not picked for manual handling closed automatically; appealability disputed",
+  "test3-HFD-2015-ref61#3": "Direct access to personal-data register without control over disclosure",
+  "test3-OSR-2021#1": "Terminology only",
+  "test2-Statskontoret-OOS-51#3": "Duty to give reasons, documentation, public access",
+  "test3-OSR-2021#2": "Transparency of model, governance/accountability, grounds for appeal",
+  "test2-SOU-2018:25#1": "Exceptions to duty to give reasons; reasons for appeal",
+  "test3-AF-Analys-2023:11#3": "Group-wise analysis for non-discrimination of ranking model",
+  "test3-AF-Rusta-och-matcha#2": "Profiling notice; data incl. birth country, sex, disability, age; legal basis",
+  "test3-CSPL-2020#3": "Data bias and algorithmic discrimination",
+  "test2-CDEI-2020#5": "Credit discrimination by gender",
+  "test3-Ofqual-2020#1": "Protected characteristics; explainability of model to schools; small cohorts treated differently",
+  "test2-FK-2026-000930#1": "Data shared and reused broadly; risk selection profiles",
+  "test3-AF-Analys-2023:11#4": "Methodological choice of outcome variable",
+  "test2-FK-2026-000930#3": "Personal data; algorithmic discrimination assessment",
+  "test2-IMY-2025-11828#2": "How to appeal",
+  "test3-Ofqual-2020#3": "Bias in teacher estimates by characteristics",
+  "test2-FK-2026-000930#2": "Risk profiles targeting controls; equal treatment",
+  "test3-IMY-2023-1647#2": "Personal data of pupils/staff in service",
+  "test2-FK-2026-000930#6": "Reuse of personal data collected for other purposes; social scoring limits",
+  "test2-FK-2026-000930#5": "Reasons/documentation, appeal, automation bias and oversight",
+  "test2-DO-2022:1#3": "Lack of insight, trade secrets; impedes complaints/appeals",
+  "test3-MOD-M2950-24#3": "Automated GIS status not an appealable decision",
+  "test3-OSR-2021#3": "Models with no final human judgement vs human in the loop",
+  "test3-IMY-2023-1647#3": "High-risk processing of children's data, missing DPIA",
+  "test3-ISF-2026:1#4": "Method description",
+  "test2-CDEI-2020#3": "Meaningful human oversight; disclosure so people can challenge",
+  "test2-SOU-2018:25#4": "Traceability of decision basis, insight into case material",
+  "test3-CSPL-2020#1": "Secretive/outsourced algorithms; surveillance of citizens",
+  "test2-FK-2026-000930#4": "Competent humans to quality-assure and follow up AI outcomes",
+  "test2-DO-2022:1#4": "Prevalence statistics; bare mention of automated decisions",
+  "test2-Statskontoret-OOS-51#1": "Need for transparency and documentation of AI use",
+  "test3-IMY-2023-1647#4": "Sanction for DPIA failure, children's data",
+  "test3-HFD-2015-ref61#4": "Authorisation and secrecy controls in data disclosure system",
+  "test3-IMY-2023-1647#1": "DPIA failure; cloud service migration to own IT environment",
+  "test3-ISF-2026:1#2": "Preconditions for automation, cost",
+  "test3-MOD-M2950-24#2": "No orders possible without manual handling; automatic review constitutes a decision",
+  "test3-Ofqual-2020#2": "Teacher grade optimism statistics",
+  "test2-Statskontoret-OOS-51#4": "Unclear grounds make responsibility hard to place",
+  "test2-DO-2022:1#1": "Fully automated decisions vs caseworker making final decision",
+  "test3-AF-Analys-2023:11#1": "Prediction model sorts job seekers into tracks; miscalibration",
+  "test2-SOU-2018:25#2": "Algorithms not documented or in reasons; reconsideration/appeal",
+  "test3-AF-Rusta-och-matcha#1": "Caseworker decides finally; notice of tool; randomisation for evaluation alters outcomes",
+  "test3-CSPL-2020#2": "Human-in-the-loop intervention",
+  "test2-Statskontoret-OOS-51#2": "AI risk assessment sorting cases for fraud",
+  "test3-HFD-2015-ref61#2": "Disclosure via direct access, insufficient secrecy/authorisation controls",
+  "test3-ISF-2026:1#3": "General effects of digitalisation",
+  "test3-AF-Analys-2023:11#2": "Being transparent about model, data, selection"
+ }
+}

@@ -69,9 +69,32 @@ test("held-out (now development) precision and recall stay at the measured level
 // precision 0.48 (30 of 62), recall 0.70 (30 of 43): one true positive lost
 // (recall floor lowered from 0.70 to 0.69 for that, see the PR), ten false
 // positives removed.
-test("frozen test set: scores, and does not fall below its one-time measurement", () => {
+// Three-annotator round: test2 was relabelled by the majority of three
+// independent annotators (single-annotator labels kept in
+// labels_single_annotator). Against the majority: precision 0.53 (33 of 62),
+// recall 0.73 (33 of 45).
+test("earlier frozen set, relabelled by three annotators: does not fall below its measurement", () => {
   const r = evaluate(loadSet("test2"));
   assert.equal(r.passages, 26);
+  assert.ok(r.overall.precision >= 0.52, `precision ${r.overall.precision}`);
+  assert.ok(r.overall.recall >= 0.72, `recall ${r.overall.recall}`);
+});
+
+// test3.json: nine new documents, labelled by majority of three independent
+// annotators against the guide, scored once: precision 0.48 (25 of 52),
+// recall 0.63 (25 of 40). The current honest number. Never tune on it; the
+// floors only guard against regressions.
+test("new test set (three annotators): does not fall below its one-time measurement", () => {
+  const r = evaluate(loadSet("test3"));
+  assert.equal(r.passages, 30);
   assert.ok(r.overall.precision >= 0.47, `precision ${r.overall.precision}`);
-  assert.ok(r.overall.recall >= 0.69, `recall ${r.overall.recall}`);
+  assert.ok(r.overall.recall >= 0.62, `recall ${r.overall.recall}`);
+});
+
+test("agreement between the three annotators recomputes as reported", async () => {
+  const { agreement } = await import("./agreement.mjs");
+  const r = agreement();
+  assert.equal(r.annotators, 3);
+  assert.equal(r.passages, 56);
+  assert.ok(Math.abs(r.pooledKappa - 0.93) < 0.01, `pooled kappa ${r.pooledKappa}`);
 });

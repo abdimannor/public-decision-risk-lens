@@ -101,10 +101,10 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 | Held-out (new documents), first score | 30 | 57 | 44% | 72% | 55% |
 | Tuning, after precision round | 54 | 51 | 84% | 71% | 77% |
 | Held-out, after precision round (development data) | 30 | 57 | 65% | 82% | 73% |
-| **Frozen test set, before precision round** | 26 | 43 | 36% | 63% | 46% |
-| **Frozen test set, after precision round (the honest number)** | 26 | 43 | 42% | 72% | 53% |
+| Frozen test set (test2), before precision round | 26 | 43 | 36% | 63% | 46% |
+| Frozen test set (test2), after precision round (the honest number at the time) | 26 | 43 | 42% | 72% | 53% |
 
-On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a third, frozen test set (`prototype/eval/test2.json`: 26 passages from six further documents, labelled blind on a separate branch) was scored once afterwards: precision 36% to 42%, recall 63% to 72%. That is the number to quote; the development numbers overstate the gain. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
+On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a third, frozen test set (`prototype/eval/test2.json`: 26 passages from six further documents, labelled blind on a separate branch) was scored once afterwards: precision 36% to 42%, recall 63% to 72%. That was the number to quote at the time (now superseded by test3, below); the development numbers overstated the gain. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
 
 ### Definitions
 
@@ -114,9 +114,18 @@ Labels follow the [annotation guide](docs/annotation-guide.md): a definition per
 | --- | ---: | ---: | ---: |
 | Tuning, relabelled | 47 | 89% (74% with the previous engine) | 66% (68%) |
 | Held-out, development data | 57 | 69% (65%) | 82% (82%) |
-| **Frozen test set, labels from before the guide** | 43 | **48%** (42%) | **70%** (72%) |
+| Frozen test set, labels from before the guide | 43 | 48% (42%) | 70% (72%) |
 
-Caveat: the frozen test set was labelled before the guide existed and its labels stay frozen, so it still counts some bare mentions as concerns. The gap between the development sets and the frozen set is partly that, partly patterns that still fire on words that do not carry the concern. The frozen set has now been scored twice; the next honest number needs a new blind test set labelled with the guide.
+Historical note (before the three-annotator round): the frozen test set was then labelled before the guide existed, so it still counted some bare mentions as concerns, and it had been scored twice. Both points led to the three-annotator round and the new test set below.
+
+**Three annotators and a fresh test set.** Three independent annotators (AI instances with different instructions, working only from the guide and the texts) labelled a new test set (`prototype/eval/test3.json`: 30 passages from nine further documents, among them two Swedish court rulings on automated decisions, Arbetsförmedlingen's profiling model and three UK reports on the 2020 grading algorithm and AI in public life) and relabelled the earlier frozen set; a label counts when two of three give it. Agreement: Fleiss' kappa 0.93 pooled, lowest for accountability (0.73); `npm run agreement` recomputes it from `prototype/eval/annotations/`. Shared-model annotators overstate agreement compared with people. Scored once against the majority:
+
+| Set | Passages | Labels | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| **New test set (the number to quote)** | 30 | 40 | **48%** | **63%** | **54%** |
+| Earlier frozen set, relabelled by three annotators | 26 | 45 | 53% | 73% | 62% |
+
+Human oversight and accountability are the weakest categories on the new set.
 
 Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
 

@@ -106,6 +106,16 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 
 On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a third, frozen test set (`prototype/eval/test2.json`: 26 passages from six further documents, labelled blind on a separate branch) was scored once afterwards: precision 36% to 42%, recall 63% to 72%. That is the number to quote; the development numbers overstate the gain. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
 
+### Round 4: oversight and accountability (development numbers)
+
+Human oversight now also fires when a passage says a case is decided or examined without a person or describes the extent of manual review; "handläggare" and "oversight" need a review cue nearby. Accountability words ("ansvar", "responsible") need a cue that responsibility is unclear, shared, shifted or tied to an error, not just a named body. All three sets were used for development, so these are not honest estimates.
+
+| Set | Labels | Overall P / R before | Overall P / R after | Accountability P / R | Human oversight P / R |
+| --- | ---: | --- | --- | --- | --- |
+| Tuning (gold) | 47 | 89% / 66% | 87% / 87% | 100% / 22% to 82% / 100% | 86% / 67% to 90% / 100% |
+| Held-out (development) | 57 | 69% / 82% | 70% / 86% | 83% / 63% to 86% / 75% | 75% / 92% to 76% / 100% |
+| test2 (development in this round) | 43 | 48% / 70% | 52% / 74% | 33% / 20% to 75% / 60% | 50% / 100% to 56% / 100% |
+
 ### Definitions
 
 Labels follow the [annotation guide](docs/annotation-guide.md): a definition per category, what counts and what does not, and invented borderline examples. Its key rule: a passage that only mentions automation, an algorithm, a model or AI is not a transparency or human-oversight concern by itself. The tool shows such passages with a neutral "Mentions automation" / "Nämner automatisering" tag, which is not a risk flag and is not counted in the progress meter, summary card or evaluation. The tuning and held-out sets were re-read against the guide without running the engine (four tuning labels removed, none on held-out; see [the relabel log](docs/relabel-log.md)).

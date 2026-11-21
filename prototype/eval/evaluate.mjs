@@ -63,9 +63,11 @@ const pct = (x) => (x === null ? "  n/a" : (x * 100).toFixed(0).padStart(4) + "%
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const setName = process.argv.slice(2).find((a) => !a.startsWith("--")) || "gold";
-  const r = evaluate(loadSet(setName));
+  const set = loadSet(setName);
+  const r = evaluate(set);
   if (process.argv.includes("--json")) { console.log(JSON.stringify(r, null, 2)); process.exit(0); }
-  console.log(`Set: ${setName}. Passages: ${r.passages}. Unit: (passage, category). Single AI annotator, see gold.json.\n`);
+  const who = /three/i.test(set.annotator || "") ? "Labels: majority of three independent annotators" : "Labels: single AI annotator";
+  console.log(`Set: ${setName}. Passages: ${r.passages}. Unit: (passage, category). ${who}, see ${SETS[setName]}.\n`);
   console.log("category          support   TP  FP  FN  precision  recall     F1");
   for (const s of [...r.perCategory, { category: "OVERALL (micro)", ...r.overall }]) {
     console.log(`${s.category.padEnd(17)} ${String(s.support).padStart(7)} ${String(s.tp).padStart(4)} ${String(s.fp).padStart(3)} ${String(s.fn).padStart(3)}      ${pct(s.precision)}   ${pct(s.recall)}  ${pct(s.f1)}`);

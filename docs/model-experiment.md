@@ -37,7 +37,7 @@ Micro precision / recall / F1 by slice:
 | English | 48 | 68% / 81% / 74% | 24% / 70% / 36% | 62% / 80% / 70% | 29% / 92% / 44% |
 | test3 passages only | 30 | 48% / 63% / 54% | 20% / 70% / 31% | 43% / 65% / 51% | 22% / 83% / 34% |
 
-A note on fairness: the rules were tuned on gold, heldout and test2, so "rules" on all 140 passages is flattering to the rules. The test3 row is the one where neither side has seen the documents; the rules still win there (54% against 31% and 51% F1).
+A note on fairness: the rules were tuned on gold, heldout and test2, so on all 140 passages every column that uses the rule decision is flattered: "rules", "model + rule feature" and "union". Only "model" alone is free of it. The test3 row is the one no column has seen; the rules still win there (54% F1, against 51% for model + rule feature, 34% for the union and 31% for the model).
 
 Sensitivity check, not used to pick anything: 600 epochs at learning rate 4 gave the same picture (micro F1: model 33%, model + rule feature 60%, union 41%, rules 67%).
 
@@ -52,7 +52,7 @@ Largest weights when trained on all 140 passages, in plain words ("starts with",
 - **contestability**: "motiv" (motivering, reasons), "klag" (överklaga, appeal). Close to what the rules already use.
 - **human-oversight**: "human", "system".
 - **security** and **misuse**: fragments with no clear meaning ("-ade", "-del", "may", "other"): with 7 and 8 positive labels the model memorises documents rather than concepts.
-- In the "model + rule feature" variant, the rule decision gets the largest weight in every category (2.1 to 4.3, against below 1.1 for any n-gram), so that variant mostly copies the rules and the n-grams add noise.
+- In the "model + rule feature" variant, the rule decision gets the largest weight in every category (2.1 to 4.3; in the n-gram-only model, whose top weights are stored in cv-results.json, no n-gram weight exceeds 1.1), so that variant mostly copies the rules and the n-grams add noise.
 
 A pattern across categories: "beslut" (decision) is a strong negative cue almost everywhere. That is a document effect, not a concept: förvaltningslag passages talk about decisions constantly and many carry no label. With 25 documents, such document-level vocabulary dominates.
 

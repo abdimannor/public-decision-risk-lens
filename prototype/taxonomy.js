@@ -94,19 +94,36 @@
       description: "Whether a person with real authority checks the tool's output before it affects someone.",
       question: "Does a person with competence and authority review the output, and can they overrule it?",
       patterns: {
-        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve", "human intervention", "human involvement", "human being"],
-        sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
+        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve", "human intervention", "human involvement", "human being",
+             "no human", "human in the loop", "human-in-the-loop", "natural person", "case-by-case", "case by case", "manual check"],
+        sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare",
+             "ingen manuell", "manuell kontroll", "individuell prövning", "faktisk prövning", "verklig prövning", "verklig sekretessprövning", "granskas av en handläggare", "utan handläggare", "granska och kontrollera"]
       },
       // Automation and the word "decision maker" are context, not an
       // oversight issue in themselves (docs/annotation-guide.md). They flag
       // only when the passage also speaks of a person reviewing, checking,
       // correcting or stepping in. "fatta" (take a decision) and "person"
       // (which also starts "personuppgift") are not oversight cues.
-      gated: {
+      // "natural person" is also the GDPR word for any individual: it is an
+      // oversight cue only next to verifying, overseeing or deciding.
+      // A caseworker named as the one who handles a case, and "oversight"
+      // of a sector by a regulator, are not about a person checking the
+      // tool. They flag only next to reviewing, checking, assessing,
+      // correcting, or a human/manual step (or its absence).
+      gated: [{
+        terms: ["handläggare"],
+        cues: ["granska", "granskning", "kontroll", "pröv", "bedöm", "manuell", "manuellt", "utan", "ingen ", "ingrip", "rätta", "ändra", "överpröv", "godkänn", "automatiser", "automatisk", "AI", "system", "algoritm"]
+      }, {
+        terms: ["oversight"],
+        cues: ["human", "natural person", "manual", "meaningful", "effective", "overseen", "intervene", "override", "operator", "deployer", "AI system", "automated"]
+      }, {
+        terms: ["natural person"],
+        cues: ["verif", "overs", "oversight", "review", "confirm", "check", "competence", "authority"]
+      }, {
         terms: ["automatically", "automatiser", "automatiskt", "beslutsfattare"],
         cues: ["human", "manual", "review", "oversight", "intervention", "intervene", "caseworker", "case officer", "check", "verif", "override", "sign off",
                "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "rätta", "befattningshavare"]
-      }
+      }]
     },
     {
       id: "security",

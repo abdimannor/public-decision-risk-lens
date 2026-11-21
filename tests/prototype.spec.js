@@ -178,8 +178,8 @@ test("reviewer-added rule flags immediately, is marked and exported", async ({ p
 
 test("compare two versions lists appearing, disappearing and persisting flags", async ({ page }) => {
   await page.goto("/prototype/");
-  await page.getByLabel("Version A (earlier)").fill("The agency uses an algorithm to rank applications.\n\nThere is no appeal.");
-  await page.getByLabel("Version B (revised)").fill("The agency uses an algorithm to rank all applications.\n\nData has a retention period of one year.");
+  await page.getByLabel("Version A (earlier)").fill("The agency uses an algorithm, explained online, to rank applications.\n\nThere is no appeal.");
+  await page.getByLabel("Version B (revised)").fill("The agency uses an algorithm, explained online, to rank all applications.\n\nData has a retention period of one year.");
   await page.getByRole("button", { name: "Compare versions" }).click();
   await expect(page.locator(".cmp-group.appeared")).toContainText("retention");
   await expect(page.locator(".cmp-group.disappeared")).toContainText("appeal");

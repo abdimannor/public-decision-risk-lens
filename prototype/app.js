@@ -130,6 +130,11 @@
         pos = e;
       }
       li.append(p.text.slice(pos));
+      // Context signals are neutral information, not risk flags: they are
+      // shown on the passage but never counted (see docs/annotation-guide.md).
+      for (const c of (result.context || []).filter((x) => x.passageIndex === p.index)) {
+        li.append(" ", el("span", { class: "context-tag", "data-context": c.id, title: t("ctxHint") }, t("ctx_" + c.id.replace(/-/g, "_"))));
+      }
       list.append(li);
     }
   }

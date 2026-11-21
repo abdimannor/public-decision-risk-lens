@@ -19,20 +19,21 @@
         en: ["algorithm", "automated decision", "automated processing", "machine learning", "artificial intelligence", "notif", "AI system", "model", "black box", "proprietary", "trade secret"],
         sv: ["algoritm", "automatiser", "underrätt", "maskininlärning", "artificiell intelligens", "AI-system", "modell", "affärshemlighet", "sekretess"]
       },
-      // A bare mention of automation is not a transparency concern by
-      // itself ("automated decision" already names a decision and stays
-      // ungated). These terms flag only when the passage also speaks of a
-      // decision, or talks about explaining, informing, insight or
-      // reasons. A notice ("underrätt") flags only when it concerns a
-      // decision, its content, reasons or appeal, so routine notices (about
-      // a delay, say) stay quiet.
+      // A bare mention of automation or AI is not a transparency concern by
+      // itself (docs/annotation-guide.md): such mentions are shown as the
+      // neutral "mentions automation" context signal instead (see
+      // CONTEXT_SIGNALS below). These terms flag only when the passage also
+      // talks about explaining, informing, insight, documentation or reasons.
+      // A notice ("underrätt") flags only when it concerns a decision, its
+      // content, reasons or appeal, so routine notices stay quiet.
       gated: [{
         terms: ["underrätt"],
         cues: ["beslut", "decision", "innehåll", "skäl", "motiver", "överklag"]
       }, {
-        terms: ["automated processing", "automatiser"],
-        cues: ["beslut", "decision", "fatta", "explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware",
-               "förklar", "insyn", "motiver", "information", "informer", "skäl", "begrip", "transparens", "öppen", "känner till", "veta"]
+        terms: ["algorithm", "automated decision", "automated processing", "machine learning", "artificial intelligence", "AI system", "model",
+                "algoritm", "automatiser", "maskininlärning", "artificiell intelligens", "AI-system", "modell"],
+        cues: ["explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware", "document", "trace", "black box",
+               "förklar", "insyn", "motiver", "information", "informer", "skäl", "begrip", "transparens", "öppen", "känner till", "veta", "dokumentation", "spåra", "svarta lådan"]
       }]
     },
     {
@@ -97,12 +98,14 @@
         sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
       },
       // Automation and the word "decision maker" are context, not an
-      // oversight issue in themselves. They flag only when the passage also
-      // speaks of a person reviewing, checking or stepping in.
+      // oversight issue in themselves (docs/annotation-guide.md). They flag
+      // only when the passage also speaks of a person reviewing, checking,
+      // correcting or stepping in. "fatta" (take a decision) and "person"
+      // (which also starts "personuppgift") are not oversight cues.
       gated: {
         terms: ["automatically", "automatiser", "automatiskt", "beslutsfattare"],
         cues: ["human", "manual", "review", "oversight", "intervention", "intervene", "caseworker", "case officer", "check", "verif", "override", "sign off",
-               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "person", "befattningshavare", "fatta"]
+               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "rätta", "befattningshavare"]
       }
     },
     {
@@ -169,7 +172,20 @@
     }
   ];
 
-  const api = { TAXONOMY, ABSENCE_CHECKS };
+  // Context signals are NOT risk flags. They tell the reviewer what a
+  // passage is about (here: that it mentions automated decision-making or
+  // AI) and are never counted in the progress meter, the summary or the
+  // evaluation. See docs/annotation-guide.md, "bare mentions".
+  const CONTEXT_SIGNALS = [
+    {
+      id: "mentions-automation",
+      label: "Mentions automation",
+      patterns: ["automated decision", "automated processing", "automated individual", "automatically", "fully automated", "solely automated", "algorithm", "machine learning", "artificial intelligence", "AI system", "AI-", "(AI)", "use of AI", "using AI", "generative AI",
+                 "automatiser", "automatisk", "automatiskt", "algoritm", "maskininlärning", "artificiell intelligens", "AI-system", "AI-tjänst", "generativ AI", "användning av AI"]
+    }
+  ];
+
+  const api = { TAXONOMY, ABSENCE_CHECKS, CONTEXT_SIGNALS };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.RiskLensTaxonomy = api;
 })(typeof window !== "undefined" ? window : globalThis);

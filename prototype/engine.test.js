@@ -248,3 +248,42 @@ test("an automated decision that people are not told the reasons for is a transp
     assert.ok(findFlags(splitPassages(s)).some((f) => f.category === "transparency"), s);
   }
 });
+
+// Round 4: human oversight and accountability. Invented sentences only.
+function catsOf(text) { return findFlags(splitPassages(text)).map((f) => f.category); }
+
+test("human oversight fires when no person examines the case", () => {
+  for (const s of [
+    "Ansökningar om bidraget avgörs utan handläggare.",
+    "Det görs ingen manuell kontroll av besluten om avgift.",
+    "Nämnden har inte gjort någon individuell prövning av varje elev.",
+    "No human looks at the refusal before it is sent.",
+    "Each permit is checked case-by-case by the licensing team.",
+    "The scheme keeps a human in the loop for every rejection.",
+    "Matches must be confirmed by two natural persons before action is taken."
+  ]) assert.ok(catsOf(s).includes("human-oversight"), s);
+});
+
+test("a caseworker or regulator named without review is not human oversight", () => {
+  assert.ok(!catsOf("Kontakta din handläggare om du har frågor om ansökan.").includes("human-oversight"));
+  assert.ok(!catsOf("The ministry has oversight of the housing sector budget.").includes("human-oversight"));
+  assert.ok(!catsOf("A natural person may request a copy of the record.").includes("human-oversight"));
+});
+
+test("accountability needs responsibility that is unclear, shared or contested", () => {
+  for (const s of [
+    "Det är oklart vem som bär ansvaret när modellen ger fel svar.",
+    "Ansvarsfördelningen mellan kommunen och bolaget är inte reglerad.",
+    "It is not clear who is responsible when the score is wrong.",
+    "The provider builds the logging and the deployer must keep it running.",
+    "Ledamoten får reservera sig mot beslutet."
+  ]) assert.ok(catsOf(s).includes("accountability"), s);
+});
+
+test("a body named as responsible, or responsible use, is not an accountability flag", () => {
+  for (const s of [
+    "Socialnämnden är ansvarig för verksamheten.",
+    "Vi vill använda tekniken på ett ansvarsfullt sätt.",
+    "The parks board is responsible for the summer programme."
+  ]) assert.ok(!catsOf(s).includes("accountability"), s);
+});

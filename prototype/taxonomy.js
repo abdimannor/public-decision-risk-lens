@@ -42,9 +42,26 @@
       description: "Who is responsible for the tool, its outputs and its errors.",
       question: "Is it clear which named role or body answers for this decision and for mistakes?",
       patterns: {
-        en: ["responsible", "responsibility", "liability", "third-party supplier", "supplier", "vendor", "contractor", "outsourc", "delegat", "accountab"],
-        sv: ["ansvar", "ansvarig", "personuppgiftsansvarig", "leverantör", "underleverantör", "upphandl", "delegation", "delegera"]
-      }
+        en: ["responsible", "responsibility", "liability", "third-party supplier", "supplier", "vendor", "contractor", "outsourc", "delegat", "accountab",
+             "answerable", "who is responsible", "provider", "deployer", "regulators", "democratic oversight", "third-party audit", "independent audit"],
+        sv: ["ansvar", "ansvarig", "personuppgiftsansvarig", "leverantör", "underleverantör", "upphandl", "delegation", "delegera",
+             "ansvarsfördelning", "oklart vem", "otydligt vem", "vem som har fattat", "vem eller vilka", "reservera sig", "avvikande mening", "beslutsfattarens namn"]
+      },
+      // A body named as responsible, or "responsible use", is not yet an
+      // accountability concern (docs/annotation-guide.md: a body named only
+      // as author does not count). These words flag only when the passage
+      // also says responsibility is unclear, shared, split, shifted or
+      // tied to an error. "provider" and "deployer" flag only together:
+      // the split between who builds and who uses the tool.
+      gated: [{
+        terms: ["ansvar", "ansvarig", "personuppgiftsansvarig", "responsible", "responsibility"],
+        cues: ["oklar", "otydlig", "vem ", "vilken", "fördel", "delat", "gemensam", "mellan", "bär", "ytterst", "skyldig", "se till", "kritik", "misstag", "felaktig", "leverantör", "upphandl", "överlåt", "ligger", "var ansvaret", "peka ut",
+               "unclear", "who ", "which body", "shared", "split", "between", "rests with", "lies", "liab", "answer", "criticis", "error", "mistake", "supplier", "vendor", "contractor", "transfer", "ensure"]
+      }, {
+        terms: ["provider"], cues: ["deployer", "user of the system"]
+      }, {
+        terms: ["deployer"], cues: ["provider"]
+      }]
     },
     {
       id: "discrimination",
@@ -94,19 +111,36 @@
       description: "Whether a person with real authority checks the tool's output before it affects someone.",
       question: "Does a person with competence and authority review the output, and can they overrule it?",
       patterns: {
-        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve", "human intervention", "human involvement", "human being"],
-        sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
+        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve", "human intervention", "human involvement", "human being",
+             "no human", "human in the loop", "human-in-the-loop", "natural person", "case-by-case", "case by case", "manual check"],
+        sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare",
+             "ingen manuell", "manuell kontroll", "individuell prövning", "faktisk prövning", "verklig prövning", "verklig sekretessprövning", "granskas av en handläggare", "utan handläggare", "granska och kontrollera"]
       },
       // Automation and the word "decision maker" are context, not an
       // oversight issue in themselves (docs/annotation-guide.md). They flag
       // only when the passage also speaks of a person reviewing, checking,
       // correcting or stepping in. "fatta" (take a decision) and "person"
       // (which also starts "personuppgift") are not oversight cues.
-      gated: {
+      // "natural person" is also the GDPR word for any individual: it is an
+      // oversight cue only next to verifying, overseeing or deciding.
+      // A caseworker named as the one who handles a case, and "oversight"
+      // of a sector by a regulator, are not about a person checking the
+      // tool. They flag only next to reviewing, checking, assessing,
+      // correcting, or a human/manual step (or its absence).
+      gated: [{
+        terms: ["handläggare"],
+        cues: ["granska", "granskning", "kontroll", "pröv", "bedöm", "manuell", "manuellt", "utan", "ingen ", "ingrip", "rätta", "ändra", "överpröv", "godkänn", "automatiser", "automatisk", "AI", "system", "algoritm"]
+      }, {
+        terms: ["oversight"],
+        cues: ["human", "natural person", "manual", "meaningful", "effective", "overseen", "intervene", "override", "operator", "deployer", "AI system", "automated"]
+      }, {
+        terms: ["natural person"],
+        cues: ["verif", "overs", "oversight", "review", "confirm", "check", "competence", "authority"]
+      }, {
         terms: ["automatically", "automatiser", "automatiskt", "beslutsfattare"],
         cues: ["human", "manual", "review", "oversight", "intervention", "intervene", "caseworker", "case officer", "check", "verif", "override", "sign off",
                "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "rätta", "befattningshavare"]
-      }
+      }]
     },
     {
       id: "security",

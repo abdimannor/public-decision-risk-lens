@@ -8,6 +8,7 @@
     "eval": "node prototype/eval/evaluate.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.60.0"
+    "@playwright/test": "1.60.0",
+    "axe-core": "^4.14.1"
   }
 }

@@ -5,7 +5,8 @@
   "scripts": {
     "test": "node --test prototype/engine.test.js prototype/fileimport.test.js prototype/eval/eval.test.mjs",
     "test:e2e": "playwright test",
-    "eval": "node prototype/eval/evaluate.mjs"
+    "eval": "node prototype/eval/evaluate.mjs",
+    "agreement": "node prototype/eval/agreement.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",

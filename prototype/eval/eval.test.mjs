@@ -3,7 +3,7 @@
 // without explaining why in the pull request.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { evaluate } from "./evaluate.mjs";
+import { evaluate, loadSet } from "./evaluate.mjs";
 
 // Before the error-analysis fixes: recall 0.51, precision 0.76 (51 labels).
 // Recall went from 0.74 to 0.725 when förvaltningslag #13 got the
@@ -24,4 +24,15 @@ test("overall precision on the gold set does not drop below the baseline", () =>
 test("every gold passage is still produced by the splitter for its sample", () => {
   const r = evaluate();
   assert.equal(r.passages, 54);
+});
+
+// Held-out set: blind-labelled passages from documents the engine was never
+// tuned on. Measured on first run (no engine changes): precision 0.44,
+// recall 0.72 (41 of 57 labels). The floor below is set under the measured
+// value so the test catches a large regression without inviting tuning to it.
+test("the held-out evaluation runs on all 30 passages", () => {
+  const r = evaluate(loadSet("heldout"));
+  assert.equal(r.passages, 30);
+  assert.equal(r.overall.support, 57);
+  assert.ok(r.overall.recall >= 0.6, `held-out recall ${r.overall.recall.toFixed(3)} < 0.6`);
 });

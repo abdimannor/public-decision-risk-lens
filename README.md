@@ -2,6 +2,8 @@
 
 > **Final project for the [Building AI course](https://buildingai.elementsofai.com/).**
 
+Try the prototype: https://abdimannor.github.io/public-decision-risk-lens/prototype/
+
 ## Summary
 
 **Building AI course project.** Public Decision Risk Lens is a human-supervised concept for reviewing public-sector decision documents before an AI-supported or automated process is introduced. It helps reviewers identify passages that may require closer attention because they affect transparency, accountability, fairness, privacy, or people’s ability to question a decision.
@@ -32,7 +34,7 @@ Each flag is linked to the relevant passage and risk category. A human reviewer 
 
 ### Prototype
 
-The `prototype/` folder contains a small version of the review workflow with no build step and no external services. To try it, open `prototype/index.html` in a browser, paste a document, load a `.txt` or PDF file, or load the fictional sample. PDF text is extracted in the browser with a vendored copy of pdf.js (`prototype/vendor/pdfjs/`, Apache-2.0), and each passage keeps its page number in flags and exports. PDF import needs the page served over http (for example `node tests/server.js`), because browsers block module scripts on `file://`. Scanned PDFs without a text layer are not supported (no OCR). All processing stays in the browser. A live copy will be at https://abdimannor.github.io/public-decision-risk-lens/prototype/ once GitHub Pages is enabled. The text, decisions and notes are stored only in your browser (local storage) so they survive a reload; the Clear review button removes them.
+The `prototype/` folder contains a small version of the review workflow with no build step and no external services. To try it, use the [live copy](https://abdimannor.github.io/public-decision-risk-lens/prototype/) or open `prototype/index.html` in a browser, and paste a document, load a `.txt` or PDF file, or load the fictional sample. PDF text is extracted in the browser with a vendored copy of pdf.js (`prototype/vendor/pdfjs/`, Apache-2.0), and each passage keeps its page number in flags and exports. PDF import needs the page served over http (for example `node tests/server.js`), because browsers block module scripts on `file://`. Scanned PDFs without a text layer are not supported (no OCR). All processing stays in the browser. The text, decisions and notes are stored only in your browser (local storage) so they survive a reload; the Clear review button removes them.
 
 What it does:
 

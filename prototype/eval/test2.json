@@ -1,0 +1,478 @@
+{
+  "format": "risk-lens-gold",
+  "version": 1,
+  "set": "test2",
+  "status": "FROZEN FINAL TEST SET. Labelled blind. Not used for tuning. Do not run the engine on these passages or tune against them; scored once by the coordinator after engine work is finished.",
+  "retrieved": "2026-11-21",
+  "annotator": "A single AI agent (Claude, acting for the repository owner), November 2026. One annotator only: no inter-annotator agreement, no check by a lawyer or domain expert.",
+  "method": "Frozen final test set from six documents not used in gold.json or heldout.json. Excerpts were chosen by reading for substance (decision reasoning, safeguards, oversight, transparency, appeal, discrimination, data protection), plus a few passages that only mention automation, AI or public records without a real risk, so false alarms can be measured. Each excerpt is verbatim from the fetched document after whitespace normalisation (PDF text extracted with the vendored pdf.js; page breaks become single spaces, so running headers, page numbers, footnote numbers and hyphenated line breaks such as 'be- gränsas' can appear inside a passage; the CDEI page was taken from the GOV.UK HTML). Labels were made BLIND: the annotator read only the category ids, descriptions and review questions, did not read engine.js, did not run the engine and did not run evaluate.mjs on this set. Caveat: while checking the file layout of prototype/taxonomy.js, one line of the Swedish misuse term list was briefly displayed; labels were assigned on the category description, not on terms. Passages with no label count for precision. IMY-2025-11828 is a two-page decision, so it yields only 2 passages.",
+  "documents": {
+    "d1": {
+      "title": "Beslut efter tillsyn enligt dataskyddsförordningen – Försäkringskassan",
+      "issuer": "Integritetsskyddsmyndigheten (IMY)",
+      "date": "2025-11-18",
+      "number": "IMY-2025-11828",
+      "url": "https://www.imy.se/globalassets/dokument/beslut/2025/beslut-tillsyn-forsakringskassan.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d2": {
+      "title": "Rapport – Öka förmågan att använda AI och ny teknik genom datadrivet arbete (svar på regeringsuppdrag)",
+      "issuer": "Försäkringskassan",
+      "date": "2026-03-09",
+      "number": "Dnr FK 2026/000930",
+      "url": "https://www.forsakringskassan.se/download/18.6824ccfb19c0e5392cd169/1773748737734/oka-formagan-att-anvanda-ai-och-ny-teknik-genom-datadrivet-arbete-svar-regeringsuppdrag-dnr-2026-000930.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d3": {
+      "title": "Myndigheterna och AI (Om offentlig sektor)",
+      "issuer": "Statskontoret",
+      "date": "2024",
+      "number": "Om offentlig sektor 51",
+      "url": "https://www.statskontoret.se/siteassets/rapporter-pdf/2024/oos_51---utskriftsversion.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d4": {
+      "title": "Juridik som stöd för förvaltningens digitalisering (kapitel 7, Automation i förvaltningen)",
+      "issuer": "Regeringskansliet (statens offentliga utredningar)",
+      "date": "2018-03",
+      "number": "SOU 2018:25",
+      "url": "https://regeringen.se/contentassets/e9a0044c745c4c9ca84fef309feafd76/juridik-som-stod-for-forvaltningens-digitalisering-sou-201825.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d5": {
+      "title": "Transparens, träning och data. Myndigheters användning av automatiserat beslutsfattande och risker för diskriminering",
+      "issuer": "Diskrimineringsombudsmannen (DO)",
+      "date": "2022",
+      "number": "Rapport 2022:1",
+      "url": "https://www.do.se/download/18.56175f8817b345aa7651be9/1646982570826/rapport-transparens-traning-och-data.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d6": {
+      "title": "Review into bias in algorithmic decision-making (main report)",
+      "issuer": "Centre for Data Ethics and Innovation (CDEI)",
+      "date": "2020-11-27",
+      "number": "CDEI review, November 2020",
+      "url": "https://www.gov.uk/government/publications/cdei-publishes-review-into-bias-in-algorithmic-decision-making/main-report-cdei-review-into-bias-in-algorithmic-decision-making",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "Open Government Licence v3.0 (Crown copyright, CDEI)",
+      "fetched_from": "https://www.gov.uk/government/publications/cdei-publishes-review-into-bias-in-algorithmic-decision-making/main-report-cdei-review-into-bias-in-algorithmic-decision-making"
+    }
+  },
+  "skipped": [],
+  "passages": [
+    {
+      "sample": "test2-IMY-2025-11828",
+      "index": 1,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Redogörelse för tillsynsärendet IMY inledde i juni 2025 tillsyn mot Försäkringskassan i syfte att utreda hur myndigheten behandlar personuppgifter inom ramen för myndighetens arbete med riskbaserade urval för riktade kontroller mot enskilda inom ersättning för tillfällig föräldrapenning samt om behandlingen är förenlig med dataskyddsförordningen och föreskrifter som kompletterar dataskyddsförordningen. Inom ramen för tillsynen har IMY begärt in information om den aktuella behandlingen, särskilt med avseende på hur ett eventuellt AI-system används i arbetet med urvalskontroller. I Försäkringskassans svar till IMY, som inkom den 5 september 2025, uppgavs att Försäkringskassan har använt en maskininlärningsbaserad riskprofil inom ramen för det aktuella arbetet men att denna togs ur bruk en dryg månad före tidpunkten för Försäkringskassans svar. Försäkringskassan har vidare uppgett att myndigheten för närvarande inte har några planer på att ta den tidigare riskprofilen i bruk igen inom den ovan nämnda handläggningen. Motivering av beslutet IMY konstaterar att Försäkringskassan använt sig av en maskininlärningsbaserad riskprofil inom ramen för den aktuella handläggningen men att denna tagits ur bruk.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Supervisory authority examines whether personal data processing in a machine-learning risk profile used to select individuals for targeted controls complies with the GDPR."
+        }
+      ]
+    },
+    {
+      "sample": "test2-IMY-2025-11828",
+      "index": 2,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Detta beslut har fattats av avdelningsjuristen Andreas Persson efter föredragning av juristen Måns Lysén. Vid den slutliga handläggningen av ärendet har även it- och informationssäkerhetsspecialisten Mats Juhlén medverkat. Andreas Persson Kopia till: Dataskyddsombudet Hur man överklagar Om ni vill överklaga beslutet ska ni skriva till IMY. Ange i skrivelsen vilket beslut ni överklagar och den ändring som ni begär. Överklagandet ska ha kommit in till IMY senast tre veckor från den dag ni fick del av beslutet. Om ni är en part som företräder det allmänna ska överklagandet dock ha kommit in inom tre veckor från den dag då beslutet meddelades. Om överklagandet har kommit in i tid sänder IMY det vidare till Förvaltningsrätten i Stockholm för prövning. Ni kan e-posta överklagandet till IMY om det inte innehåller några integritetskänsliga personuppgifter eller uppgifter som kan omfattas av sekretess.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Sets out how, where and within what time limit the decision can be appealed to the administrative court."
+        },
+        {
+          "category": "accountability",
+          "reason": "Names the official who took the decision and the officials who presented and took part in it."
+        }
+      ]
+    },
+    {
+      "sample": "test2-FK-2026-000930",
+      "index": 1,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Försäkringskassan har under lång tid arbetat datadrivet och stärker kontinuerligt myndighetens förmåga att använda datadrivna arbetssätt och AI. Detta skapar bättre förutsättningar för tidig riskidentifiering, mer proaktiva arbetssätt, förbättrad service och effektivare verksamhetsprocesser. Förflyttningen innebär samtidigt en perspektivförskjutning där data ses som en gemensam strategisk och operativ tillgång som kan delas och återanvändas brett i verksamheten. Det förutsätter även utveckling av nya arbetssätt och förmågor i organisationen. Arbetet omfattar bland annat etablering av gemensam data- och informationsstyrning, utveckling av gemensam operativ datalagringsplattform och stärkt kompetens inom verksamhetsarkitektur, data och AI. Parallellt utvecklas och utvärderas olika datadrivna tillämpningar, såsom riskbaserade urvalsprofiler och nätverksanalyser vilka bidrar till ökad träffsäkerhet i kontrollarbetet samt AI-baserade tillämpningar som automatiserad dokumenttolkning, vilket effektiviserar arbetet i handläggningsprocesserna. Arbetet med data och AI omfattas av komplexa och omfattande regelverk som kräver löpande rättsliga ställningstaganden. Den rättsliga ramen påverkar i stor utsträckning om och hur olika datadrivna tillämpningar, AI och ny teknik kan användas.",
+      "labels": [
+        {
+          "category": "misuse",
+          "reason": "Data is treated as a shared asset to be shared and reused broadly across the agency, beyond the purpose it was collected for."
+        }
+      ]
+    },
+    {
+      "sample": "test2-FK-2026-000930",
+      "index": 2,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Urvals- och riskprofiler Arbetet med att identifiera och hantera riskfyllda beteenden kopplade till felaktiga utbetalningar och bidragsbrott har bedrivits inom myndigheten i över 10 år och är i dag en integrerad del av verksamheten. Detta sker med stöd av urvals- och riskprofiler som, baserat på analyser av verksamhetsdata, används för att identifiera mönster och avvikelser som indikerar förhöjd risk, i syfte att rikta kontroll- och handläggningsinsatser dit de gör störst nytta. Arbetssätten bidrar till en mer träffsäker prioritering av resurser, en stärkt kontrollförmåga och en effektiv, rättssäker handläggning med enhetlig tillämpning. En central utgångspunkt är att insatserna utformas proportionerligt och med beaktande av likabehandling. Myndigheten har ett strukturerat datalager med väl utvecklade metadata och hög analytisk kompetens, vilket har möjliggjort en successiv utveckling mot mer träffsäkra riskanalyser och prioriteringar. Exempel på denna utveckling redovisas i avsnittet om datadrivna arbetssätt 2.0 Datadriven automatisering av förmånsprocesser Datadriven automatisering av förmånsprocesser är ett koncept som togs fram runt millennieskiftet.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Risk profiles direct controls at individuals; the text itself names equal treatment as a requirement for that targeting."
+        },
+        {
+          "category": "privacy",
+          "reason": "Operational data about claimants is analysed to find patterns and deviations indicating elevated risk."
+        }
+      ]
+    },
+    {
+      "sample": "test2-FK-2026-000930",
+      "index": 3,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Försäkringskassan hanterar stora mängder personuppgifter i handläggningen. AI- tillämpning som berör enskilda innebär i regel fler risker än AI-tillämpningar som används i interna administrativa processer. Inom socialförsäkringen och anslutande bidragssystem är diskriminering förbjuden. 8 I de fall där Försäkringskassan använder AI inom socialförsäkringen på ett sätt där det kan uppstå risk för diskriminering, görs en bedömning ur ett diskrimineringsrättsligt perspektiv innan AI-systemet tas i bruk. En risk när enskilda berörs är så kallad algoritmisk diskriminering, vilket exempelvis kan vara en konsekvens av att det finns bias i de data som samlas in och som används vid träning av ett AI-system. AI-förordningen, som i vissa delar är tillämpliga i dag, ställer krav på kvaliteten på den data som används vid träning, validering och test av ett AI- system som ska användas inom ett högriskområde. Ett exempel är kravet på undersökning av eventuella biaser som sannolikt kommer att påverka människors hälsa och säkerhet, inverka negativt på grundläggande rättigheter eller leda till diskriminering som är förbjuden enligt unionsrätten, kravet på riskhanteringssystem och mänsklig kontroll.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Discusses algorithmic discrimination from biased training data and a discrimination-law assessment before AI is put into use."
+        },
+        {
+          "category": "privacy",
+          "reason": "Large volumes of personal data are processed in casework, and AI that affects individuals carries more risk."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Cites the AI Act requirement of human oversight and risk management for high-risk systems."
+        }
+      ]
+    },
+    {
+      "sample": "test2-FK-2026-000930",
+      "index": 4,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Användning av alla typer av AI-system ställer höga krav på användarens förståelse för hur AI-systemet fungerar. AI-förordningen ställer även krav på att medarbetare ska ha tillräcklig med AI-kunnighet. I fall där AI-system gör bedömningar eller helt eller delvis fattar beslut under handläggningen behöver det fortsatt finnas människor som har tillräcklig kompetens och kunskap för att exempelvis kunna kvalitetssäkra data och för att kunna följa upp och utvärdera AI-systemets utfall. Försäkringskassan har i dag en hög grad av mänsklig 8 2 kap. 14§ 1 diskrimineringslagen [2008:567]. 9 1 kap. 9§ RF. 13 (16) Informationsklass Datum Diarienummer Öppen 2026-03-09 FK 2026/000930 involvering när AI används inom handläggningen, för att möta kraven på att tekniken används på ett rättssäkert, tryggt och tillförlitligt sätt. Försäkringskassan har tagit fram en grundutbildning i AI för att öka kompetensen kring AI och därigenom möjliggöra för medarbetare att använda AI på ett ansvarsfullt sätt. Utbildningar har även tagits fram i AI och teknik, AI och juridik samt AI, diskriminering och etik.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "People with sufficient competence must remain to quality-assure data and evaluate outcomes where AI assesses or decides, and the agency claims a high degree of human involvement."
+        }
+      ]
+    },
+    {
+      "sample": "test2-FK-2026-000930",
+      "index": 5,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Vid användning av automatisering eller AI-system inom ärendehandläggning gäller samma krav på utredning, kommunicering, partsinsyn och dokumentation av beslutsunderlag samt beslutsmotivering som vid manuell handläggning. Gällande regler medför därmed att ärenden oavsett vilken teknik som används övervakas och granskas i syfte att upptäcka och åtgärda risker för felaktigheter. De åtgärder som har beskrivits i ovan stycken bidrar till att myndighetens användande av AI är transparent och förklarbart. En särskild risk med automation och AI-system är att människor tenderar att lita på och okritiskt följa utfallet från systemet, ett fenomen känt som automation bias. Det innebär att det krävs hög grad av självständighet och kompetens hos de människor som använder och övervakar systemet. Denna risk ökar i takt med att transparensen i systemet minskar. Brister avseende transparens och förklarbarhet riskerar att minska allmänhetens förtroende för myndigheten och försvåra för allmänheten att tillvarata och utöva sina demokratiska rättigheter. För att enskilda ska kunna överklaga ett myndighetsbeslut måste myndigheten på ett begripligt sätt kunna ange grunderna för och förklara de resonemang som lett fram till beslutet.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "States that automated handling carries the same duties of disclosure, documentation and reasoning, and that weak explainability harms public trust."
+        },
+        {
+          "category": "contestability",
+          "reason": "Notes that people can only appeal if the agency can explain the grounds and reasoning behind the decision."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Names automation bias: staff tend to follow system output uncritically, so oversight needs independence and competence."
+        }
+      ]
+    },
+    {
+      "sample": "test2-FK-2026-000930",
+      "index": 6,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "AI-förordningen innebär ytterligare rättsliga ramar. Bland annat aktualiseras förbudet mot social poängsättning, vilket begränsar hur uppgifter får användas som grund för risk- och urvalsprofiler. Samtidigt ger AI-förordningen möjlighet att behandla personuppgifter för utveckling, träning och testning, även om de ursprungligen och lagligen samlats in för andra syften, förutsatt att det sker i en AI-regulatorisk sandlåda med ett antal villkor uppfyllda. Exempelvis • måste det vara fråga om ett AI-system som ska utvecklas för att ett viktigt allmänt intresse ska skyddas av en offentlig myndighet eller annan fysisk eller juridisk person på ett antal uppräknade områden, där den offentliga förvaltningens och de offentliga tjänsternas effektivitet och kvalitet är ett sådant • ska de data som behandlas vara nödvändiga för att uppfylla de krav som gäller för högrisksystem 13 Försäkringskassans remissvar på SOU 2025:108.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Personal data may be processed for AI training even if originally collected for other purposes, under sandbox conditions."
+        },
+        {
+          "category": "misuse",
+          "reason": "Reuse of data collected for other purposes, and the social scoring ban limiting what data may feed risk and selection profiles."
+        }
+      ]
+    },
+    {
+      "sample": "test2-Statskontoret-OOS-51",
+      "index": 1,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "De behöver till exempel arbeta med att öka transparensen och insynen i hur de använder AI. Myndigheterna behöver också dokumentera, följa upp och utvärdera AI-satsningarna i större utsträckning än vad de gör i dag. Det är viktigt för att säkerställa att det inte uppstått några fel, men även för att bedöma om satsningarna har lett till förväntade effektiviseringar och ökad rättssäkerhet. Regeringen har en viktig roll att driva utvecklingen Vår bild är att statsförvaltningen som helhet befinner sig i ett slags vänte- läge i förhållande till den tekniska utvecklingen inom AI. Myndigheterna skyndar över lag långsamt. Det kan vara ett uttryck för att myndigheterna är medvetna om de risker som finns med AI. Men det kan också bero på att myndigheterna är osäkra på vilka förutsättningar som kommer att finnas för att använda AI i framtiden. Det handlar bland annat om osäkerhet kring rättsläget, tillgång till rätt kompetens och behov av samordning i AI-frågor.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Agencies need to increase transparency and insight into how they use AI."
+        },
+        {
+          "category": "accountability",
+          "reason": "Agencies must document, follow up and evaluate AI initiatives to make sure errors have not occurred."
+        }
+      ]
+    },
+    {
+      "sample": "test2-Statskontoret-OOS-51",
+      "index": 2,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Det finns flera exempel på att myndigheter använder AI för att göra riskbedömningar av ärenden i syfte att upptäcka fel eller brott. Ofta är principen att med hjälp av AI analysera stora mängder data och därigenom hitta mönster i vilka ärenden som har en stor risk för felaktigheter eller brottslig verksamhet. AI kan kanske hitta mönster för riskfyllda ärenden som annars aldrig upptäckts och det går mycket snabbare att hitta riskfyllda ärenden i en stor ärendemängd, jämfört med en mer manuell analys. En framgångsrik identifiering av sådana ärenden kan spara stora resurser för staten om brottslig verksamhet kan förhindras. Vi har funnit användning av AI i system för att upptäcka ärenden med risk för felaktigheter eller fusk hos bland annat Försäkringskassan, Arbetsförmedlingen och Skatteverket. Försäkringskassan har tidigare använt AI för att upptäcka fel och brottslig verksamhet inom det statliga tandvårdsstödet. 21 Med hjälp av AI kan Försäkringskassan identifiera transaktioner till klinikerna där risken för felaktiga utbetalningar bedöms vara hög.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "AI analyses large amounts of data on cases and transactions to flag risk of error or fraud."
+        }
+      ]
+    },
+    {
+      "sample": "test2-Statskontoret-OOS-51",
+      "index": 3,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Förutom att en myndighet måste ha författningsstöd för sina beslut eller åtgärder, måste den också kunna visa vilken regel den har använt sig av i varje konkret fall. Även detta är en viktig aspekt av legalitetsprincipen. 43 Det är viktigt för att de enskilda som påverkas av myndigheternas beslut ska kunna förutse och förstå utfallet. Kravet på stöd i reglerna finns i förvaltningslagen, som också anger att myndigheter måste motivera sina beslut. 44 Myndigheter omfattas även av krav på transparens i sin verksamhet. Offentlighetsprincipen bidrar till att garantera att medborgarna har insyn i myndigheterna och därigenom får möjlighet att kontrollera deras verksamhet. Det innebär att myndigheterna måste dokumentera sina överväganden och beslut i allmänna handlingar som är offentliga. Alla har rätt att vända sig till myndigheterna för att få del av innehållet. 45 42 SVT Nyheter. (2023-03-17). Tusentals nederländska barnfamiljer ruinerades av övernitiska myndigheter | SVT Nyheter . (Hämtad 2024-02-22). 43 Statskontoret. (2019).",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Agencies must be able to show which rule was applied and document their considerations so citizens have insight."
+        },
+        {
+          "category": "contestability",
+          "reason": "Individuals affected must be able to foresee and understand the outcome, and decisions must be reasoned."
+        }
+      ]
+    },
+    {
+      "sample": "test2-Statskontoret-OOS-51",
+      "index": 4,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Vi kan konstatera att om det är svårt att reda ut på vilka grunder ett AI-genererat beslut är taget så kan det också bli svårt att peka ut var ansvaret för beslutet ska läggas. Det är vedertaget att transparens ökar förtroendet för exempelvis en myndighet. Men en dåligt designad transparens kan minska förtroendet för offentlig förvaltning. 48 Detta diskuteras i flera rapporter inom området. 49 En återkommande utmaning som flera studier lyfter är också 46 Denk, Hedström & Karlsson. (2019); Medborgarna och automatiserat beslutsfattande . I: Andersson, U., Rönnerstrand, B., Öhberg P. & Bergström, A. (red.), Storm och Stiltje: SOM-institutets 74:e forskarantologi (s. 183–196). Göteborg: SOM-institutet; Kaun, A., Larsson A. & Masso, A. (2024). Automating public administration: citizens’ attitudes towards automated decision-making across Estonia, Sweden, and Germany. Information, Communication & Society . Vol. 27(2), 314–332. 47 Förvaltningsrätten i Göteborg mål nr 6541–20, 2020-08-27. 48 Myndigheten för digital förvaltning (Digg). (2019). Testa ny teknik för automatisering av offentlig förvaltning.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "If the grounds of an AI-generated decision are unclear it becomes hard to say where responsibility lies."
+        },
+        {
+          "category": "transparency",
+          "reason": "Discusses how transparency, and poorly designed transparency, affects trust."
+        }
+      ]
+    },
+    {
+      "sample": "test2-Statskontoret-OOS-51",
+      "index": 5,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Myndigheterna ser möjligheter till ökad effektivitet, rättssäkerhet och förbättrad tillgänglighet och service De myndigheter som vi har varit i kontakt med bedömer att användningen av AI kan bidra till högre effektivitet i deras verksamheter. AI har potential att både sänka kostnaderna och att förbättra kvaliteten i verksamheterna. AI kan till exempel bidra till att förkorta handläggningstider och förbättra träffsäkerheten i olika typer av bedömningar och analyser. Digg uppskattade 2020 att ett fullständigt införande av dagens AI-teknik i offentlig förvaltning skulle kunna innebära en ekonomisk nytta för samhället på 140 miljarder kronor årligen. 33 Vi har inte granskat hur den beräkningen gjordes, men det råder knappast någon tvekan om att det finns tillämpningar som kan leda till stor samhällsnytta. Inom flera av de användningsområden som vi beskriver i kapitel 2 finns det potential som har att göra med respekt för individen och icke- diskriminering. Om AI används som stöd i beslutsfattande och förutsatt att algoritmerna är rätt utformade kan risken minska för att beslut påverkas av att handläggare, medvetet eller omedvetet diskriminerar utifrån diskrimineringsgrunder som kön, etnisk tillhörighet eller ålder.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Claims AI decision support could reduce discrimination by caseworkers on grounds such as sex, ethnicity or age, provided algorithms are correctly designed."
+        }
+      ]
+    },
+    {
+      "sample": "test2-SOU-2018:25",
+      "index": 1,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "I förarbetena nämns bl.a. att motiveringsskyldigheten kan be- gränsas på grund av att motivering ibland är uppenbart obehövligt. Det kan t.ex. gälla när en myndighet meddelar ett beslut som helt tillgodoser den enskildes önskemål på grundval uteslutande av den enskildes egna uppgifter, och det inte finns någon enskild motpart som kan ha ett intresse av att ta del av en motivering för att överväga ett överklagande. 78 Vissa ytterligare undantag görs i frågan om när en motivering helt eller delvis får utelämnas, men som huvudregel ska en myndighet ändå kunna ge en motivering i efterhand om någon enskild begär det och det behövs för att han eller hon ska kunna ta till vara sin rätt. 79 Att skälen för ett avgörande ska framgå gäller också i dömande verksamhet. 80 Våra inledande överväganden Det saknas förarbetsuttalanden som anger hur bestämmelsen i för- valtningslagen om att beslut kan fattas automatiserat förhåller sig till dataskyddsförordningen.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Discusses the duty to give reasons, its exceptions and the right to reasons afterwards so a person can consider an appeal."
+        }
+      ]
+    },
+    {
+      "sample": "test2-SOU-2018:25",
+      "index": 2,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Några särskilda åtgärder till skydd för den registrerades rättigheter, friheter och berättigade intressen med avseende på just auto- matiserade beslut har emellertid inte införts i förvaltningslagen. 82 Förvaltningslagen innehåller dock generellt tillämpliga bestäm- melser om bl.a. rätt att lämna uppgifter muntligt i ett ärende, om det inte framstår som obehövligt, och bestämmelser om omprövning samt rätt att överklaga beslut. 83 I kapitel 7.9.1 återkommer vi till ytterligare överväganden om på vilket sätt reglering i den materiella rätt som ska tillämpas vid beslutsfattande kan inverka på frågan om det är tillåtet eller lämpligt att beslut fattas automatiserat. Några ytterligare inledande reflektioner från vår sida är att för- valtningslagen varken kräver att datorprogram (inkluderande algo- ritmer) som används vid automatiserat beslutsfattande dokumenteras, tillförs beslutsunderlaget i de enskilda förvaltningsärenden där de kommer till användning eller framgår av beslutsmotiveringen. Dessa tillkommer i stället snarast som ett eget lager av funktionalitet mellan å ena sidan de författningar med anknytande källmaterial som tillämpas och å andra sidan det beslutsunderlag i form av fakta som har tillförts ärendet (se beskrivning i kapitel 7.4.2).",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "No special safeguards for automated decisions; only the general rights to reconsideration and appeal apply."
+        },
+        {
+          "category": "transparency",
+          "reason": "The law does not require the programs and algorithms used in automated decisions to be documented, added to the case file or shown in the reasoning."
+        }
+      ]
+    },
+    {
+      "sample": "test2-SOU-2018:25",
+      "index": 3,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Vad utgör en allmän handling? I såväl offentlighets- och sekretesslagen som arkivlagen (1990:782) finns regler om att myndigheterna på olika sätt ska registrera och beskriva sina allmänna handlingar. 85 Bestämmelsernas syfte är att garantera allmänhetens rätt att få tillgång till allmänna handlingar. För att offentlighetsprincipen praktiskt sett ska kunna fungera på det sätt som är avsett i tryckfrihetsförordningen har det ansetts nöd- vändigt att myndigheterna håller sina allmänna handlingar registrerade eller i vart fall så ordnade att det går att konstatera vilka allmänna handlingar som finns. 86 Vad som är allmän handling framgår av 2 kap. tryckfrihets- förordningen. Med handling förstås framställning i skrift eller bild samt upp- tagning som kan läsas, avlyssnas eller på annat sätt uppfattas endast med tekniskt hjälpmedel. 87 Framställningar i skrift eller bild utgör handlingar i traditionell bemärkelse, dvs. framställningar som kan uppfattas visuellt utan tekniska hjälpmedel. Det är alltså fråga om alla former av pappersbaserade skriftliga uppteckningar, t.ex. tabeller, blanketter och protokoll, men även kartor, ritningar och olika slags bilder t.ex. fotografier eller röntgenbilder.",
+      "labels": []
+    },
+    {
+      "sample": "test2-SOU-2018:25",
+      "index": 4,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "bör därför enligt vår bedömning framgå klart i författning att myndigheter ska kunna upprätthålla spårbarhet till ett beslutsunderlag. Vi föreslår för tydlighets skull att detta kommer till uttryck genom ett tillägg till befintlig reglering som anger att myndigheten i den aktuella situationen ska se till att information kan lämnas om vilken eller vilka databaser eller andra digitala källor, t.ex. sensorer, filer eller andra lagringsplatser, som innehåller ett underlag för handläggningen av målet eller ärendet. Vi föreslår också att det görs språkliga justeringar i nuvarande 4 kap. 3 § offentlighets- och sekretesslagen för att förtydliga att det är just möjligheterna till insyn i underlag i mål eller ärenden som behöver säkerställas. Den förändring som vi föreslår bör enligt vår bedömning även fungera som en god grund för fortsatta överväganden om en moder- nisering av informationsförsörjningen i den digitala förvaltningen, där uppgifter i högre utsträckning kan lämnas en gång och åter- användas inom förvaltningen.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Proposes that agencies must be able to trace and disclose which databases and digital sources hold the basis for a decision."
+        },
+        {
+          "category": "privacy",
+          "reason": "Envisions data being provided once and reused across the administration."
+        }
+      ]
+    },
+    {
+      "sample": "test2-DO-2022:1",
+      "index": 1,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Automatiskt beslutsfattande omfattar i DO:s definition algoritmiska och automatiserade beslutsprocesser, med eller utan AI. Enligt denna definition kan automatiserat beslutsfattande ske både med och utan AI. När AI ingår sker det automatiska beslutsfattandet i system som uppvisar intelligent beteende genom att analysera sin miljö och vidta åtgärder, med viss grad av självständighet. 6 6 Jämför med Riksrevisionen (2020). Automatiserat beslutsfattande hos myndigheter kan till exempel användas för att fatta beslut om arbetsmarknadsutbildningar, tillfällig föräldra- penning, inkomstskatt, och ekonomiska ersättningar. 15 Automatiserade beslutsprocesser förekommer i huvudsak i tre varianter hos myndigheter: 1. helt automatiserat beslutsfattande som oftast handlar om relativt enkla bedömningar 2. automatiserat beslutsfattande för beslutsstöd, där inkommande data bearbetas automatiskt och är en del av beslutsunderlaget men där en handläggare fattar det slutgiltiga beslutet 3. automatiserade processer för att identifiera ärenden. Det kan handla om att identifiera ärenden exempelvis för kontroll eller manuell hantering. 7 7 Dessa tre tillvägagångsätt identifierades i de intervjuer som vi har genomfört med myndigheter.",
+      "labels": []
+    },
+    {
+      "sample": "test2-DO-2022:1",
+      "index": 2,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Equinet bedömer att antidiskriminering och lika rättigheter och möjligheter bör bli en naturlig del i all utveckling av AI och automatiserat beslutsfattande. Equinet föreslår också att likabehandlingsorgan ska få de resurser och möjligheter som krävs för att ha en effektiv tillsyn inom detta område. 18 Equinet (2020a; 2020b; 2020c). 19 Svarta lådan-fenomenet handlar om datorprogram som självständigt gör kopplingar och ser mönster och samband mellan olika data, där det kan vara svårt även för programmerare att beskriva hur och varför dessa program drar vissa slutsatser. Se även Naarttijärvi (2017); Diskrimineringsombudsmannen (2020); Pasquale (2015). European Union Agency for Fundamental Rights (FRA) är europeiska unionens oberoende byrå för grundläggande rättigheter, och de konstaterar i en rapport att det saknas kunskap om hur grundläggande rättigheter påverkas av de nya teknologierna. 20 Rapporten bygger på ett 20 FRA (2020). 21 stort antal intervjuer med informanter i både offentlig sektor och privata företag i olika delar av Europa, och en central iakttagelse är att majoriteten av de intervjuade i princip förstår att automatiserat besluts- fattande kan leda till diskriminering.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Equality bodies stress that automated decision-making can lead to discrimination and call for anti-discrimination in all AI development."
+        },
+        {
+          "category": "transparency",
+          "reason": "Describes the black-box problem where even programmers cannot explain how a system reaches its conclusions."
+        }
+      ]
+    },
+    {
+      "sample": "test2-DO-2022:1",
+      "index": 3,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Med brist på insyn eller dokumentation av beslutsprocessen minskar människors möjligheter att hävda sina rättigheter genom anmälningar eller överklaganden. Problemet med utebliven transparens gäller inte minst för självlärande AI som kan komma fram till sina svar på sätt som inte ens 27 Se exempelvis: Larsson (2019); Diskrimineringsombudsmannen (2019c). 24 programmerarna förstår. Ytterligare ett problem som lyfts är att sekretess för affärshemligheter kan bidra till bristande transparens. 28 28 Larsson (2018; 2019); Equinet (2020a). EU-kommissionen, Equinet och FRA föreslår obligatorisk granskning av den data som AI använder, vilket kräver att det finns dokumentation som görs tillgänglig för enskilda personer, intresseorganisationer och tillsynsmyndigheter. 29 29 Europeiska kommissionen (2021); Se även Institut for menneskerettigheder (2021a; 2021b, 2021c). 25 Resultat Här redovisar vi det som framkommit i enkät- och intervjustudien. I de första avsnitten redogör vi för myndigheternas sätt att använda automatiserat beslutsfattande. Därefter kommer vi in på frågan om vilken kunskap myndigheterna har om risker för diskriminering och hinder för lika rättigheter och möjligheter vid tillämpningen av automatiserat beslutsfattande.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Lack of insight, self-learning opacity and trade secrecy undermine transparency; mandatory audit of the data is proposed."
+        },
+        {
+          "category": "contestability",
+          "reason": "Without documentation people are less able to assert their rights through complaints or appeals."
+        }
+      ]
+    },
+    {
+      "sample": "test2-DO-2022:1",
+      "index": 4,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Rapporterna visar en begränsad förekomst av AI och automatiserat beslutsfattande i myndigheter. SCB rapporterar att 10,2 procent av statliga, regionala och kommunala myndigheter använde någon form av AI under 2019. 11 I rapporten konstateras att större delen av användandet återfanns inom kommunsektorn och regionernas hälso- och sjukvård. 12 Även DIGG:s kartläggning rapporterar en begränsad förekomst bland statliga myndigheter. 13 Bland de 14 statliga myndigheter som ingick fann DIGG drygt 10 AI-lösningar i produktion, drygt 20 AI-satsningar under utveckling och ytterligare drygt 10 som planerades. I rapporten 11 SCB (2019). 12 SCB undersökte enbart AI, inte andra former av automatiserat beslutsfattande. 13 Myndigheten för digital förvaltning (2020). 18 konstaterar DIGG att den offentliga sektorn i stort har effektiviserats i och med införandet av AI, men att arbetet med frågor om rättssäkerhet och etik behöver utvecklas. Riksrevisionen granskade i vilken mån statliga myndigheters automatiserade beslutsfattande är effektivt och rättssäkert, och man identifierade tretton myndigheter som tillsammans har 112 miljoner helt automatiserat beslutsprocesser.",
+      "labels": []
+    },
+    {
+      "sample": "test2-CDEI-2020",
+      "index": 1,
+      "doc": "d6",
+      "lang": "en",
+      "text": "Adoption of algorithmic decision-making in the public sector is generally at an early stage. In policing, we found very few tools currently in operation in the UK, with a varied picture across different police forces, both on usage and approaches to managing ethical risks. There have been notable government reviews into the issue of bias in policing, which is important context when considering the risks and opportunities around the use of technology in this sector. Again, we found potential for algorithms to support decision-making, but this introduces new issues around the balance between security, privacy and fairness, and there is a clear requirement for strong democratic oversight. Police forces have access to more digital material than ever before, and are expected to use this data to identify connections and manage future risks. The £63.7 million funding for police technology programmes announced in January 2020 demonstrates the government’s drive for innovation. But clearer national leadership is needed.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Situates police algorithms against reviews of bias in policing."
+        },
+        {
+          "category": "privacy",
+          "reason": "Names the balance between security, privacy and fairness as police use more digital material."
+        },
+        {
+          "category": "accountability",
+          "reason": "Calls for strong democratic oversight and clearer national leadership."
+        }
+      ]
+    },
+    {
+      "sample": "test2-CDEI-2020",
+      "index": 2,
+      "doc": "d6",
+      "lang": "en",
+      "text": "One of the grounds for successful appeal was that South Wales Police failed to adequately consider whether their trial could have a discriminatory impact, and specifically that they did not take reasonable steps to establish whether their facial recognition software contained biases related to race or sex. In doing so, the court found that they did not meet their obligations under the Public Sector Equality Duty, even though there was no evidence that this specific algorithm was biased. This suggests a general duty for public sector organisations to take reasonable steps to consider any potential impact on equality upfront and to detect algorithmic bias on an ongoing basis. The current regulatory landscape for algorithmic decision-making consists of the Equality and Human Rights Commission (EHRC), the Information Commissioner’s Office (ICO) and sector regulators. At this stage, we do not believe that there is a need for a new specialised regulator or primary legislation to address algorithmic bias.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Police failed to check facial recognition for race or sex bias, breaching the Public Sector Equality Duty."
+        },
+        {
+          "category": "accountability",
+          "reason": "Describes which regulators oversee algorithmic decision-making and whether a new regulator is needed."
+        }
+      ]
+    },
+    {
+      "sample": "test2-CDEI-2020",
+      "index": 3,
+      "doc": "d6",
+      "lang": "en",
+      "text": "However, consideration is always needed on whether the role of the human remains meaningful; does the human understand the algorithm (and its limitations) sufficiently well to exercise that oversight effectively? Does the organisational environment that they are working within empower them to do so? Is there a risk that human biases could be reintroduced through this oversight? In Chapter 8 below we consider the ability of existing UK legal and regulatory structures to ensure fairness in this area, especially data protection and equality legislation, and how they will need to evolve to adapt to an algorithmic world. 3: There should be transparency and responsible disclosure around AI systems to ensure that people understand AI-based outcomes and can challenge them. Our sector-led work has identified variable levels of transparency on the usage of algorithms. A variety of other recent reviews have called for increased levels of transparency across the public sector. It is clear that more work is needed to achieve this level of transparency in a consistent way across the economy, and especially in the public sector where many of the highest stakes decisions are made.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Asks whether the human reviewer understands the algorithm and is empowered to exercise oversight effectively."
+        },
+        {
+          "category": "transparency",
+          "reason": "Calls for transparency and responsible disclosure about AI use and notes variable transparency in the public sector."
+        },
+        {
+          "category": "contestability",
+          "reason": "Disclosure should let people understand AI-based outcomes and challenge them."
+        }
+      ]
+    },
+    {
+      "sample": "test2-CDEI-2020",
+      "index": 4,
+      "doc": "d6",
+      "lang": "en",
+      "text": "Instead organisations test their model’s accuracy through validation techniques [footnote 61] and ensuring sufficient human oversight of the process as a way of managing bias in the development of the model. Case study - London fintech company We spoke to a London fintech company which uses supervised ML in order to predict whether people are able to repay personal loans and to detect fraud. In line with legislation, they do not include protected characteristics in their models, but to check for bias they adopt a ‘fairness through unawareness’ approach involving ongoing monitoring and human judgement. The ongoing monitoring includes checking for sufficiency across the model performance, business optimisation and building test models to counteract the model. The human judgement involves interpreting the direction in which their models are going and if a variable does not fit the pattern rejecting or transforming it. This approach requires significant oversight to ensure fair operation and to effectively mitigate bias.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "A lender excludes protected characteristics but must still monitor for bias in loan and fraud models."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Human judgement and ongoing monitoring are used to reject or transform variables and mitigate bias."
+        }
+      ]
+    },
+    {
+      "sample": "test2-CDEI-2020",
+      "index": 5,
+      "doc": "d6",
+      "lang": "en",
+      "text": "Difficulty in assessing credit discrimination by gender New York’s Department of Financial Services’ investigated Goldman Sachs for potential credit discrimination by gender. This came from the web entrepreneur David Heinemeier Hansson who tweeted that the Apple Card, which Goldman manages, had given him a credit limit 20 times that extended to his wife, though the two filed joint tax returns and she had a better credit score. Goldman Sachs’ response was that it did not consider gender when determining creditworthiness, as this would be illegal in the US, and therefore there was no way they could discriminate on the basis of gender. The full facts around this case are not yet public, as the regulatory investigation is ongoing. Nonetheless, there is evidence that considering gender could help mitigate gender bias or at least test the algorithm to better understand whether it is biased. This example brings up a key challenge for financial organisations in terms of testing for bias which we will explore later in this chapter.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Possible gender discrimination in credit limits despite gender not being used as an input."
+        }
+      ]
+    }
+  ]
+}

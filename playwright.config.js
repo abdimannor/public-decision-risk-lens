@@ -8,5 +8,9 @@ module.exports = defineConfig({
     url: "http://127.0.0.1:4173/prototype/",
     reuseExistingServer: !process.env.CI
   },
-  projects: [{ name: "chromium", use: { browserName: "chromium" } }]
+  projects: [
+    { name: "chromium", use: { browserName: "chromium" } },
+    { name: "firefox", use: { browserName: "firefox" }, testMatch: /cross-browser\.spec\.js/ },
+    { name: "webkit", use: { browserName: "webkit" }, testMatch: /cross-browser\.spec\.js/ }
+  ]
 });

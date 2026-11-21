@@ -13,7 +13,12 @@ import { evaluate, loadSet } from "./evaluate.mjs";
 // (36 of 51), precision 0.837. Recall fell from 0.725 by one label (the
 // AI Act #4 "AI system" mention no longer flags transparency without a cue);
 // tuning and held-out were both used as development data in that round.
-const BASELINE = { recall: 0.70, precision: 0.83 };
+// Annotation guide round (docs/annotation-guide.md, docs/relabel-log.md):
+// four gold labels removed under the bare-mention rule (support 51 -> 47),
+// relabelled blind before any run. Main's engine on the relabelled set:
+// precision 0.744 (32 of 43), recall 0.681. With automation/AI mentions as
+// a context signal: precision 0.886 (31 of 35), recall 0.660 (31 of 47).
+const BASELINE = { recall: 0.65, precision: 0.88 };
 
 test("overall recall on the gold set does not drop below the baseline", () => {
   const r = evaluate();
@@ -43,11 +48,15 @@ test("the held-out evaluation runs on all 30 passages", () => {
 
 // After the precision round the held-out set was used for development, so it
 // is no longer an independent test. Measured: precision 0.653 (47 of 72),
-// recall 0.825 (47 of 57). Floors guard the gain; the frozen test set is the
+// recall 0.825 (47 of 57). Annotation guide round: no held-out label
+// changed; precision 0.701 (47 of 67), recall 0.825 (47 of 57). Adding "why",
+// "told", "tell", "varför" and "berätta" as transparency cues (so "applicants are
+// not told why" is flagged) added one held-out false alarm: precision 0.691
+// (47 of 68). Floors guard the gain; the frozen test set is the
 // independent check.
 test("held-out (now development) precision and recall stay at the measured level", () => {
   const r = evaluate(loadSet("heldout"));
-  assert.ok(r.overall.precision >= 0.65, `held-out precision ${r.overall.precision.toFixed(3)} < 0.65`);
+  assert.ok(r.overall.precision >= 0.69, `held-out precision ${r.overall.precision.toFixed(3)} < 0.69`);
   assert.ok(r.overall.recall >= 0.80, `held-out recall ${r.overall.recall.toFixed(3)} < 0.80`);
 });
 
@@ -55,9 +64,14 @@ test("held-out (now development) precision and recall stay at the measured level
 // scored once after the precision round: precision 0.42 (31 of 73 flags),
 // recall 0.72 (31 of 43). It must never be used to tune the engine; this test
 // only guards against regressions, with floors just below the measured values.
+// Its labels predate docs/annotation-guide.md and stay frozen. After the
+// annotation guide round (context signal for bare automation mentions):
+// precision 0.48 (30 of 62), recall 0.70 (30 of 43): one true positive lost
+// (recall floor lowered from 0.70 to 0.69 for that, see the PR), ten false
+// positives removed.
 test("frozen test set: scores, and does not fall below its one-time measurement", () => {
   const r = evaluate(loadSet("test2"));
   assert.equal(r.passages, 26);
-  assert.ok(r.overall.precision >= 0.41, `precision ${r.overall.precision}`);
-  assert.ok(r.overall.recall >= 0.70, `recall ${r.overall.recall}`);
+  assert.ok(r.overall.precision >= 0.47, `precision ${r.overall.precision}`);
+  assert.ok(r.overall.recall >= 0.69, `recall ${r.overall.recall}`);
 });

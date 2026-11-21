@@ -292,9 +292,27 @@
       }));
   }
 
+  // Context signals (e.g. "mentions automation") are a separate kind of
+  // signal: neutral information for the reviewer, never a risk flag, never
+  // counted. One entry per passage and signal, with the first matched term.
+  function findContext(passages, signals = taxonomyApi.CONTEXT_SIGNALS || []) {
+    const out = [];
+    for (const passage of passages) {
+      for (const s of signals) {
+        for (const pattern of s.patterns) {
+          const m = patternToRegExp(pattern).exec(passage.text);
+          if (!m) continue;
+          out.push({ type: "context", id: s.id, label: s.label, passageIndex: passage.index, matchedTerm: m[0].trim() });
+          break;
+        }
+      }
+    }
+    return out;
+  }
+
   function analyse(text, extraRules = []) {
     const passages = splitPassages(text);
-    return { passages, flags: findFlags(passages, undefined, extraRules), absences: findAbsences(passages) };
+    return { passages, flags: findFlags(passages, undefined, extraRules), absences: findAbsences(passages), context: findContext(passages) };
   }
 
   // Analyse a paged document (for example text extracted from a PDF). Each
@@ -307,11 +325,11 @@
         passages.push({ index: passages.length + 1, page: pg.page, text: p.text });
       }
     }
-    return { passages, flags: findFlags(passages, undefined, extraRules), absences: findAbsences(passages) };
+    return { passages, flags: findFlags(passages, undefined, extraRules), absences: findAbsences(passages), context: findContext(passages) };
   }
 
   const api = {
-    extendToWordEnd, isNegated, splitPassages, findFlags, findAbsences, analyse, analysePages, patternToRegExp,
+    extendToWordEnd, isNegated, splitPassages, findFlags, findAbsences, findContext, analyse, analysePages, patternToRegExp,
     normaliseRules, parseRulePack, rulePack, similarity, compareVersions, explainFlag
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;

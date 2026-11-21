@@ -106,6 +106,18 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 
 On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a third, frozen test set (`prototype/eval/test2.json`: 26 passages from six further documents, labelled blind on a separate branch) was scored once afterwards: precision 36% to 42%, recall 63% to 72%. That is the number to quote; the development numbers overstate the gain. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
 
+### Definitions
+
+Labels follow the [annotation guide](docs/annotation-guide.md): a definition per category, what counts and what does not, and invented borderline examples. Its key rule: a passage that only mentions automation, an algorithm, a model or AI is not a transparency or human-oversight concern by itself. The tool shows such passages with a neutral "Mentions automation" / "Nämner automatisering" tag, which is not a risk flag and is not counted in the progress meter, summary card or evaluation. The tuning and held-out sets were re-read against the guide without running the engine (four tuning labels removed, none on held-out; see [the relabel log](docs/relabel-log.md)).
+
+| Set (after the guide) | Labels | Precision | Recall |
+| --- | ---: | ---: | ---: |
+| Tuning, relabelled | 47 | 89% (74% with the previous engine) | 66% (68%) |
+| Held-out, development data | 57 | 69% (65%) | 82% (82%) |
+| **Frozen test set, labels from before the guide** | 43 | **48%** (42%) | **70%** (72%) |
+
+Caveat: the frozen test set was labelled before the guide existed and its labels stay frozen, so it still counts some bare mentions as concerns. The gap between the development sets and the frozen set is partly that, partly patterns that still fire on words that do not carry the concern. The frozen set has now been scored twice; the next honest number needs a new blind test set labelled with the guide.
+
 Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
 
 - [JO, dnr 4778-2006 (2008-01-21): Ett fel i Försäkringskassans automatiserade behandling ...](https://www.jo.se/besluten/ett-fel-i-forsakringskassans-automatiserade-behandling-av-ett-arende-om-sjukpenninggrundande-inkomst-fick-till-foljd-att-den-forsakrade-aterkallade-ett-overklagande-varigenom-hon-fororsakades-en-ratt/) (2 passages)

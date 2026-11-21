@@ -69,6 +69,17 @@
       <tr><th scope=row>After the precision round</th><td>42%</td><td>72%</td><td>53%</td></tr></tbody>
     </table>
     <p>The change helps on unseen documents, but far less than the development numbers suggested: 42% precision, not 65%. This is the figure to quote. More than half of the flags on new documents are still false alarms, mostly transparency and human-oversight flags raised by a mere mention of AI, machine learning or automation. The tuning and held-out labels disagree on whether such a mention is itself a transparency concern, so the next step is a written annotation guideline, not more patterns.</p>
+    <h2>Definitions: the annotation guide</h2>
+    <p>The <a href="https://github.com/abdimannor/public-decision-risk-lens/blob/main/docs/annotation-guide.md">annotation guide</a> now defines every category, with what counts, what does not and invented borderline examples. Its key rule: a passage that only mentions automation, an algorithm, a model or AI is not a transparency or human-oversight concern by itself. The tool shows such a passage with a neutral "Mentions automation" tag, which is not a risk flag and is not counted in the progress meter, the summary or the evaluation. Transparency needs the passage to be about what people can know (information, explanation, documentation, secrecy); human oversight needs it to be about a person checking, correcting or overruling, or an outcome reaching someone with no human step.</p>
+    <p>The tuning and held-out sets were re-read against the guide without running the engine and committed before any evaluation. Four tuning labels were removed (<a href="https://github.com/abdimannor/public-decision-risk-lens/blob/main/docs/relabel-log.md">relabel log</a>); no held-out label changed. The frozen test set keeps its original labels, made before the guide existed.</p>
+    <table>
+      <caption>After the annotation guide (precision / recall)</caption>
+      <thead><tr><th>Set</th><th>Labels</th><th>Previous engine, previous labels</th><th>Previous engine, guide labels</th><th>New engine, guide labels</th></tr></thead>
+      <tbody><tr><th scope=row>Tuning</th><td>47 (was 51)</td><td>84% / 71%</td><td>74% / 68%</td><td>89% / 66%</td></tr>
+      <tr><th scope=row>Held-out (development)</th><td>57</td><td>65% / 82%</td><td>65% / 82%</td><td>69% / 82%</td></tr>
+      <tr><th scope=row>Frozen test (labels from before the guide)</th><td>43</td><td>42% / 72%</td><td>42% / 72%</td><td>48% / 70%</td></tr></tbody>
+    </table>
+    <p>On the frozen test set precision rose from 42% to 48% (ten fewer false alarms) and recall fell from 72% to 70% (one transparency label lost, where documentation of algorithms is discussed with a word form the new gate does not recognise; it was not fixed, because tuning on the frozen set is not allowed). The gap between the development sets (69% to 89% precision) and the frozen set (48%) is itself a finding: part of it is that the frozen labels were made before the guide, part is that the patterns still fire on words that do not carry the concern. The frozen set has now been seen twice, so a new blind test set labelled with the guide is needed for the next honest number.</p>
     <h2>What was changed</h2>
     <ul>
       <li>Swedish inflection: the phrase patterns "automatiserat beslut" and "automatiserad behandling" missed "beslut ... fattas automatiserat". They were replaced by the stem "automatiser", which covers automatiserad, automatiserat, automatiserade and automatiseras.</li>
@@ -128,6 +139,17 @@
       <tr><th scope=row>Efter precisionsrundan</th><td>42 %</td><td>72 %</td><td>53 %</td></tr></tbody>
     </table>
     <p>Ändringen hjälper på okända dokument, men mycket mindre än utvecklingssiffrorna antydde: 42 % precision, inte 65 %. Det är den siffran som gäller. Mer än hälften av flaggorna på nya dokument är fortfarande falsklarm, oftast flaggor för transparens och mänsklig tillsyn som utlöses av att AI, maskininlärning eller automatisering bara nämns. Justerings- och testetiketterna är oense om huruvida ett sådant omnämnande i sig är en transparensfråga, så nästa steg är en skriven annoteringsguide, inte fler mönster.</p>
+    <h3>Definitioner: annoteringsguiden</h3>
+    <p><a href="https://github.com/abdimannor/public-decision-risk-lens/blob/main/docs/annotation-guide.md">Annoteringsguiden</a> (på engelska, med svensk sammanfattning) definierar varje kategori, vad som räknas och inte, med påhittade gränsfall. Huvudregeln: ett stycke som bara nämner automatisering, en algoritm, en modell eller AI är inte i sig en fråga om transparens eller mänsklig kontroll. Verktyget visar då en neutral markering, "Nämner automatisering", som inte är en riskflagga och inte räknas i förloppet, sammanfattningen eller utvärderingen.</p>
+    <p>Justerings- och den tidigare testmängden lästes om mot guiden utan att motorn kördes, och sparades innan någon utvärdering. Fyra justeringsetiketter togs bort (<a href="https://github.com/abdimannor/public-decision-risk-lens/blob/main/docs/relabel-log.md">ändringslogg</a>); ingen etikett i den tidigare testmängden ändrades. Den frysta testmängden behåller sina ursprungliga etiketter, gjorda innan guiden fanns.</p>
+    <table>
+      <caption>Efter annoteringsguiden (precision / täckning)</caption>
+      <thead><tr><th>Mängd</th><th>Etiketter</th><th>Tidigare motor, tidigare etiketter</th><th>Tidigare motor, guidens etiketter</th><th>Ny motor, guidens etiketter</th></tr></thead>
+      <tbody><tr><th scope=row>Justering</th><td>47 (var 51)</td><td>84 % / 71 %</td><td>74 % / 68 %</td><td>89 % / 66 %</td></tr>
+      <tr><th scope=row>Tidigare testmängd (utveckling)</th><td>57</td><td>65 % / 82 %</td><td>65 % / 82 %</td><td>69 % / 82 %</td></tr>
+      <tr><th scope=row>Fryst testmängd (etiketter från före guiden)</th><td>43</td><td>42 % / 72 %</td><td>42 % / 72 %</td><td>48 % / 70 %</td></tr></tbody>
+    </table>
+    <p>På den frysta testmängden steg precisionen från 42 % till 48 % (tio färre falsklarm) och täckningen sjönk från 72 % till 70 % (en transparensetikett förlorades). Glappet mellan utvecklingsmängderna och den frysta mängden är i sig ett resultat: delvis för att de frysta etiketterna gjordes före guiden, delvis för att mönstren fortfarande slår på ord som inte bär själva frågan. Den frysta mängden har nu setts två gånger, så nästa ärliga siffra kräver en ny blind testmängd märkt enligt guiden.</p>
     <h3>Vad som ändrades</h3>
     <ul>
       <li>Böjning: "automatiserat beslut" missade "fattas automatiserat". Stammen "automatiser" täcker nu alla böjningsformer.</li>

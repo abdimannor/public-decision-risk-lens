@@ -2,7 +2,7 @@
   "format": "risk-lens-gold",
   "version": 1,
   "annotator": "A single AI agent (Claude, acting for the repository owner), November 2026. One annotator only: there is no inter-annotator agreement, and the labels have not been checked by a lawyer or a domain expert.",
-  "method": "Every passage the engine produces from the three samples is listed. For each passage the annotator read the text and the category descriptions and review questions in prototype/taxonomy.js, and labelled a category only when a reviewer would genuinely want to ask that category's question about this passage. A mere mention of a word is not enough (for example 'AI system' in a sentence about oversight is labelled human oversight, not transparency). Passages with no label are true negatives and count for precision.",
+  "method": "Every passage the engine produces from the three samples is listed. For each passage the annotator read the text and the category descriptions and review questions in prototype/taxonomy.js, and labelled a category only when a reviewer would genuinely want to ask that category's question about this passage. A mere mention of a word is not enough (for example 'AI system' in a sentence about oversight is labelled human oversight, not transparency). Passages with no label are true negatives and count for precision. Relabelled against docs/annotation-guide.md (version 1, November 2026) without running the engine; every change is listed in docs/relabel-log.md.",
   "passages": [
     {
       "sample": "sv-forvaltningslag",
@@ -20,16 +20,7 @@
       "sample": "sv-forvaltningslag",
       "index": 3,
       "text": "28 § Ett beslut kan fattas av en befattningshavare ensam eller av flera gemensamt eller automatiserat. Vid den slutliga handläggningen kan föredragande och andra befattningshavare medverka utan att delta i avgörandet.",
-      "labels": [
-        {
-          "category": "transparency",
-          "reason": "A decision may be taken 'automatiserat': an affected person needs to know an automated process shaped it."
-        },
-        {
-          "category": "human-oversight",
-          "reason": "Automated decision-making with no person named raises who checks the output."
-        }
-      ]
+      "labels": []
     },
     {
       "sample": "sv-forvaltningslag",
@@ -478,10 +469,6 @@
       "text": "1. Purpose. The social services committee decides to introduce a support tool that sorts incoming home-care applications. The tool uses a machine learning model to give each application a risk score that indicates how urgently it should be handled.",
       "labels": [
         {
-          "category": "transparency",
-          "reason": "A machine learning model is used."
-        },
-        {
           "category": "discrimination",
           "reason": "A risk score sorts applications."
         }
@@ -499,10 +486,6 @@
         {
           "category": "discrimination",
           "reason": "Age and postcode are inputs and possible proxies."
-        },
-        {
-          "category": "transparency",
-          "reason": "Training data of the model is described."
         }
       ]
     },

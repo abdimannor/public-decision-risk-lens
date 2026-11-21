@@ -17,7 +17,7 @@ test("splits very long paragraphs into sentences", () => {
 });
 
 test("flags English and Swedish terms with passage, category and rule", () => {
-  const flags = findFlags(splitPassages("The agency uses an automated decision.\n\nBeslutet kan överklagas."));
+  const flags = findFlags(splitPassages("The agency explains its automated decision.\n\nBeslutet kan överklagas."));
   const auto = flags.find((f) => f.rule.includes('"automated decision"'));
   assert.equal(auto.passageIndex, 1);
   assert.equal(auto.category, "transparency");
@@ -140,8 +140,8 @@ test("rule packs round-trip and reject malformed input", () => {
 });
 
 test("compareVersions sorts flags into appeared, disappeared and persisted", () => {
-  const a = E.analyse("The agency uses an algorithm to rank applications.\n\nThere is no appeal.");
-  const b = E.analyse("The agency uses an algorithm to rank all applications.\n\nData is kept with a retention period of one year.");
+  const a = E.analyse("The agency uses an algorithm, explained online, to rank applications.\n\nThere is no appeal.");
+  const b = E.analyse("The agency uses an algorithm, explained online, to rank all applications.\n\nData is kept with a retention period of one year.");
   const c = E.compareVersions(a, b);
   assert.ok(c.persisted.some((x) => x.b.matchedTerm === "algorithm"));
   assert.ok(c.disappeared.some((x) => x.a.matchedTerm === "appeal"));
@@ -158,7 +158,7 @@ test("compareVersions does not pair the same rule across unrelated passages", ()
 });
 
 test("explainFlag gives rule, context, category and related absence checks", () => {
-  const r = E.analyse("Short intro. The tool uses an algorithm to decide. More text follows here.");
+  const r = E.analyse("Short intro. The tool uses an algorithm to decide. Reasons are given.");
   const f = r.flags.find((x) => x.matchedTerm === "algorithm");
   const x = E.explainFlag(f, r);
   assert.equal(x.pattern, "algorithm");
@@ -171,7 +171,7 @@ test("explainFlag gives rule, context, category and related absence checks", () 
 });
 
 test("Swedish inflections of automatiserad are matched", () => {
-  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används utan mänsklig granskning.", "Ärendet automatiseras och beslutet fattas utan handläggare."]) {
+  for (const s of ["Beslutet fattas automatiserat och motiveras inte för handläggaren.", "Automatiserade beslut används utan mänsklig granskning, utan förklaring.", "Ärendet automatiseras och beslutet fattas utan handläggare och utan insyn."]) {
     const cats = findFlags(splitPassages(s)).map((f) => f.category);
     assert.ok(cats.includes("transparency") && cats.includes("human-oversight"), s);
   }
@@ -188,7 +188,7 @@ test("a negated term is not flagged, a later negation does not hide it", () => {
   assert.ok(!findFlags(splitPassages("Beslutet fattas inte automatiserat.")).some((f) => f.category === "transparency"));
   // "not fully automated" means partly automated: the hedge keeps the flag.
   assert.ok(findFlags(splitPassages("The decision is not fully automated by any algorithm.")).some((f) => f.rule.includes('"fully automated"')));
-  assert.ok(findFlags(splitPassages("An algorithm is used, which is not ideal.")).some((f) => f.rule.includes('"algorithm"')));
+  assert.ok(findFlags(splitPassages("An algorithm is used and explained, which is not ideal.")).some((f) => f.rule.includes('"algorithm"')));
   assert.ok(findFlags(splitPassages("It runs without human review.")).some((f) => f.rule.includes('"without human"')));
   // A negated safeguard is still a reason to look closer.
   assert.ok(findFlags(splitPassages("There is no appeal.")).some((f) => f.category === "contestability"));
@@ -197,15 +197,15 @@ test("a negated term is not flagged, a later negation does not hide it", () => {
 
 test("a hedge after the negation keeps the flag (partial automation is still automation)", () => {
   const cats = (s) => findFlags(splitPassages(s)).map((f) => f.category);
-  const a = cats("Beslut fattas inte alltid automatiserat.");
+  const a = cats("Beslut fattas inte alltid automatiserat, och handläggaren kan inte förklara dem.");
   assert.ok(a.includes("transparency") && a.includes("human-oversight"), a.join());
-  assert.ok(cats("Beslutet fattas inte helt automatiserat, men ofta.").length > 0);
+  assert.ok(cats("Beslutet fattas inte helt automatiserat, men ofta, utan insyn.").length > 0);
   assert.ok(cats("Decisions are no longer fully automated except in simple cases.").length > 0);
 });
 
 test("\"no\" before a number or a dot is an abbreviation, not a negation", () => {
-  assert.ok(findFlags(splitPassages("Regulation no 2016 algorithm")).some((f) => f.rule.includes('"algorithm"')));
-  assert.ok(findFlags(splitPassages("Regulation No. 5 algorithm")).some((f) => f.rule.includes('"algorithm"')));
+  assert.ok(findFlags(splitPassages("Regulation no 2016 algorithm explanation")).some((f) => f.rule.includes('"algorithm"')));
+  assert.ok(findFlags(splitPassages("Regulation No. 5 algorithm explanation")).some((f) => f.rule.includes('"algorithm"')));
 });
 
 test("negated safeguards stay flagged after the hedge fix", () => {
@@ -216,4 +216,29 @@ test("negated safeguards stay flagged after the hedge fix", () => {
   assert.ok(has("Beslutet kan inte överklagas.", "contestability"));
   // A plain negation still hides the risk term.
   assert.ok(!has("Beslutet fattas inte automatiserat.", "transparency"));
+});
+
+// Context signal (docs/annotation-guide.md, bare mentions): a passage that
+// only mentions automation or AI gets a neutral "mentions-automation" signal,
+// which is not a flag, and no transparency or human-oversight flag.
+test("a bare mention of automation is a context signal, not a risk flag", () => {
+  const r = analyse("Beslut kan fattas automatiserat.\n\nThe council uses a machine learning model to sort applications.");
+  assert.deepEqual(r.context.map((c) => [c.passageIndex, c.id]), [[1, "mentions-automation"], [2, "mentions-automation"]]);
+  const cats = r.flags.map((f) => f.category);
+  assert.ok(!cats.includes("transparency"), cats.join());
+  assert.ok(!cats.includes("human-oversight"), cats.join());
+  assert.ok(r.flags.every((f) => f.type !== "context"));
+});
+
+test("automation with an oversight or information cue still flags", () => {
+  const r = analyse("Beslut fattas automatiserat utan att en handläggare granskar dem.\n\nApplicants are informed that an algorithm ranked them.");
+  const by = (i) => r.flags.filter((f) => f.passageIndex === i).map((f) => f.category);
+  assert.ok(by(1).includes("human-oversight"));
+  assert.ok(by(2).includes("transparency"));
+  assert.equal(r.context.length, 2);
+});
+
+test("context signal does not fire on words that merely start with ai", () => {
+  const r = analyse("The aim is to aid applicants.");
+  assert.equal(r.context.length, 0);
 });

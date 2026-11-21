@@ -44,7 +44,7 @@ test("unsupported and broken files give clear errors in both languages", async (
   await expect(page.locator("#status")).toHaveText("old.doc is not a supported file type. Use .txt, .md, .html, .docx or .pdf.");
   await page.locator("#file").setInputFiles({ name: "broken.docx", mimeType: "application/octet-stream", buffer: Buffer.from("PK\u0003\u0004 not really a zip") });
   await expect(page.locator("#status")).toHaveText(/broken\.docx could not be read/);
-  await page.getByRole("button", { name: "Svenska" }).click();
+  await page.getByRole("button", { name: "Switch to Swedish" }).click();
   await page.locator("#file").setInputFiles({ name: "tom.txt", mimeType: "text/plain", buffer: Buffer.from("   ") });
   await expect(page.locator("#status")).toHaveText("tom.txt innehåller ingen läsbar text.");
   await expect(page.locator("#file-hint")).toContainText("Inget laddas upp");

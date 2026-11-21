@@ -13,6 +13,6 @@ test("bare automation mention shows a context tag, not a flag", async ({ page })
   const total = await flags.count();
   await expect(page.locator("#progress")).toContainText(`Reviewed 0 of ${total}`);
   await expect(page.locator("#flag-groups")).not.toContainText("Mentions automation");
-  await page.getByRole("button", { name: "Svenska" }).click();
+  await page.getByRole("button", { name: "Switch to Swedish" }).click();
   await expect(tag).toHaveText("Nämner automatisering");
 });

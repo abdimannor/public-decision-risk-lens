@@ -8,7 +8,10 @@ test.describe("Swedish browser", () => {
     await page.goto("/prototype/");
     await expect(page.locator("html")).toHaveAttribute("lang", "sv");
     await expect(page.locator(".banner")).toContainText("Rådgivande diskussionsstöd");
-    await expect(page.getByRole("button", { name: "Svenska" })).toHaveAttribute("aria-pressed", "true");
+    const toggle = page.getByRole("button", { name: "Byt till engelska" });
+    await expect(toggle).toHaveAttribute("title", "Byt till engelska");
+    await expect(toggle.locator(".ctl-code")).toHaveText("EN");
+    await expect(toggle.locator(".ctl-code")).toHaveAttribute("lang", "en");
     await page.getByRole("button", { name: "Läs in exempel", exact: true }).click();
     await expect(page.locator("#flag-groups summary").first()).toContainText(/Transparens|Ansvarsskyldighet|Diskriminering|Integritet|Mänsklig kontroll|Säkerhet|Missbruk|Möjlighet/);
     await expect(page.locator("#status")).toContainText("flaggor");
@@ -39,7 +42,7 @@ test("switching language re-renders, keeps decisions and is remembered", async (
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await page.getByRole("button", { name: "Load sample", exact: true }).click();
   await page.locator(".flag").first().getByLabel("Reject").check();
-  await page.getByRole("button", { name: "Svenska" }).click();
+  await page.getByRole("button", { name: "Switch to Swedish" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "sv");
   await expect(page.getByRole("button", { name: "Analysera texten" })).toBeVisible();
   await expect(page.locator(".flag").first().getByLabel("Avvisa")).toBeChecked();
@@ -47,7 +50,25 @@ test("switching language re-renders, keeps decisions and is remembered", async (
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "sv");
   await expect(page).toHaveTitle(/prototyp/);
-  await page.getByRole("button", { name: "English" }).click();
+  await page.getByRole("button", { name: "Byt till engelska" }).click();
   await expect(page.getByRole("button", { name: "Analyse text" })).toBeVisible();
   await expect(page.locator(".flag").first().getByLabel("Reject")).toBeChecked();
+});
+
+test.describe("quiet language control", () => {
+  test.use({ contextOptions: { reducedMotion: "reduce" } });
+
+  test("is one 34px globe button naming the other language, and motion stays on", async ({ page }) => {
+    await page.goto("/prototype/");
+    await expect(page.locator("html")).toHaveAttribute("data-motion", "on");
+    const toggle = page.getByRole("button", { name: "Switch to Swedish" });
+    await expect(toggle).toHaveAttribute("title", "Switch to Swedish");
+    await expect(toggle.locator(".ctl-code")).toHaveText("SV");
+    await expect(toggle.locator(".ctl-code")).toHaveAttribute("lang", "sv");
+    const box = await toggle.boundingBox();
+    expect(Math.round(box.height)).toBe(34);
+    await toggle.click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "sv");
+    await expect(page.getByRole("button", { name: "Byt till engelska" }).locator(".ctl-code")).toHaveText("EN");
+  });
 });

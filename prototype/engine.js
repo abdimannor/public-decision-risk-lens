@@ -107,14 +107,15 @@
 
   // Context gates. Some terms only name a topic ("automated decision",
   // "profiling", "GDPR") and say nothing about a risk on their own. A
-  // category can list such terms under gated.terms; they only raise a flag
+  // category can list such terms under gated.terms (one gate or a list of gates); they only raise a flag
   // when one of gated.cues (a word that points at the actual concern, e.g.
   // explanation for transparency, a protected ground for discrimination)
   // appears in the same passage. Returns "" for ungated terms, the cue that
   // was found for gated terms, or null when the gate stays closed.
   function contextCue(text, category, pattern) {
-    const gate = category.gated;
-    if (!gate || !gate.terms.includes(pattern)) return "";
+    const gates = [].concat(category.gated || []);
+    const gate = gates.find((g) => g.terms.includes(pattern));
+    if (!gate) return "";
     for (const c of gate.cues) if (patternToRegExp(c).test(text)) return c;
     return null;
   }

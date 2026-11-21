@@ -18,7 +18,21 @@
       patterns: {
         en: ["algorithm", "automated decision", "automated processing", "machine learning", "artificial intelligence", "notif", "AI system", "model", "black box", "proprietary", "trade secret"],
         sv: ["algoritm", "automatiser", "underrätt", "maskininlärning", "artificiell intelligens", "AI-system", "modell", "affärshemlighet", "sekretess"]
-      }
+      },
+      // A bare mention of automation is not a transparency concern by
+      // itself. These terms flag only when the passage also says a decision
+      // is taken that way, or talks about explaining, informing, insight or
+      // reasons. A notice ("underrätt") flags only when it concerns a
+      // decision, its content, reasons or appeal, so routine notices (about
+      // a delay, say) stay quiet.
+      gated: [{
+        terms: ["underrätt"],
+        cues: ["beslut", "decision", "innehåll", "skäl", "motiver", "överklag"]
+      }, {
+        terms: ["automated decision", "automated processing", "automatiser"],
+        cues: ["fatta", "taken", "explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware",
+               "förklar", "insyn", "motiver", "information", "informer", "skäl", "begrip", "transparens", "öppen", "känner till", "veta"]
+      }]
     },
     {
       id: "accountability",
@@ -75,6 +89,14 @@
       patterns: {
         en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve"],
         sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
+      },
+      // Automation and the word "decision maker" are context, not an
+      // oversight issue in themselves. They flag only when the passage also
+      // speaks of a person reviewing, checking or stepping in.
+      gated: {
+        terms: ["automatically", "automatiser", "automatiskt", "beslutsfattare"],
+        cues: ["human", "manual", "review", "oversight", "intervention", "intervene", "caseworker", "case officer", "check", "verif", "override", "sign off",
+               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "person", "befattningshavare", "fatta"]
       }
     },
     {

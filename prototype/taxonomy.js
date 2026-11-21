@@ -20,8 +20,9 @@
         sv: ["algoritm", "automatiser", "underrätt", "maskininlärning", "artificiell intelligens", "AI-system", "modell", "affärshemlighet", "sekretess"]
       },
       // A bare mention of automation is not a transparency concern by
-      // itself. These terms flag only when the passage also says a decision
-      // is taken that way, or talks about explaining, informing, insight or
+      // itself ("automated decision" already names a decision and stays
+      // ungated). These terms flag only when the passage also speaks of a
+      // decision, or talks about explaining, informing, insight or
       // reasons. A notice ("underrätt") flags only when it concerns a
       // decision, its content, reasons or appeal, so routine notices (about
       // a delay, say) stay quiet.
@@ -29,8 +30,8 @@
         terms: ["underrätt"],
         cues: ["beslut", "decision", "innehåll", "skäl", "motiver", "överklag"]
       }, {
-        terms: ["automated decision", "automated processing", "automatiser"],
-        cues: ["fatta", "taken", "explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware",
+        terms: ["automated processing", "automatiser"],
+        cues: ["beslut", "decision", "fatta", "explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware",
                "förklar", "insyn", "motiver", "information", "informer", "skäl", "begrip", "transparens", "öppen", "känner till", "veta"]
       }]
     },
@@ -69,6 +70,11 @@
       patterns: {
         en: ["personal data", "sensitive data", "health data", "data sharing", "share data", "retention", "retain", "combine", "register", "surveillance", "monitor", "GDPR"],
         sv: ["personuppgift", "känsliga uppgifter", "hälsouppgifter", "uppgiftsutbyte", "lagring", "gallring", "samkör", "register", "övervak", "dataskydd", "GDPR"]
+      },
+      // Naming the law is not a privacy concern by itself.
+      gated: {
+        terms: ["GDPR"],
+        cues: ["personal data", "data subject", "sensitive", "consent", "personuppgift", "registrerad", "känsliga", "samtycke"]
       }
     },
     {
@@ -96,7 +102,7 @@
       gated: {
         terms: ["automatically", "automatiser", "automatiskt", "beslutsfattare"],
         cues: ["human", "manual", "review", "oversight", "intervention", "intervene", "caseworker", "case officer", "check", "verif", "override", "sign off",
-               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "person", "befattningshavare", "fatta"]
+               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "person", "befattningshavare", "fatta", "beslut", "decision"]
       }
     },
     {
@@ -107,6 +113,14 @@
       patterns: {
         en: ["security", "access control", "breach", "encryption", "cloud", "hosting", "third country", "logging", "incident"],
         sv: ["säkerhet", "behörighet", "intrång", "kryptering", "molntjänst", "tredjeland", "loggning", "incident"]
+      },
+      // "säkerhet" also means national or public safety, and a third
+      // country is a transfer question first. Both flag only next to a term
+      // about systems, access or data protection.
+      gated: {
+        terms: ["säkerhet", "tredjeland", "third country"],
+        cues: ["system", "data", "access", "breach", "encrypt", "cyber", "server", "network", "unauthori",
+               "it-", "åtkomst", "behörig", "intrång", "kryptering", "dator", "nätverk", "obehörig", "informationssäkerhet"]
       }
     },
     {

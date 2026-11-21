@@ -1,0 +1,585 @@
+{
+  "format": "risk-lens-gold",
+  "version": 1,
+  "set": "heldout",
+  "retrieved": "2026-11-21",
+  "annotator": "A single AI agent (Claude, acting for the repository owner), November 2026. One annotator only: no inter-annotator agreement, no check by a lawyer or domain expert.",
+  "method": "Held-out set. Documents were chosen because the engine was never tuned on them. Excerpts were chosen by reading for substance (decision reasoning, safeguards, oversight, transparency, appeal), not by running the engine. Each excerpt is verbatim from the fetched document after whitespace normalisation (PDF line breaks become single spaces, so some hyphenated line breaks appear as 'domstols- prövningen'). Labels were made BLIND: the annotator read only the category descriptions and review questions in prototype/taxonomy.js, did not read the engine's pattern lists and did not run the engine, and the labels were committed before the first engine run. Passages with no label count for precision.",
+  "documents": {
+    "d1": {
+      "title": "Ett fel i Försäkringskassans automatiserade behandling av ett ärende om sjukpenninggrundande inkomst fick till följd att den försäkrade återkallade ett överklagande, varigenom hon förorsakades en rättsförlust",
+      "issuer": "Riksdagens ombudsmän (JO)",
+      "date": "2008-01-21",
+      "number": "JO dnr 4778-2006",
+      "url": "https://www.jo.se/besluten/ett-fel-i-forsakringskassans-automatiserade-behandling-av-ett-arende-om-sjukpenninggrundande-inkomst-fick-till-foljd-att-den-forsakrade-aterkallade-ett-overklagande-varigenom-hon-fororsakades-en-ratt/",
+      "fetched_from": "https://www.jo.se/app/uploads/resolve_pdfs/813495_4778-2006.pdf",
+      "lang": "sv",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d2": {
+      "title": "En undersökning av hur 11 och 12 §§ förvaltningslagen tillämpas hos några olika myndigheter",
+      "issuer": "Riksdagens ombudsmän (JO)",
+      "date": "2023-06-19",
+      "number": "JO dnr 3232-2023",
+      "url": "https://www.jo.se/besluten/en-undersokning-av-hur-11-och-12-%c2%a7%c2%a7-forvaltningslagen-tillampas-hos-nagra-olika-myndigheter/",
+      "fetched_from": "https://www.jo.se/app/uploads/resolve_pdfs/1525087_3232-2023.pdf",
+      "lang": "sv",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d3": {
+      "title": "Yttrande över Skatteverkets promemoria om uppgift om beslutsfattare",
+      "issuer": "Riksdagens ombudsmän (JO)",
+      "date": "2024-05-02",
+      "number": "JO dnr R 32-2024",
+      "url": "https://www.jo.se/app/uploads/2024/05/remissyttrande-r-32-2024.pdf",
+      "lang": "sv",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d4": {
+      "title": "Automatiserat beslutsfattande i statsförvaltningen: effektivt, men kontroll och uppföljning brister",
+      "issuer": "Riksrevisionen",
+      "date": "2020",
+      "number": "RiR 2020:22",
+      "url": "https://www.riksrevisionen.se/download/18.2008b69c18bd0f6ed3f2a460/1605694925646/RiR%202020_22%20Anpassad.pdf",
+      "lang": "sv",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d5": {
+      "title": "GDPR vid användning av generativ AI",
+      "issuer": "Integritetsskyddsmyndigheten (IMY)",
+      "date": "2025-02-05",
+      "number": "IMY-2024-9162",
+      "url": "https://www.imy.se/globalassets/dokument/rapporter/gdpr-vid-anvandning-av-generativ-ai_imy-2024-9162.pdf",
+      "lang": "sv",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d7": {
+      "title": "Guidelines on Automated individual decision-making and Profiling for the purposes of Regulation 2016/679 (wp251rev.01)",
+      "issuer": "Article 29 Data Protection Working Party",
+      "date": "2018-02-06",
+      "number": "WP251rev.01",
+      "url": "https://ec.europa.eu/newsroom/article29/redirection/document/49826",
+      "lang": "en",
+      "reuse": "Reuse of EU institution documents (Commission Decision 2011/833/EU and the institution's reuse notice)"
+    },
+    "d9": {
+      "title": "Closing Note on the Strategic Initiative on how the European Commission decides on and uses artificial intelligence",
+      "issuer": "European Ombudsman",
+      "date": "2024-12-05",
+      "number": "SI/4/2024/MIK",
+      "url": "https://www.ombudsman.europa.eu/en/doc/closing-note/en/196934",
+      "lang": "en",
+      "reuse": "Reuse of EU institution documents (Commission Decision 2011/833/EU and the institution's reuse notice)"
+    }
+  },
+  "skipped": [
+    {
+      "title": "CJEU C-634/21 SCHUFA, ECLI:EU:C:2023:957",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX%3A62021CJ0634",
+      "why": "EUR-Lex returned 202 to scripts; the extract obtained held only the case header, no reasoning."
+    },
+    {
+      "title": "KU 2021/22:KU36",
+      "why": "Not fetched within the time budget."
+    }
+  ],
+  "passages": [
+    {
+      "sample": "heldout-JO-dnr-4778-2006",
+      "index": 1,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Försäkringskassans ärendehanteringssystem syftar till att effektivisera handläggningen på Försäkringskassan. För att uppnå syftet är en del av handläggningen automatiserad dvs. delar av handläggningsprocessen sköts av systemet. Eftersom ett beslut om SGI på grund av den mänskliga faktorn kan bli felaktigt vad gäller datum och/eller inkomst, finns det en rutin som gör det möjligt att rätta uppgifterna och förhindra att det sänds ut ett felaktigt beslut till en person. När rättelsen görs samma dag stoppas beslutsprocessen i ärendehanteringssystemet, Försäkringskassan har då möjlighet att rätta den felaktiga uppgiften innan processen fortsätter vilket resulterar i att beslutet blir korrekt. Rättelse kan även göras vid en senare tidpunkt. Skillnaden är då att det felaktiga beslutet är på väg eller har kommit fram till personen. I dessa fall krävs det att Försäkringskassan gör en rättelse enligt 20 kap. 10 § a lagen (1962:381) om allmän försäkring och sänder ett nytt beslut som upphäver det felaktiga.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Staff can stop the automated process and correct data before a decision is sent: a human check on system output."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-JO-dnr-4778-2006",
+      "index": 2,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Som framgår av Försäkringskassans remissvar tillkom beslutet den 28 augusti 2006 genom ett misstag i samband med den automatiserade behandlingen. Detta fick till följd bl.a. att AA återkallade sitt överklagande av kassans beslut den 9 september 2005 om hennes SGI. Genom kassans felaktiga handläggning kom hon att göra en Dnr 4778-2006 Sid 3 (3) tydlig rättsförlust. Därtill kommer att det fortsatta förfarandet – domstols- prövningen – kom att försenas avsevärt. Försäkringskassan förtjänar kritik för detta. Jag vill här också göra Försäkringskassan uppmärksam på att principen om litispendens torde ha medfört att kassan var förhindrad att fatta ett nytt beslut om AA:s SGI till den del frågan var föremål för prövning i domstol. En särskild fråga är om det var riktigt av Försäkringskassan att i sitt ändringsbeslut den 4 oktober 2006 åberopa 20 kap. 10 a § lagen (1962:381) om allmän försäkring. Det ankommer emellertid på domstol att pröva detta, varför jag inte går vidare i den delen.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "An error in automated processing made the person withdraw her appeal and lose court review."
+        },
+        {
+          "category": "accountability",
+          "reason": "JO criticises the agency for the automated error: who answers for the mistake."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-JO-dnr-3232-2023",
+      "index": 1,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "6.3 När ska en underrättelse om väsentlig försening lämnas? 6.3.1 Rättsliga utgångspunkter Av 11 § framgår att om en myndighet bedömer att avgörandet i ett ärende som har inletts av en enskild part kommer att bli väsentligt försenat, ska myndigheten underrätta parten om detta. Som konstaterats tidigare anger alltså inte bestämmelsen någon fast tidsgräns för när en underrättelse ska lämnas. Det måste i stället bedömas av myndigheten i varje enskilt fall. I förarbetena till förvaltningslagen finns uttalanden som ger myndigheterna viss ledning för hur en sådan bedömning ska göras. Där anges bl.a. att tillämpningsområdet för 11 § bör begränsas till att avse helt klara fall och att underrättelseskyldigheten endast bör gälla när myndigheten kan konstatera att avgörandet kommer att försenas väsentligt. Om en normaltid för ärendetypen har angetts av myndigheten bör den i och för sig kunna tjäna som en utgångspunkt, men bedömningen behöver inte helt och hållet vara knuten till en normal handläggningstid för den aktuella ärendetypen. Myndigheten bör även kunna ta hänsyn till omständigheter som är hänförliga till det konkreta fallet, t.ex. att parten redan i sin ansökan presenterat ett gediget material eller tvärtom 93 Se 28 a–g §§ LSS. Dnr 3232-2023 Sid 25 (55) att parten har lämnat in en mycket bristfällig ansökan. I viss mån bör bedömningen också kunna relateras till den betydelse som ett snabbt avgörande normalt kan förväntas ha för den enskilde, t.ex.",
+      "labels": []
+    },
+    {
+      "sample": "heldout-JO-dnr-3232-2023",
+      "index": 2,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Det är myndighetens ansvar att se till att underrättelseskyldigheten enligt 11 § kan uppfyllas. Någon hänsyn kan därvid inte tas till eventuella begränsningar i en myndighets ärendehanteringssystem. Det är inte heller en acceptabel ordning att myndigheten låter bli att manuellt söka fram ärenden och underrätta enskilda, för att på det sättet frigöra tid till att handlägga ärenden som blivit liggande hos myndigheten. Om en myndighet bedömer att avgörandet i ett ärende kommer att bli väsentligt försenat är det viktigt att myndigheten samtidigt gör en planering för att undvika att det försenas ytterligare. Fasta tidpunkter som stöd för bedömningen Både Försäkringskassan och Pensionsmyndigheten har tagit fram generella tidpunkter för när ett ärende inom en viss ärendetyp kan anses väsentligt 108 Se avsnitt 6.3.1. 109 Se avsnitt 6.3.1. Dnr 3232-2023 Sid 30 (55) försenat. Man kan säga att dokumenten anger vissa tidsfrister inom vilka myndigheterna inte anser att någon underrättelseskyldighet enligt 11 § uppkommer. Jag uppfattar det som att tanken med dessa dokument är att de ska utgöra ett stöd i verksamheten. Även om det finns fördelar med att tydligt kommunicera internt vad som gäller, ser jag problem med hur dokumenten utformats. Underrättelseskyldigheten enligt 11 § förutsätter inte att en försening redan har uppstått. Jag noterar att detta inte framgår tydligt av Försäkringskassans dokument. Enligt min uppfattning är också många av de angivna tidsfristerna alltför väl tilltagna.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "The agency is responsible for the duty to notify regardless of limits in its case management system."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-JO-dnr-3232-2023",
+      "index": 3,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "En underrättelse kan i ett sådant fall ge den enskilde en bättre förståelse för varför handläggningen drar ut på tiden. Den kan också bidra till att den enskilde själv väljer att försöka driva handläggningen av ärendet framåt, exempelvis genom att på egen hand ta kontakt med den externa aktören. Vid granskningen av Försäkringskassans ärenden om försäkringstillhörighet fanns det exempel på underrättelser om väsentlig försening där den enskilde uppmuntrades att själv kontakta en utländsk myndighet. Så länge det är klart för den enskilde att det fortfarande är myndigheten som ansvarar för att ärendet handläggs så snabbt som möjligt, har jag inget att invända mot en sådan hantering. 6.4 Hur förhåller sig underrättelseskyldigheten till serviceskyldigheten? 6.4.1 Rättsliga utgångspunkter Regleringen i 11 § kompletterar den allmänna bestämmelsen om myndigheternas serviceskyldighet i 6 § FL. Den sistnämnda bestämmelsen anger att en myndighet ska se till att kontakterna med enskilda blir smidiga och enkla, samt att myndigheten utan onödigt dröjsmål ska lämna den enskilde sådan hjälp att han eller hon kan ta till vara sina intressen. Det förekommer att myndigheter på olika sätt försöker upplysa allmänheten om hur lång tid det normalt tar att få ett slutligt avgörande inom en viss ärendetyp.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "It must stay clear to the individual that the agency remains responsible for the case."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-JO-dnr-R-32-2024",
+      "index": 1,
+      "doc": "d3",
+      "lang": "sv",
+      "text": "Som JO tidigare har uttalat kan det finnas goda skäl för att i en beslutsunderrättelse ange beslutsfattarens namn med hänsyn till bl.a. beslutets karaktär och den enskildes intressen (se JO 2022/23 s. 326, dnr 3869-2019). Sammanfattningsvis avstyrker jag förslaget.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "Naming the decision-maker in the decision notice: which named person answers for the decision."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 1,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Även om besluten oftast är automatiserade, så fattas inga beslut med hjälp av så kallad artificiell intelligens (AI). De myndigheter som Riksrevisionen har granskat – Försäkringskassan, Skatteverket och Transportstyrelsen – stod för 80 procent av myndigheternas automatiserade beslut, i sammanlagt 46 beslutsprocesser. Automatisering leder till snabbare och billigare beslut, men dokumentationen av utvecklingen har brister Automatiseringen av beslutsfattande har lett till ökad effektivitet genom att privatpersoner får beslut snabbare utan att förvaltningskostnaderna har ökat. Förvaltningskostnaderna för föräldrapenning, inkomstbeskattning av privatpersoner och körkortstillstånd har till och med minskat. Det är dock bara för föräldrapenningen det går att fastställa att kostnadsminskningen beror på automatiseringen. E N G R A N S K N I N G S R A P P O R T F R Å N R I K S R E V I S I O N E N R I K S R E V I S I O N E N 5 Vidare framgår det i granskningen av föräldrapenning, inkomstbeskattning och körkortstillstånd att Försäkringskassan, Skatteverket och Transportstyrelsen inte alltid har följt upp om automatiseringen fått önskade effekter på verksamheten och ekonomin, samt att dokumentationen av den uppföljning som gjorts har brister. Bristande kontroll och uppföljning i de automatiserade beslutsprocesserna Försäkringskassan, Skatteverket och Transportstyrelsen arbetar systematiskt med att säkerställa att IT-systemen i de automatiserade beslutsprocesserna fungerar korrekt.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Control and follow-up of automated decision processes are found lacking."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 2,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Det handlar om att det i vissa fall saknas tydlig och läsbar dokumentation av automatiserade beslut och att lika fall inte alltid hanteras på lika sätt i det manuella kontrollarbetet. Myndigheterna har även identifierat att kompetens för att kunna översätta lagstiftning till programkod är en kritisk faktor för att kunna säkerställa korrekta och rättssäkra automatiserade beslut. Åtgärder bör vidtas för att fler myndigheter ska införa en effektiv, rättssäker och korrekt automatisering av beslutsfattande Sammantaget visar granskningen att det finns behov av att ta fram kunskapsunderlag och stöd till myndigheter för att statsförvaltningens automatiserade beslutsfattande ska få bättre förutsättningar för att vara effektivt, rättssäkert och korrekt. A U T O M A T I S E R A T B E S L U T S F A T T A N D E I S T A T S F Ö R V A L T N I N G E N 6 R I K S R E V I S I O N E N Rekommendationer Regeringen bör ge Myndigheten för digital förvaltning i uppdrag att ta fram kunskapsunderlag för hur arbete med automatiserade beslutsprocesser kan struktureras för att ge bättre förutsättningar för effektiva, rättssäkra och korrekta automatiserade beslut. Försäkringskassan, Skatteverket och Transportstyrelsen bör följa upp sina automatiserade beslut i syfte att säkerställa att de varit korrekta.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Clear and readable documentation of automated decisions is missing in some cases."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Equal cases are not handled alike in manual control work; recommendation to follow up automated decisions."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 3,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Vid Skatteverket finns det liknande formella skrivningar, men det är samtidigt otydligt vem som i praktiken har det övergripande ansvaret för hela den automatiserade beslutsprocessen. Vid både Försäkringskassan och Transportstyrelsen finns det en ansvarsfördelning i generaldirektörens delegerade arbetsordning där avdelningschefen för de berörda avdelningarna har ansvaret för de granskade processerna. Av Försäkringskassans arbetsordning framgår att ansvaret för processer ligger hos avdelningschefen för respektive försäkringsavdelning, det vill säga avdelningschefen för Barn och familj när det gäller föräldrapenningen.149 Även Transportstyrelsens arbetsordning fastställer att ansvaret för samtliga beslut inom körkortsverksamheten delegeras från generaldirektören till avdelningsdirektören för körkortsavdelningen.150 Intervjuer vid Försäkringskassan och Transportstyrelsen visar att det inte görs någon skillnad på ansvaret för automatiserade eller manuella beslut.151 149 Intervju med företrädare för Försäkringskassan, 2020-03-17. 150 Underlag från Transportstyrelsen, Arbetsordning. Generaldirektörens beslut om arbetsordning för Transportstyrelsen, 2019, punkt 5.5.5 och 7, inkom 2020-06-18. 151 Intervju med företrädare för Försäkringskassan 2020-03-16; intervju med företrädare för Transportstyrelsen 2020-03-11.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "Unclear who in practice is responsible for the whole automated decision process at Skatteverket."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 4,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Sex år efter automatiseringen har slumpkontroller eller kontroller baserade på riskprofiler ännu inte införts permanent, trots att Försäkringskassan har identifierat ett tydligt riskområde och att manuella kontroller skulle minska andelen felaktiga utbetalningar. Skatteverket använder sig av riskbaserade urval för att manuellt kontrollera deklarationer med hög risk för fusk och fel. Det finns dock brister som handlar om att det utförs för få kontroller i relation till det antal avdrag som görs och andelen fel i dessa, att handläggare i viss utsträckning väljer att inte genomföra de kontroller de tilldelas i ärendehanteringssystemet samt att de manuella kontrollerna inte följs upp. 170 Intervju med företrädare för Transportstyrelsen, 2020-03-09 (b). 171 Intervju med företrädare för Transportstyrelsen, 2020-03-09 (b). 172 Intervju med företrädare för Transportstyrelsen, 2020-01-23. 173 Intervju med företrädare för Transportstyrelsen, 2020-03-06. E N G R A N S K N I N G S R A P P O R T F R Å N R I K S R E V I S I O N E N R I K S R E V I S I O N E N 43 Transportstyrelsen genomför inte slumpmässiga manuella kontroller eller manuella kontroller som baseras på riskurval i körkortstillståndet och det finns inga planer på att införa det. Transportstyrelsen uppger bland annat att lagstiftningen hindrar vilka typer av riktade manuella kontroller som kan utföras.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Random or risk-based manual controls of automated decisions are missing or not followed up."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 5,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Övriga tre myndigheter uppger att det är svårt att säga huruvida likabehandlingen ökat.235 En av de tretton myndigheterna använder sig av profilering i det automatiserade beslutsfattandet och denna myndighet informerar privatpersoner om att så är fallet. Myndigheten använder profilering dels för att fatta beslut, dels för att välja ut vilka ärenden som faller ut för kontroll.236 5.1.2 Automatiseringen av föräldrapenningen har ökat likabehandlingen Intervjuer vid Försäkringskassan visar att kvaliteten i ärendehanteringen har förbättrats i och med automatiseringen. Sedan automatiseringen infördes kan Försäkringskassan säkerställa att samma kontroller görs i samtliga ärenden.237 Medarbetare vid Försäkringskassan upplever att det även blir en bättre rättslig styrning av förmånen när ärendehanteringssystemet gör samma automatiska kontroller oavsett förmånssökande och sorterar ut ärenden för manuell hantering utifrån samma kriterier. Det medför en systematik i handläggningen som gör att även den manuella hanteringen blir mer enhetlig i tillämpningen.238 Den ökade enhetligheten i den manuella hanteringen riskerar dock i vissa aspekter att få negativ påverkan på utfallet av korrekta beslut. Om en handläggare ser en risk för fel i ett föräldrapenningsärende utöver den åtgärd som IT-systemet meddelar att handläggaren ska utföra, så ska handläggaren inte åtgärda detta, utan lita på att ärendet faller ut igen för manuell hantering.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "An agency using profiling in automated decisions informs individuals that it does so."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Case officers must not act on errors they see beyond what the IT system tells them: limited authority to overrule."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 6,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Myndigheterna har även identifierat att kompetens för att kunna översätta lagstiftning till programkod är en kritisk faktor för att kunna säkerställa korrekta och rättssäkra automatiserade beslut. Granskningen visar att Försäkringskassan, Skatteverket och Transportstyrelsen till stor del uppfyller Riksrevisionens bedömningskriterier om grundläggande rättssäkerhetsaspekter, men att vissa av dessa inte är fullt ut omhändertagna på alla tre myndigheter. Det handlar om att manuella kontroller som inte utförs på ett korrekt sätt riskerar att minska likabehandlingen och att dokumentationen i den automatiserade handläggningen ska vara tydlig och läsbar. De flesta myndigheter som svarat på enkäten uppger att likabehandlingen har ökat till följd av automatiserat beslutsfattande. Intervjuer vid Försäkringskassan, Skatteverket och Transportstyrelsen visar att medarbetare vid dessa myndigheter genomgående upplever att likabehandlingen har ökat sedan automatiserat beslutsfattande infördes i föräldrapenningen, inkomstbeskattningen av privatpersoner och körkortstillståndet. Anledningen till detta är att alla ärenden går igenom samma automatiska kontroller och faller ut till manuell hantering utifrån samma urvalsgrunder. De största riskerna för bristande likabehandling återfinns i urvalsprocessen för att kontrollera ärenden manuellt och den manuella hanteringen. Det saknas dock analyser av hur likabehandlingen har påverkats av automatiseringen av beslutsfattande.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Risks lie in selection for manual control and in manual handling of automated cases."
+        },
+        {
+          "category": "transparency",
+          "reason": "Documentation in automated handling should be clear and readable."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-RiR-2020:22",
+      "index": 7,
+      "doc": "d4",
+      "lang": "sv",
+      "text": "Försäkringskassans dokumentation är dock inte alltid helt tydlig och förståelig för den som vill spåra vilka åtgärder som har utförts i den automatiserade handläggningen. Det medför att vad som skett i den automatiserade handläggningen inte är helt tydligt för de privatpersoner som begär ut dokumentation över hur beslut har fattats. Försäkringskassan har identifierat detta som en brist, och påbörjat ett utvecklingsarbete för att fastställa en standard för dokumentation i automatiserade beslut, men har ännu inte implementerat detta. 6.4 Kunskapen om automatiserat beslutsfattande behöver öka Det finns behov av att ta fram kunskapsunderlag och stöd till myndigheter för att statsförvaltningens automatiserade beslutsfattande ska få bättre förutsättningar för att vara effektivt, rättssäkert och korrekt. Granskningen visar att Försäkringskassan, Skatteverket och Transportstyrelsen har etablerade strukturer för styrning av de automatiserade beslutsprocesserna, men att det ändå finns vissa brister. Sammantaget visar granskningen att det finns behov av att ta fram kunskapsunderlag och stöd till myndigheter för att statsförvaltningens automatiserade beslutsfattande ska få bättre förutsättningar för att vara effektivt, rättssäkert och korrekt. Ett sådant kunskapsunderlag skulle exempelvis kunna innehålla modeller för hur myndigheter kan strukturera och styra sina automatiserade beslutsprocesser.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Documentation does not let individuals see what happened in the automated handling."
+        },
+        {
+          "category": "contestability",
+          "reason": "Individuals who request documentation of how a decision was made cannot follow it, which limits challenge."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-IMY-2024-9162",
+      "index": 1,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Den verksamhet som använder generativ AI för att utföra sitt uppdrag är personuppgiftsansvarig för personuppgiftsbehandlingen. En leverantör av ett AI-system som behandlar personuppgifter för verksamhetens räkning kan vara personuppgiftsbiträde. I sådana fall krävs ett personuppgiftsbiträdesavtal mellan den ansvarige och biträdet. Se till att det finns rättslig grund och annat rättsligt stöd för användningen. När generativ AI används för att uppfylla verksamhetens uppdrag kan det finnas rättslig grund för att behandla personuppgifter. Kravet på nödvändighet kan vara uppfyllt om användningen sker för att effektivisera verksamheten. Ju större riskerna är med den behandling av personuppgifter som sker vid användning av generativ AI, desto högre krav ställs på den rättsliga grunden. Överväg om automatiserat beslutsfattande och överföring till tredje land förekommer. Vid användning av generativ AI kan bestämmelser i dataskyddsförordningen om automatiserat beslutsfattande och överföring av personuppgifter till tredjeland aktualiseras. För att myndigheter ska kunna använda generativ AI för automatiserat beslutsfattande behöver förvaltningslagens krav på proportionalitet, objektivitet och legalitet följas. Om användningen av AI innebär att personuppgifter förs över till ett land utanför EU/EES måste särskilda villkor enligt dataskyddsförordningen vara uppfyllda. Säkerställ enskildas rättigheter vid användningen av generativ AI. Verksamheter behöver vidta åtgärder för att säkerställa enskildas rättigheter enligt dataskyddsförordningen vid användning av generativ AI. Verksamheten behöver till exempel överväga om det krävs uppdateringar av verksamhetens integritetspolicy eller liknande dokument som informerar enskilda om behandlingen av deras personuppgifter.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Legal basis, necessity, third-country transfer and data subject rights for personal data in generative AI."
+        },
+        {
+          "category": "accountability",
+          "reason": "The organisation using generative AI is the controller; a processor agreement is needed with the supplier."
+        },
+        {
+          "category": "transparency",
+          "reason": "Privacy policy may need updating to inform individuals about the processing."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-IMY-2024-9162",
+      "index": 2,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Samtidigt kan det exempelvis vara utmanade att på ett lättbegripligt sätt förklara hur ett AI-system fungerar eller har kommit fram till ett visst svar. Eftersom tekniken utvecklas snabbt är det viktigt att enskilda får uppdaterad information om användningen och hur det påverkar dem. I avsnittet Säkerställ enskildas rättigheter vid användningen av generativ AI ges mer vägledning om hur personuppgifter kan behandlas på ett öppet sätt. Principen om ändamålsbegränsning Specificera ändamålet Principen om ändamålsbegränsning innebär att personuppgifter ska samlas in för särskilda, uttryckligt angivna och berättigade ändamål. Uppgifterna får inte senare behandlas på ett sätt som är oförenligt med dessa ändamål. Generativ AI är en typ av teknik som kan användas för flera olika ändamål. Att använda generativ AI är dock inte ett ändamål i sig, utan ett medel för att behandla information. Det är viktigt att verksamheten specificerar för vilka ändamål som AI- systemet ska användas och att detta tydliggörs för verksamhetens medarbetare. Överväg tekniska begränsningar Verksamheten kan också överväga att införa åtgärder för att avgränsa AI-systemets användningsområde, exempelvis genom att tekniskt begränsa vilka instruktioner och vilken information användarna kan ge till systemet genom så kallade promptar. I vissa fall kan AI-systemets funktionalitet behöva begränsas så att det endast är tekniskt möjligt att utföra de uppgifter som är relevanta för syftet med behandlingen.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Hard to explain how an AI system reached an answer; individuals need updated information."
+        },
+        {
+          "category": "privacy",
+          "reason": "Purpose limitation for personal data."
+        },
+        {
+          "category": "misuse",
+          "reason": "Specify purposes and technically restrict the AI system to them, preventing use beyond the purpose."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-IMY-2024-9162",
+      "index": 3,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Det bör dock betonas att det fortfarande är nödvändigt att noggrant granska och kontrollera AI- systemets svar eftersom hallucinationer förekommer även när RAG används. Läs mer om hallucinationer och åtgärder för att säkerställa riktighet i avsnittet Bedöm riskerna med användningen och säkerställ lämplig säkerhet. Principen om lagringsminimering Undvik att spara irrelevanta personuppgifter Principen om lagringsminimering innebär att verksamheten behöver se till att personuppgifter inte behandlas under en längre tid än nödvändigt. För att effektivt kunna använda generativ AI på verksamhetens data kan det i vissa fall krävas att all Integritetsskyddsmyndigheten Diarienummer: IMY-2024-9162 13(30) Datum: 2025-02-05 data behandlas (exempelvis vektoriseras) för att göras sökbar och tillgänglig för AI- systemet. Det kan därför vara utmanande att göra en avvägning mellan å ena sidan behovet av att lagra data som kan vara relevanta för syftet med användningen, och å andra sidan kravet på lagringsminimering. Verksamheten behöver säkerställa att AI- systemet inte behandlar personuppgifter som inte längre är relevanta på ett sätt som innebär risker för enskilda. När det inte längre är nödvändigt att behandla personuppgifterna utifrån ändamålet ska de raderas eller anonymiseras. Det gäller även för sådana data som exempelvis ett generativt AI-system använder samt eventuella kopior av datauppsättningar som lagras någon annanstans än internt i verksamheten.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Storage limitation: delete or anonymise personal data no longer needed."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "AI answers must be carefully reviewed and checked because of hallucinations."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-IMY-2024-9162",
+      "index": 4,
+      "doc": "d5",
+      "lang": "sv",
+      "text": "Dataläckage Ytterligare en risk är att personuppgifter som överförs till en extern generativ AI-tjänst kan hamna i orätta händer eller används på ett obehörigt sätt utanför verksamhetens kontroll. Svarta lådan-problematiken En utmaning med generativ AI är den så kallade svarta lådan-problematiken (eng. the black box problem), vilket innebär att det inte alltid går att fullt ut förstå hur tekniken fungerar eller på vilka grunder ett svar genereras. Detta kan leda till säkerhetsrisker Integritetsskyddsmyndigheten Diarienummer: IMY-2024-9162 24(30) Datum: 2025-02-05 som vi ännu inte känner till eller förstår. Offentliga verksamheter bör därför överväga om användningen av generativ AI är nödvändig eller om en mer förutsebar, regelbaserad IT-lösning kan fylla samma funktion. Enklare AI-lösningar som kan ge bättre kontroll över och förståelse för behandlingen bör också övervägas, till exempel en liten språkmodell (eng. small language model, SLM) som kan hanteras närmare verksamheten. Hallucinationer Hallucinationer innebär att generativ AI skapar utdata som inte stämmer överens med verkligheten. Exempel på hallucinationer kan vara svar eller handlingar som innehåller vilseledande eller felaktiga uppgifter. Vissa hallucinationer kan vara mycket svåra att skilja från fakta. Ju svårare det är att identifiera det felaktiga, desto större kan risken och konsekvenserna av hallucinationen bli. Hallucinationer kan medföra svårigheter att följa dataskyddsförordningens princip om riktighet. Bias Bias innebär att ett generativt AI-systemet producerar resultat som är diskriminerande eller snedvridna.",
+      "labels": [
+        {
+          "category": "security",
+          "reason": "Personal data sent to an external AI service may leak or be used without authorisation; black box creates unknown security risks."
+        },
+        {
+          "category": "discrimination",
+          "reason": "Bias: generative AI may produce discriminatory results."
+        },
+        {
+          "category": "transparency",
+          "reason": "Black box problem: not possible to understand on what grounds an answer is generated."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 1,
+      "doc": "d7",
+      "lang": "en",
+      "text": "Definitions The GDPR introduces provisions to ensure that profiling and automated individual decision-making (whether or not this includes profiling) are not used in ways that have an unjustified impact on individuals’ rights; for example:  specific transparency and fairness requirements;  greater accountability obligations;  specified legal bases for the processing;  rights for individuals to oppose profiling and specifically profiling for marketing; and  if certain conditions are met, the need to carry out a data protection impact assessment. The GDPR does not just focus on the decisions made as a result of automated processing or profiling. It applies to the collection of data for the creation of profiles, as well as the application of those profiles to individuals. A. Profiling The GDPR defines profiling in Article 4(4) as: any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person, in particular to analyse or predict aspects concerning that natural person’s performance at work, economic situation, health, personal preferences, interests, reliability, behaviour, location or movements; Profiling is composed of three elements:  it has to be an automated form of processing; 7  it has to be carried out on personal data; and  the objective of the profiling must be to evaluate personal aspects about a natural person.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Specific transparency requirements for profiling and automated decisions."
+        },
+        {
+          "category": "accountability",
+          "reason": "Greater accountability obligations."
+        },
+        {
+          "category": "privacy",
+          "reason": "Profiling is automated processing of personal data; legal bases and DPIA."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 2,
+      "doc": "d7",
+      "lang": "en",
+      "text": "9 The difference between (ii) and (iii) is best demonstrated by the following two examples where an individual applies for a loan online:  a human decides whether to agree the loan based on a profile produced by purely automated means(ii);  an algorithm decides whether the loan is agreed and the decision is automatically delivered to the individual, without any prior and meaningful assessment by a human (iii). Controllers can carry out profiling and automated decision-making as long as they can meet all the principles and have a lawful basis for the processing. Additional safeguards and restrictions apply in the case of solely automated decision-making, including profiling, defined in Article 22(1). Chapter III of these guidelines explains the GDPR provisions for all profiling and automated individual decision-making. This includes decision-making processes that are not solely automated. Chapter IV of these guidelines explains the specific provisions that only apply to solely automated individual decision-making, including profiling.3 A general prohibition on this type of processing exists to reflect the potential risks to individuals’ rights and freedoms. III. General provisions on profiling and automated decision-making This overview of the provisions applies to all profiling and automated decision-making. Additional specific provisions set out in Chapter IV apply if the processing meets the definition in Article 22(1). A.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Distinguishes a human deciding on a profile from an algorithm deciding without meaningful human assessment."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 3,
+      "doc": "d7",
+      "lang": "en",
+      "text": "The controller must also provide the data subject with information about the collected data, and, if appropriate, the existence of automated decision-making referred to in Article 22(1) and (4), the logic involved, and the significance and envisaged consequences of such processing. The specific requirements surrounding information and access to personal data are discussed in Chapters III (section D) and IV (section E). Processing also has to be fair, as well as transparent. Profiling may be unfair and create discrimination, for example by denying people access to employment opportunities, credit or insurance, or targeting them with excessively risky or costly financial products. The following example, which would not meet the requirements of Article 5(1)(a), illustrates how unfair profiling can lead to some consumers being offered less attractive deals than others. Example A data broker sells consumer profiles to financial companies without consumer permission or knowledge of the underlying data. The profiles define consumers into categories (carrying titles such as “Rural and Barely Making It,” “Ethnic Second-City Strugglers,” “Tough Start: Young Single Parents,”) or “score” them, focusing on consumers’ financial vulnerability. The financial companies offer these consumers payday loans and other “non-traditional” financial services (high-cost loans and other financially risky products).7 6 Office of the Australian Information Commissioner.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Data subject must be told about automated decision-making and the logic involved."
+        },
+        {
+          "category": "discrimination",
+          "reason": "Unfair profiling with categories such as 'Ethnic Second-City Strugglers' can create discrimination."
+        },
+        {
+          "category": "privacy",
+          "reason": "Profiles sold without consumer permission or knowledge of the underlying data."
+        },
+        {
+          "category": "misuse",
+          "reason": "Consumer profiles sold to financial companies to target vulnerable people with risky products."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 4,
+      "doc": "d7",
+      "lang": "en",
+      "text": "In summary, Article 22 provides that: (i) as a rule, there is a general prohibition on fully automated individual decision-making, including profiling that has a legal or similarly significant effect; (ii) there are exceptions to the rule; (iii) where one of these exceptions applies, there must be measures in place to safeguard the data subject’s rights and freedoms and legitimate interests32. 31 In line with Article 12(2) controllers who collect personal data from individuals with the aim of using it for direct marketing purposes should, at the moment of collection, consider offering data subjects an easy way to indicate that they do not wish their personal data to be used for direct marketing purposes, rather than requiring them to exercise their right to object at a later occasion. 32 Recital 71 says that such processing should be “s ubject to suitable safeguards, which should include specific information to the data subject and the right to obtain human intervention, to express his or her point of view, to obtain an explanation of the decision reached after such assessment and to challenge the decision.” 20 This interpretation reinforces the idea of the data subject having control over their personal data, which is in line with the fundamental principles of the GDPR.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Safeguards include an explanation of the decision and the right to challenge it."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Right to obtain human intervention."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 5,
+      "doc": "d7",
+      "lang": "en",
+      "text": "Any processing likely to result in a high risk to data subjects requires the controller to carry out a Data Protection Impact Assessment (DPIA).34 As well as addressing any other risks connected with the processing, a DPIA can be particularly useful for controllers who are unsure whether their proposed activities will fall within the Article 22(1) definition, and, if allowed by an identified exception, what safeguarding measures must be applied. A. ‘Decision based solely on automated processing’ Article 22(1) refers to decisions ‘based solely’ on automated processing. This means that there is no human involvement in the decision process. Example An automated process produces what is in effect a recommendation concerning a data subject. If a human being reviews and takes account of other factors in making the final decision, that decision would not be ‘based solely’ on automated processing. 33 Further comments on the interpretation of Article 22 as a prohibition can be found in Annex 2. 34 Article 29 Data Protection Working Party. Guidelines on Data Protection Impact Assessment (DPIA) and determining whether processing is “likely to result in a high risk” for the purposes of Regulation 2016/679. 4 April 2017. European Commission. http://ec.europa.eu/newsroom/document.cfm?doc_id=44137 Accessed 24 April 2017. 21 The controller cannot avoid the Article 22 provisions by fabricating human involvement.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "'Based solely' means no human involvement; a human who reviews and weighs other factors; human involvement cannot be fabricated."
+        },
+        {
+          "category": "privacy",
+          "reason": "DPIA required for high-risk processing of personal data."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 6,
+      "doc": "d7",
+      "lang": "en",
+      "text": "The GDPR introduces the word ‘similarly’ (not present in Article 15 of Directive 95/46/EC) to the phrase ‘significantly affects’. Therefore the threshold for significance must be similar to that of a decision producing a legal effect. Recital 71 provides the following typical examples: ‘automatic refusal of an online credit application’ or ‘e-recruiting practices without any human intervention’. For data processing to significantly affect someone the effects of the processing must be sufficiently great or important to be worthy of attention. In other words, the decision must have the potential to:  significantly affect the circumstances, behaviour or choices of the individuals concerned;  have a prolonged or permanent impact on the data subject; or  at its most extreme, lead to the exclusion or discrimination of individuals. 22 It is difficult to be precise about what would be considered sufficiently significant to meet the threshold, although the following decisions could fall into this category:  decisions that affect someone’s financial circumstances, such as their eligibility to credit;  decisions that affect someone’s access to health services;  decisions that deny someone an employment opportunity or put them at a serious disadvantage;  decisions that affect someone’s access to education, for example university admissions. This bring us also to the issue of online advertising, which increasingly relies on automated tools and involves solely automated individual decision-making.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Significant effects include exclusion or discrimination of individuals, e.g. in credit, health, jobs, education."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 7,
+      "doc": "d7",
+      "lang": "en",
+      "text": "The score may have been provided by a credit reference agency, or calculated directly based on information held by the controller. Regardless of the source (and information on the source must be provided to the data subject under Article 14 (2) (f) where the personal data have not been obtained from the data subject), if the controller is reliant upon this score it must be able to explain it and the rationale, to the data subject. The controller explains that this process helps them make fair and responsible lending decisions. It 38 Referred to in Article 22(1) and (4).The WP Guidelines on transparency cover the general information requirements set out in Articles 13 and 14. 39 GDPR Recital 60 “The controller should provide the data subject with any further information necessary to ensure fair and transparent processing taking into account the specific circumstances and context in which th e personal data are processed. Furthermore the data subject should be informed of the existence of profiling and the consequences of such profiling.” 40Complexity is no excuse for failing to provide information to the data subject.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Source of the score must be disclosed and the controller must explain it and its rationale."
+        },
+        {
+          "category": "contestability",
+          "reason": "The rationale of the score must be explained to the data subject."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 8,
+      "doc": "d7",
+      "lang": "en",
+      "text": "In a digital context, controllers might be able to use additional tools to help illustrate such effects. Example An insurance company uses an automated decision making process to set motor insurance premiums based on monitoring customers’ driving behaviour. To illustrate the significance and envisaged consequences of the processing it explains that dangerous driving may result in higher insurance payments and provides an app comparing fictional drivers, including one with dangerous driving habits such as fast acceleration and last-minute braking. It uses graphics to give tips on how to improve these habits and consequently how to lower insurance premiums. Controllers can use similar visual techniques to explain how a past decision has been made. 2. Article 15(1) (h) - Right of access Article 15(1) (h) entitles data subjects to have the same information about solely automated decision- making, including profiling, as required under Articles 13(2) (f) and 14(2) (g), namely:  the existence of automated decision making, including profiling;  meaningful information about the logic involved; and  the significance and envisaged consequences of such processing for the data subject. 41 Council of Europe.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Meaningful information about the logic and consequences of automated decisions; visual explanations."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 9,
+      "doc": "d7",
+      "lang": "en",
+      "text": "Recital 63 clarifies this by stating that every data subject should have the right of access to obtain ‘communication’ about automatic data processing, including the logic involved, and at least when based on profiling, the consequences of such processing, By exercising their Article 15 rights, the data subject can become aware of a decision made concerning him or her, including one based on profiling. The controller should provide the data subject with general information (notably, on factors taken into account for the decision-making process, and on their respective ‘weight’ on an aggregate level) which is also useful for him or her to challenge the decision. F. Establishing appropriate safeguards If the basis for processing is 22(2)(a) or 22(2)(c), Article 22(3) requires controllers to implement suitable measures to safeguard data subjects’ rights freedoms and legitimate interests. Under Article 22(2)(b) the Member or Union State law that authorises the processing must also incorporate appropriate safeguarding measures. Such measures should include as a minimum a way for the data subject to obtain human intervention, express their point of view, and contest the decision. Human intervention is a key element. Any review must be carried out by someone who has the appropriate authority and capability to change the decision. The reviewer should undertake a thorough assessment of all the relevant data, including any additional information provided by the data subject.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Information useful to challenge the decision; right to express a view and contest."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Review by someone with authority and capability to change the decision."
+        },
+        {
+          "category": "transparency",
+          "reason": "Right of access to the logic and factors with their weight."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 10,
+      "doc": "d7",
+      "lang": "en",
+      "text": "There may nevertheless be some circumstances in which it is necessary for controllers to carry out solely automated decision-making, including profiling, with legal or similarly significant effects in relation to children, for example to protect their welfare. If so, the processing may be carried out on the basis of the exceptions in Article 22(2)(a), (b) or (c) as appropriate. In those cases there must be suitable safeguards in place, as required by Article 22(2)(b) and 22(3), and they must therefore be appropriate for children. The controller must ensure that these safeguards are effective in protecting the rights, freedoms and legitimate interests of the children whose data they are processing. The need for particular protection for children is reflected in recital 38, which says: Children merit specific protection with regard to their personal data, as they may be less aware of the risks, consequences and safeguards concerned and their rights in relation to the processing of personal data. Such specific protection should, in particular, apply to the use of personal data of children for the purposes of marketing or creating personality or user profiles and the collection of personal data with regard to children when using services offered directly to a child.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Specific protection of children's personal data in automated decisions and profiling."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-WP251rev.01",
+      "index": 11,
+      "doc": "d7",
+      "lang": "en",
+      "text": "21(1) and (2) Right to object The right to object in Article 21(1) and (2) has to be explicitly brought to the attention of the data subject and presented clearly and separately from other information (Article 21(4). Controllers need to ensure that this right is prominently displayed on their website or in any relevant documentation and not hidden away within any other terms and conditions. 22 and Recital 71 Appropriate safeguards The following list, though not exhaustive, provides some good practice suggestions for controllers to consider when making solely automated decisions, including profiling(defined in Article 22(1)):  regular quality assurance checks of their systems to make sure that individuals are being treated fairly and not discriminated against, whether on the basis of special categories of personal data or otherwise;  algorithmic auditing – testing the algorithms used and developed by machine learning systems to prove that they are actually performing as intended, and not producing discriminatory, erroneous or unjustified results;  for independent ‘third party’ auditing (where decision-making based on profiling has a high impact on individuals), provide the auditor with all necessary information about how the algorithm or machine learning system works;  obtaining contractual assurances for third party algorithms that auditing and testing has been carried out and the algorithm is compliant with agreed standards;  specific measures for data minimisation to incorporate clear retention periods for profiles",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Quality checks and algorithmic auditing to ensure people are not discriminated against."
+        },
+        {
+          "category": "privacy",
+          "reason": "Right to object to processing; data minimisation and retention periods for profiles."
+        },
+        {
+          "category": "accountability",
+          "reason": "Independent third-party auditing and contractual assurances for third-party algorithms."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-SI/4/2024/MIK",
+      "index": 1,
+      "doc": "d9",
+      "lang": "en",
+      "text": "The Ombudsman welcomed the fact that the Commission had proactively published a communication setting out comprehensively its approach to using AI. She encouraged the Commission further to reflect on how it will continue to ensure transparency around its use of AI and how it will engage the public in the future development and deployment of the AI systems that may have a significant impact on its decision-making processes. The Ombudsman welcomed measures taken by the Commission to ensure its use of ‘high-risk’ AI systems complies with the recently-adopted AI Act. She nonetheless drew attention to the need to ensure that all AI systems that support its decision making (and not just those deemed ‘high-risk’) produce accurate results, enable the EU administration to provide reasons for its decisions and remain under effective human oversight. To this end, the Commission could consider adopting a voluntary ‘code of conduct’, as mentioned in the AI Act, for AI systems that are not deemed ‘high-risk’.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Ensure transparency around the Commission's use of AI."
+        },
+        {
+          "category": "contestability",
+          "reason": "AI systems must enable the administration to provide reasons for its decisions."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "AI systems must remain under effective human oversight."
+        }
+      ]
+    },
+    {
+      "sample": "heldout-SI/4/2024/MIK",
+      "index": 2,
+      "doc": "d9",
+      "lang": "en",
+      "text": "The rapid developments resulting from artificial intelligence (AI) will have enormous implications for public administrations. AI systems are already being developed or introduced to help public administrations improve the quality and efficiency of services they provide. In addition to tasks such as sorting and classification, translation and editing, and research, AI will also play a role in more complex decision making by analysing data or even suggesting solutions or policy options. AI also poses major challenges, when it comes to the accuracy of results, potential bias, explaining outcomes (‘explainability’) and human oversight",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Potential bias of AI in public decisions."
+        },
+        {
+          "category": "transparency",
+          "reason": "Explaining outcomes (explainability)."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Human oversight named as a major challenge."
+        }
+      ]
+    }
+  ]
+}

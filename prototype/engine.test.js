@@ -171,7 +171,7 @@ test("explainFlag gives rule, context, category and related absence checks", () 
 });
 
 test("Swedish inflections of automatiserad are matched", () => {
-  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används.", "Ärendet automatiseras och beslutet fattas utan handläggare."]) {
+  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används utan mänsklig granskning.", "Ärendet automatiseras och beslutet fattas utan handläggare."]) {
     const cats = findFlags(splitPassages(s)).map((f) => f.category);
     assert.ok(cats.includes("transparency") && cats.includes("human-oversight"), s);
   }

@@ -41,8 +41,8 @@
       description: "Who is responsible for the tool, its outputs and its errors.",
       question: "Is it clear which named role or body answers for this decision and for mistakes?",
       patterns: {
-        en: ["responsible", "responsibility", "liability", "third-party supplier", "supplier", "vendor", "contractor", "outsourc", "delegat"],
-        sv: ["ansvar", "ansvarig", "leverantör", "underleverantör", "upphandl", "delegation", "delegera"]
+        en: ["responsible", "responsibility", "liability", "third-party supplier", "supplier", "vendor", "contractor", "outsourc", "delegat", "accountab"],
+        sv: ["ansvar", "ansvarig", "personuppgiftsansvarig", "leverantör", "underleverantör", "upphandl", "delegation", "delegera"]
       }
     },
     {
@@ -51,8 +51,8 @@
       description: "Whether some groups could be treated less favourably, directly or through proxies.",
       question: "Could this criterion or data source work differently for groups protected by discrimination law?",
       patterns: {
-        en: ["risk score", "risk assessment", "profiling", "postcode", "postal code", "neighbourhood", "nationality", "ethnic", "gender", "age group", "disability", "language", "prioritis", "high-risk group"],
-        sv: ["riskpoäng", "riskbedömning", "profilering", "postnummer", "bostadsområde", "medborgarskap", "nationalitet", "etnisk", "kön", "ålder", "funktionsnedsättning", "språk", "prioriter"]
+        en: ["risk score", "risk assessment", "profiling", "postcode", "postal code", "neighbourhood", "nationality", "ethnic", "gender", "age group", "disability", "language", "prioritis", "high-risk group", "bias", "discriminat"],
+        sv: ["riskpoäng", "riskbedömning", "profilering", "diskriminer", "snedvrid", "postnummer", "bostadsområde", "medborgarskap", "nationalitet", "etnisk", "kön", "ålder", "funktionsnedsättning", "språk", "prioriter"]
       },
       // Profiling only matters for this category when the passage also
       // speaks of groups, protected grounds or unequal outcomes.
@@ -83,7 +83,7 @@
       description: "Whether people can understand, question and challenge a decision.",
       question: "Can an affected person get reasons for the decision and challenge it in practice?",
       patterns: {
-        en: ["appeal", "complaint", "challenge", "right to object", "review request", "reasons for the decision", "explanation"],
+        en: ["appeal", "complaint", "challenge", "right to object", "review request", "reasons for the decision", "explanation", "provide reasons", "give reasons", "rationale"],
         sv: ["överklag", "klagomål", "invändning", "ompröv", "motivering", "förklaring"]
       }
     },
@@ -93,7 +93,7 @@
       description: "Whether a person with real authority checks the tool's output before it affects someone.",
       question: "Does a person with competence and authority review the output, and can they overrule it?",
       patterns: {
-        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve"],
+        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve", "human intervention", "human involvement", "human being"],
         sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
       },
       // Automation and the word "decision maker" are context, not an
@@ -102,7 +102,7 @@
       gated: {
         terms: ["automatically", "automatiser", "automatiskt", "beslutsfattare"],
         cues: ["human", "manual", "review", "oversight", "intervention", "intervene", "caseworker", "case officer", "check", "verif", "override", "sign off",
-               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "person", "befattningshavare", "fatta", "beslut", "decision"]
+               "mänsklig", "manuell", "granska", "granskning", "handläggare", "ingrip", "kontroller", "pröva", "överprövning", "godkänn", "person", "befattningshavare", "fatta"]
       }
     },
     {

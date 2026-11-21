@@ -1,5 +1,7 @@
 // Inter-annotator agreement for the three-annotator sets.
-// Run with: npm run agreement   (or: node prototype/eval/agreement.mjs)
+// Run with: npm run agreement   (or: node prototype/eval/agreement.mjs [test4])
+// Without an argument it reads the test2+test3 round in annotations/; with a
+// round name it reads annotations/<round>/.
 // Reads prototype/eval/annotations/ann-*.json and reports Fleiss' kappa per
 // category, the share of passages where all annotators agree, and how many
 // passages the majority labels. No dependencies.
@@ -21,8 +23,10 @@ export function fleiss(counts, n) {
   return pE === 1 ? NaN : (pBar - pE) / (1 - pE);
 }
 
-export function agreement(files = readdirSync(dir).filter((f) => /^ann-.*\.json$/.test(f)).sort()) {
-  const anns = files.map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")).labels);
+export function agreement(round = "") {
+  const where = round ? join(dir, round) : dir;
+  const files = readdirSync(where).filter((f) => /^ann-.*\.json$/.test(f)).sort();
+  const anns = files.map((f) => JSON.parse(readFileSync(join(where, f), "utf8")).labels);
   const n = anns.length;
   const ids = [...new Set(anns.flatMap((a) => Object.keys(a)))].sort();
   const rows = [];
@@ -36,7 +40,7 @@ export function agreement(files = readdirSync(dir).filter((f) => /^ann-.*\.json$
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const r = agreement();
+  const r = agreement(process.argv[2] || "");
   console.log(`Annotators: ${r.annotators}. Passages: ${r.passages}.\n`);
   console.log("category          kappa  unanimous  majority yes");
   for (const x of r.rows) console.log(`${x.category.padEnd(16)}${x.kappa.toFixed(2).padStart(7)}${(Math.round(x.unanimous * 100) + "%").padStart(11)}${String(x.majorityYes).padStart(14)}`);

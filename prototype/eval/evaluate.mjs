@@ -16,7 +16,7 @@ const engine = require(join(here, "..", "engine.js"));
 const { TAXONOMY } = require(join(here, "..", "taxonomy.js"));
 
 // test2 is the frozen final test set: scored once after the precision round, never tuned on.
-export const SETS = { gold: "gold.json", heldout: "heldout.json", test2: "test2.json", test3: "test3.json" };
+export const SETS = { gold: "gold.json", heldout: "heldout.json", test2: "test2.json", test3: "test3.json", test4: "test4.json" };
 export function loadSet(name = "gold") {
   if (!SETS[name]) throw new Error(`unknown set "${name}", use one of: ${Object.keys(SETS).join(", ")}`);
   return JSON.parse(readFileSync(join(here, SETS[name]), "utf8"));

@@ -91,6 +91,25 @@ test("new test set (three annotators): does not fall below its one-time measurem
   assert.ok(r.overall.recall >= 0.62, `recall ${r.overall.recall}`);
 });
 
+// test4.json: eight further documents (JO on DiBa and on Migrationsverket,
+// two Irish DPC decisions, Datatilsynet, DIGG and Lantmäteriet, the UK Public
+// Accounts Committee, EDPS on explainable AI), majority of three annotators,
+// scored once with the engine on main: precision 0.45 (27 of 60), recall 0.57
+// (27 of 47). Never tune on it.
+test("test4 (three annotators): does not fall below its one-time measurement", () => {
+  const r = evaluate(loadSet("test4"));
+  assert.equal(r.passages, 30);
+  assert.ok(r.overall.precision >= 0.44, `precision ${r.overall.precision}`);
+  assert.ok(r.overall.recall >= 0.56, `recall ${r.overall.recall}`);
+});
+
+test("test4 agreement recomputes as reported", async () => {
+  const { agreement } = await import("./agreement.mjs");
+  const r = agreement("test4");
+  assert.equal(r.passages, 30);
+  assert.ok(Math.abs(r.pooledKappa - 0.84) < 0.01, `pooled kappa ${r.pooledKappa}`);
+});
+
 test("agreement between the three annotators recomputes as reported", async () => {
   const { agreement } = await import("./agreement.mjs");
   const r = agreement();

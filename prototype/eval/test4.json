@@ -1,0 +1,872 @@
+{
+  "format": "risk-lens-gold",
+  "version": 1,
+  "set": "test4",
+  "status": "frozen final test set; labelled by majority of three independent annotators against docs/annotation-guide.md; scored once",
+  "retrieved": "2026-11-21",
+  "annotator": "Three independent AI annotators (A neutral, B sceptical, C inclusive), same underlying model, working only from docs/annotation-guide.md, the category definitions and the passage texts (wrapped, in different random orders); label = majority (2 of 3). Raw files: prototype/eval/annotations/test4/.",
+  "method": "Frozen final test set from eight documents not used in gold.json, heldout.json, test2.json or test3.json. Excerpts (120 to 320 words) were chosen by reading for substance (decision reasoning, safeguards, oversight, documentation, appeal, bias, data protection), plus about five passages that only describe or mention automation, AI or data without a real concern, so false alarms can be measured. Each excerpt is verbatim from the fetched document after whitespace normalisation (PDF text extracted with the vendored pdf.js; page breaks become single spaces, so running headers, page numbers, footnote numbers and text, and hyphenated line breaks can appear inside a passage; the HC 356 report was taken from the HTML page as rendered text in a browser). Nothing was removed inside an excerpt. Excerpts from the Irish DPC and Datatilsynet documents, whose reuse terms are not stated, are kept to at most 250 words. The extractor did not label anything, did not read engine.js, the taxonomy term lists or the model files, did not run the engine and did not run evaluate.mjs. The DIGG and Lantmäteriet PDF and the PAC HTML report were fetched with a real browser (Playwright chromium). Skipped: ICO Regulatory Sandbox Final Report: West Yorkshire Police (2025-10), https://ico.org.uk/media2/lo0kqhze/west-yorkshire-police-sandbox-final-report-v10.pdf, which returned HTTP 403 to both curl and the browser.",
+  "documents": {
+    "d1": {
+      "title": "JO:s granskning av Domstolsverkets införande av verksamhetsstödet Digitalt brottmålsavgörande (DiBa)",
+      "issuer": "Riksdagens ombudsmän (JO)",
+      "date": "2024-05-30",
+      "number": "dnr 4379-2023",
+      "url": "https://www.jo.se/app/uploads/resolve_pdfs/1636148_4379-2023beslut.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d2": {
+      "title": "Ny granskning av Migrationsverkets hantering av dröjsmålstalan enligt 12 § förvaltningslagen i medborgarskapsärenden",
+      "issuer": "Riksdagens ombudsmän (JO)",
+      "date": "2025-09-24",
+      "number": "dnr 9043-2024",
+      "url": "https://www.jo.se/app/uploads/resolve_pdfs/1888867_9043-2024.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d3": {
+      "title": "Decision, inquiry into Kerry County Council (surveillance of citizens by the state for law enforcement purposes)",
+      "issuer": "Data Protection Commission (Ireland)",
+      "date": "2020-03-25",
+      "number": "IN-02-SIU-2018",
+      "url": "https://www.dataprotection.ie/sites/default/files/uploads/2021-02/25.03.2020_Decision_IN-02-SIU-2018_KerryCountyCouncil.pdf",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "reuse terms not stated; short excerpts quoted for evaluation"
+    },
+    "d4": {
+      "title": "Decision, inquiry into Waterford City and County Council (surveillance of citizens by the state for law enforcement purposes)",
+      "issuer": "Data Protection Commission (Ireland)",
+      "date": "2020-10-21",
+      "number": "IN-04-SIU-2018",
+      "url": "https://www.dataprotection.ie/sites/default/files/uploads/2021-02/21.10.2020_Decision_IN-04-SIU-2018_WaterfordCity%26CountyCouncil.pdf",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "reuse terms not stated; short excerpts quoted for evaluation"
+    },
+    "d5": {
+      "title": "Artificial intelligence and privacy",
+      "issuer": "Datatilsynet (Norwegian Data Protection Authority)",
+      "date": "2018-01",
+      "number": "",
+      "url": "https://www.datatilsynet.no/globalassets/global/english/ai-and-privacy.pdf",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "reuse terms not stated; short excerpts quoted for evaluation"
+    },
+    "d6": {
+      "title": "Testa ny teknik för automatisering inom offentlig förvaltning",
+      "issuer": "Myndigheten för digital förvaltning (DIGG) och Lantmäteriet",
+      "date": "2022-03-22",
+      "number": "",
+      "url": "https://www.digg.se/download/18.129a4fef1939e2e1c1f240b3/1647952780135/testa-ny-teknik-for-automatisering-inom-offentlig-forvaltning.pdf",
+      "lang": "sv",
+      "retrieved": "2026-11-21",
+      "reuse": "9 § upphovsrättslagen (1960:729): Swedish official documents are not protected by copyright"
+    },
+    "d7": {
+      "title": "Use of AI in Government",
+      "issuer": "House of Commons Committee of Public Accounts",
+      "date": "2025-03-26",
+      "number": "HC 356",
+      "url": "https://publications.parliament.uk/pa/cm5901/cmselect/cmpubacc/356/report.html",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "Open Parliament Licence v3.0"
+    },
+    "d8": {
+      "title": "TechDispatch: Explainable Artificial Intelligence",
+      "issuer": "European Data Protection Supervisor (EDPS)",
+      "date": "2023-11-16",
+      "number": "TechDispatch #2/2023",
+      "url": "https://www.edps.europa.eu/system/files/2023-11/23-11-16_techdispatch_xai_en.pdf",
+      "lang": "en",
+      "retrieved": "2026-11-21",
+      "reuse": "EDPS reuse notice; Commission Decision 2011/833/EU on the reuse of Commission documents"
+    }
+  },
+  "skipped": 1,
+  "passages": [
+    {
+      "sample": "test4-JO-4379-2023-1",
+      "index": 1,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "JO uttalar kritik i flera avseenden. Enligt JO var DiBa vid driftsättningen behäftat med flera fel och brister. Några är anmärkningsvärda och vissa är ännu inte åtgärdade. JO bedömer att det finns situationer där DiBa har inneburit uppenbara svårigheter för den ansvariga domaren att formulera det domslut som rätten har bestämt, och enligt henne har systemet inte gett domaren fullgoda förutsättningar att utöva sitt ämbete. Granskningen har visat att det funnits speciella utmaningar för tingsrätterna i de större brottmålen, dvs. mål med många brottsmisstankar och längre förhandlingstid. JO menar att ett verksamhetsstöd bör ta höjd bl.a. för att en dom kan behöva skrivas under tidspress och att det är mycket otillfredsställande att Domstolsverket lanserade ett system med så pass stora brister vid hanteringen av just sådana brottmål. I beslutet gör JO också uttalanden om DiBa-domens läsbarhet och begriplighet. Hon konstaterar att utformningen av en dom är av avgörande betydelse för att var och en ska förstå vad domstolen har dömt över och hur den har kommit till sina slutsatser. Det är en rättssäkerhetsfråga. Flera domstolar har uttryckt missnöje med hur DiBa- domen såg ut när verksamhetsstödet driftsattes. JO har förståelse för det och anser att det är förvånande att Domstolsverket inte bättre tog tillvara på det klarpåksarbete som domstolarna länge bedrivit.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "accountability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "contestability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "human-oversight",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "contestability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "human-oversight": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-4379-2023-2",
+      "index": 2,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "I huvudsak är avsnittet låst såtillvida att domaren inte kan påverka den närmare lydelsen eller utformningen av de beslut som registrerade ställningstaganden genererar, men i vissa situationer erbjuder systemet fritextalternativ. Den strukturerade information som har registrerats i systemet läggs således till grund för ställningstaganden som den enskilda domaren vid färdigställandet av domen, eller domskrivningen så att säga, måste hantera och besluta för att kunna göra klart domen. Att skapa en dom i DiBa går alltså förenklat till så att den ansvariga domaren – eller i praktiken möjligen en notarie eller handläggare – registrerar ställningstaganden till de frågor som är införda i systemet och aktuella i brottmålet i olika s.k. kort. Det gäller centrala saker såsom brottspåståenden, påföljdsval och ställningstaganden till exempelvis beslags- och skadeståndsyrkanden liksom sådant som häktning eller andra straffprocessuella tvångsmedel och återbetalningsskyldighet. Domen kan inte färdigställas och signeras förrän samtliga yrkanden (kort) är besvarade. Domskälsdelen kan formuleras i fritext i DiBa. Här finns inte någon principiell skillnad mot domar som skrevs i Vera. Under utvecklingen av DiBa var det inledningsvis tänkt att arbetet med domskälen enbart skulle kunna göras i en implementerad s.k. editor i systemet. Redan vid driftsättningen kunde emellertid domskälen skrivas även i ordbehandlingsprogrammet Word.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "C"
+        ],
+        "human-oversight": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-4379-2023-3",
+      "index": 3,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "Domaren kan inte påverka detta. Beroende på bedömningen av tillämpligheten av lagrummet har vissa domare i domskälen angett att bestämmelsen, trots hänvisningen i domslutet, inte har tillämpats. I en dom har rätten anmärkt följande: Lika med vad åklagaren och försvararen har anfört finner tingsrätten att påföljden bör bestämmas till ungdomsvård. Åtgärderna enligt vårdplanen ska vidtas med stöd av lagen (1990:52) med särskilda bestämmelser om vård av unga. (Oaktat vad som är angivet i domslutet tillämpar tingsrätten inte straffmätningsregeln i 29 kap. 7 § första stycket brottsbalken vid påföljdsvalet – i förevarande fall i praktiken valet mellan dagsböter och ungdomsvård – utan det är utformningen av det nyss av Domstolsverket införda digitala domskrivnings- verktyget Digitalt brottmålsavgörande som tvingar rätten att göra det (jfr 11 kap. 3 § första punkten in fine regeringsformen).) Andra domare har valt att ange den beslutade påföljden utan åberopande av 29 kap. 7 § första stycket brottsbalken genom att använda en fritextfunktion i systemet. Vid det senare alternativet har påföljden inte vidarerapporterats automatiskt till berörda RD-myndigheter. 5.1.6 Tvångsmedelsbeslut Flera domstolar har framhållit att beslutsstödet i DiBa för vissa tvångsmedels- beslut var bristfälligt vid införandet. Det saknades t.ex. flera beslut om häktning. Sålunda fanns det inte något alternativ för beslut om häktning när påföljden bestämdes till rättspsykiatrisk vård, och när en sådan standardtext senare infördes i systemet blev den inte korrekt .",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B"
+        },
+        {
+          "category": "human-oversight",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "C"
+        ],
+        "contestability": [
+          "C"
+        ],
+        "human-oversight": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-4379-2023-4",
+      "index": 4,
+      "doc": "d1",
+      "lang": "sv",
+      "text": "I fråga om hanteringen av komplicerade skadeståndsbeslut i DiBa har Domstolsverket sagt sig ha förståelse för kritiken och upplyst att det redan före driftsättningen var känt att funktionaliteten inte fungerade tillfredställande. På grund av nödvändiga prioriteringar i projektet var detta emellertid inte möjligt att åtgärda men det pågår ett arbete med att förbättra funktionaliteten även i denna del. Domstolsverket har bekräftat att vissa häktningsbeslut saknades vid drift- sättningen av DiBa, men har understrukit att några alternativ lades in i verksamhetsstödet under december 2022 och att justeringar i formuleringar har ägt rum därefter. Sedan november 2023 finns en valbar beslutstext om att ett beslag ska bestå, vilket domaren får fram genom att klicka i en ruta. Precis som i andra delar där domstolarna haft synpunkter på bristande valmöjlighet har verket fört fram att det alltid har funnits möjlighet att formulera häktningsbeslut i fritextfält.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "human-oversight",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "human-oversight": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-9043-2024-1",
+      "index": 5,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Även kritik mot Migrationsverket för att ett beslut inte skickades till ombud. Beslutet i korthet: JO har tidigare kritiserat Migrationsverket för att myndigheten använde en automatiserad hantering av dröjsmålstalan enligt 12 § förvaltningslagen i medborgarskapsärenden, där utgången var bestämd på förhand och alltid blev att talan avslogs. Besluten uppfyllde inte heller förvaltningslagens krav på motivering. JO har gjort en ny granskning av Migrationsverkets hantering av dröjsmålstalan. Av utredningen framgår att det numera görs en första sortering varvid alla ärenden som kan avgöras inom fyra veckor fångas upp. Även ärenden som myndigheten bedömer är väsentligt försenade enligt 11 § FL tas undan för manuell hantering. Motiveringen av avslagsbesluten är visserligen knapphändig, men innehåller den information Migrationsverket har om anledningen till dröjsmålet i det enskilda fallet. JO bedömer att hanteringen sammantaget får anses utgöra en tillräcklig prövning av om det individuella ärendet uppehålls i onödan. Den får därför, även om det rör sig om ett gränsfall, godtas. JO kritiserar Migrationsverket för att i ett anmält fall endast ha skickat beslutet om avslag till sökandes folkbokföringsadress och inte till ombudet. JO uttalar att det är oacceptabelt att automatiskt fattade beslut inte skickas till ombud och förutsätter att Migrationsverket säkerställer att handlingar kommuniceras med ombud i de fall det ska ske.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "contestability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "human-oversight",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "contestability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "human-oversight": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-9043-2024-2",
+      "index": 6,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Övriga ärenden, där det inte finns något särskilt att påtala på grund av att de inte är väsentligen försenade, avslås automatiskt med en standardiserad text där det framgår om handläggningen påbörjats eller ej. Ofta påbörjas handläggningen redan innan avslagsbeslutet meddelats för att inte förlänga tiden i onödan. Migrationsverket anser att nuvarande rutiner för användning av automatiserade beslut är acceptabla och nödvändiga eftersom handläggningsbalansen i medborgarskapsärenden är så omfattande. Det aktuella medborgarskapsärendet avgjordes 8 månader och 13 dagar efter ansökan, vilket är i enlighet med 9 § förvaltningslagen. Ärendet är inte heller väsentligen försenat såsom anges i 11 § förvaltningslagen. Eftersom ärendet inte varit väsentligen försenat och det krävdes ytterligare handläggningsåtgärder innan beslut kunde fattas fanns det inte grund för att bevilja enligt 12 § förvaltningslagen när fyra veckor gått från ansökan. Förvaltningslagen öppnar i 28 § upp för möjligheten att använda sig av automatiserade beslut. Det kan inte vara lagstiftarens avsikt att myndigheten i samtliga ärenden som inte är väsentligen försenade ska lägga ned arbetstid på att skriva noggrant motiverade individuella beslutsmotiveringar när det inte är möjligt att fatta beslut inom fyra veckor. AA kommenterade yttrandet. Rättslig reglering Av 9 § förvaltningslagen (FL) framgår att ett ärende ska handläggas så enkelt, snabbt och kostnadseffektivt som möjligt utan att rättssäkerheten eftersätts.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: B, C"
+        },
+        {
+          "category": "contestability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "human-oversight",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "contestability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "human-oversight": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-9043-2024-3",
+      "index": 7,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Det kan diskuteras om Migrationsverkets hantering och beslutens utformning lever upp till lagstiftarens intentioner med dröjsmålstalan. I förarbetena understryks särskilt vikten av att beslut om avslag på en begäran om avgörande enligt 12 § FL förses med en klargörande motivering. En del i detta är att när myndigheten anger skälen för att ärendet inte kan avgöras måste den också överväga när ett avgörande kan beräknas ske. Det förutsätter att myndigheten gör klart för sig hur den bör gå vidare för att nå målet att kunna avsluta ärendet så snabbt och enkelt som möjligt. (Prop. 2016/17:180 s. 114 f.) Med den ordning som Migrationsverket tillämpar får ett stort antal beslut endast en relativt knapphändig motivering och det framstår som att det i många ärenden inte finns utrymme för att göra mer än en översiktlig bedömning. Samtidigt är det sannolikt ofta så att den motivering som lämnas innehåller de huvudsakliga skälen till varför ärendet ännu inte avgjorts. Myndigheten har alltså typiskt sett inte någon ytterligare information att lämna, som på ett bättre sätt kan förklara för den enskilde varför ärendet inte avgjorts. Informationen är i den betydelsen således korrekt och det kan hävdas att den är så klargörande som det är möjligt.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "contestability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "contestability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-JO-9043-2024-4",
+      "index": 8,
+      "doc": "d2",
+      "lang": "sv",
+      "text": "Migrationsverket har angett att automatiskt fattade beslut alltid skickas till folkbokföringsadressen och att endast manuellt fattade beslut kan skickas till andra adresser. Begränsningar i Migrationsverkets ärendehanteringssystem är inte ett giltigt skäl för att inte skicka ett beslut till den enskildes ombud. Det är givetvis oacceptabelt att myndigheten inte skickar beslut till ombud. Utredningen visar att beslutet att avslå BB:s dröjsmålstalan enligt 12 § FL inte skickades till AA som var ombud i ärendet. Migrationsverket kritiseras för detta. Migrationsverket behöver vidta de åtgärder som krävs för att säkerställa att handlingar kommuniceras med ombud i de fall det ska ske. Ärendet avslutas. Beslutet har fattats av JO Per Lennerbrant. Dokumentet har fastställts digitalt och har ingen underskrift. Rättssakkunniga Hanna Hansson har föredragit ärendet och byråchefen Sara Johannesson har deltagit i beredningen.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "contestability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "C"
+        ],
+        "contestability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "human-oversight": [
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DPC-Kerry-1",
+      "index": 9,
+      "doc": "d3",
+      "lang": "en",
+      "text": "2 Section 37(1) provides that ‘A local authority shall, in performing its functions, have regard to the importance of taking steps to prevent crime, disorder and anti-social behaviour within its area of responsibility.’ 7 CCTV to detect and take enforcement action against those engaged in littering 3.8 The Council is a ‘Controller’ within the meaning of Section 69(1) of the 2018 Act in respect of the CCTV data that it processes to detect and take enforcement action against those engaged in littering. The Council is a competent authority that is determining the purposes and means of that processing. The Council decided to install those CCTV systems to assist in its litter detection and enforcement responsibilities. Thus, the Council determined the purposes for operating the CCTV systems at those locations. It also determines the means of the processing by determining how the data are processed. It controls who has access to the footage, when the footage is deleted and which images to capture.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "security",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ],
+        "security": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DPC-Kerry-2",
+      "index": 10,
+      "doc": "d3",
+      "lang": "en",
+      "text": "Lawfulness of the CCTV systems for detecting and taking enforcement action against those engaged in littering and at Amenity Walk (‘the Skinny Mile Walkway’) Inquiry Report Issues 1 and 5 7.3 The Council operates CCTV systems at five locations for detecting and taking enforcement action against those engaged in littering. These CCTV systems do not have authorisation under Section 38(1) of the 2005 Act. The Council has powers and duties for the prevention, investigation, detection and prosecution of litter related offences under the Litter Pollution Act 1997, the Waste Management Act 1996 (as amended), and the Local Government Act 2001. It relies on these 11 functions as a lawful basis for these CCTV systems on the basis that the CCTV systems are necessary for the performance of those functions. 7.4 Section 71(1)(a) of the 2018 Act requires that ‘ data shall be processed lawfully and fairly’ . Section 71(2) expands on the requirement that personal data be processed lawfully, providing that: ‘(2) The processing of personal data shall be lawful where, and to the extent that— (a) the processing is necessary for the performance of a function of a controller for a purpose specified in section 70 (1)(a) and the function has a legal basis in the law of the European Union or the law of the State, or (b) the data subject has, subject to subsection (3), given his or her consent to the processing.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DPC-Kerry-3",
+      "index": 11,
+      "doc": "d3",
+      "lang": "en",
+      "text": "Such an Act would be sufficient to provide a lawful basis once the objectives, the personal data to be processed and the purposes are clear and foreseeable from that Act. 7.13 The Council’s use of CCTV footage cannot lawfully be based on The Litter Pollution Act 1997, the Waste Management Act 1996, and the Local Government Act 2001. I have considered the Council’s submission, dated 9 March 2020, in which it stated that: ‘These acts set out strong powers in relation to the detection of prosecution of offences in relation to issues such as indiscriminate dumping and as the powers of prosecution were the responsibility of the Local Authority, it was considered appropriate that a variety of measures utilised by council officials and litter wardens including the use of cctv would be adequately covered under such a range of legislation.’ I have carefully considered the full range of legislation and the Council’s use of CCTV to detect and take enforcement action against those engaged in littering.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DPC-Waterford-1",
+      "index": 12,
+      "doc": "d4",
+      "lang": "en",
+      "text": "However, they can be divided into three thematic issues: (i) The lawful bases for the processing; (ii) Transparency (including privacy policies and CCTV policies); and (iii) Accountability and technical and organisational measures. 3.4 As outlined below, this Decision finds that there is no lawful basis for some of the Council’s processing of personal data as identified in the inquiry. Notwithstanding the unlawfulness of such processing, for completeness, this Decision proceeds to consider all issues identified by the inquiry regarding transparency and accountability and technical and organisational measures, even in respect of processing that has been found to be unlawful. 6 4. Legal regimes pertaining to the inquiry and the Decision 4.1 Some of the processing of personal data by the Council detailed in this Decision falls to be regulated under the GDPR and some falls under the LED. 4.2 The GDPR is the legal regime covering the processing of personal data in the European Union.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, C"
+        },
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "A"
+        ],
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DPC-Waterford-2",
+      "index": 13,
+      "doc": "d4",
+      "lang": "en",
+      "text": "Processing that falls under the GDPR 4.12 The GDPR is applicable to the Council’s processing of personal data by means of body worn cameras. This processing is for the purposes of protecting the personal safety of traffic wardens and to assist in the resolution of complaints. The recordings are not used for the resolution or investigation of traffic offences. The Council’s policy on the use of body worn cameras states that the personal safety of the traffic wardens is enhanced as ‘ once a member of the public is informed that an exchange is being recorded it is far less likely that they will attempt to physically harm a traffic warden ’ 7 . Although the data processed through the body worn cameras has the potential for subsequent use in criminal investigations and prosecutions 8 , this does not form part of the purposes for this processing. Therefore, this processing is not for the specific purposes of preventing, investigating, detecting or prosecuting criminal offences or executing criminal penalties.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "misuse",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "misuse": [
+          "A",
+          "B",
+          "C"
+        ],
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DPC-Waterford-3",
+      "index": 14,
+      "doc": "d4",
+      "lang": "en",
+      "text": "10 4.14 Regarding the Council’s use of dash cams, drones, and covert surveillance, the Council is a ‘ controller ’ within part (a) of that definition. The Council is a competent authority because it enjoys competence for the prevention, investigation, detection, and prosecution of certain offences under the Litter Pollution Act 1997 and the Waste Management Act 1996. Furthermore, it enjoys a general competence regarding the prevention of crime, when performing its functions, under Section 37(1) of An Garda Síochána Act 2005 9 . It determines the purposes and means of the processing carried out by means of dash cams, drones, and covert surveillance. 4.15 The purposes of the processing through dash cams, drones, and covert surveillance bring that processing under the LED. The dash cams are used to detect and prosecute littering offences. The drones are used to monitor compliance in permitted waste sites, to prevent dumping on illegal waste sites, and to demonstrate waste for prosecution purposes.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "majority of 3 independent annotators: A, C"
+        },
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "A",
+          "C"
+        ],
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-Datatilsynet-AI-1",
+      "index": 15,
+      "doc": "d5",
+      "lang": "en",
+      "text": "We shall take a closer look at these models a little later, in the section entitled the Black Box. Model use – static and dynamic (offline/online) A model may be used in two ways. The first way is to use a static, or offline model , that will not change through use. A static model will always, as the name suggests, operate in the same way and produce the same results throughout its entire lifecycle. All new model training will take place in a test environment, and all changes require that the model is replaced by a new version. This means that full control is maintained of the model in use. The other possibility is provided by a dynamic, or online model . The model is used in a similar fashion to the static model. However, the difference is that the dynamic model is able to avail itself of input data in order to improve and adjust to changes.",
+      "labels": [],
+      "votes": {
+        "human-oversight": [
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-Datatilsynet-AI-2",
+      "index": 16,
+      "doc": "d5",
+      "lang": "en",
+      "text": "One would pursue the objective of diagnosing fatal illnesses differently than one would go about profiling someone in order to target advertisements for them as accurately as possible. If we stick to the data minimisation principle, it would be natural to commence with a restricted amount of training data, and then monitor the model’s accuracy as it is fed with new data. The learning curve is one tool used for assessing this. 8 These enable one to see, having started with a limited set of data, when a curve flattens and new data ceases to add training value. The Black Box One concern in relation to machine learning is that one does not always know how the result is produced. Which features, or which combinations of features, are the most important? A model will often produce a result without any explanation. The question then arises as to whether it is possible to study the model, and thus find out how it arrived at that specific result.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-Datatilsynet-AI-3",
+      "index": 17,
+      "doc": "d5",
+      "lang": "en",
+      "text": "(Source: Skatteetatens Analysenytt 1-2016, http://www.skatteetaten.no/globalassets/pdfer/skatteetate ns_analysenytt/analysenytt-1_2016_web_hele.pdf) 13 This statement by the NTA underscores the relevancy of the black box issue. In this case only 30 different features are used, but it is possible for a system to use a lot more than that. It would then be even more difficult to identify what was relevant for the outcome. How to understand and explain what’s behind it When machine learning is employed, the end product is a model. When it comes to machine learning models, the ease with which their results can be checked varies greatly, even though the same training data is used. Deep learning and neural networks are often the first elements to be mentioned when black box issues are discussed, without their defining the issue fully. We will now consider two examples that represent extremes of ease and difficulty in understanding and checking these models, namely so-called decision trees and deep neural networks.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-Datatilsynet-AI-4",
+      "index": 18,
+      "doc": "d5",
+      "lang": "en",
+      "text": "We look at these challenges in the light of the data protection principles that are most relevant to artificial intelligence – namely the principles of fairness, purpose limitation, data minimisation and transparency. Algorithmic bias meets the fairness principle It is easy to think that artificial intelligence will be able to perform more objective analyses and therefore reach better decisions than human beings. After all, artificial intelligence will not be affected by low blood sugar, by having a bad day, or by the desire to help a friend. And yet algorithms and models are no more objective than the people who devise and build them, and the personal data that is used for training. The model’s result may be incorrect or discriminatory if the training data renders a biased picture reality, or if it has no relevance to the area in question. Such use of personal data would be in contravention of the fairness principle.",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "privacy",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "discrimination": [
+          "A",
+          "B",
+          "C"
+        ],
+        "privacy": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DIGG-LM-1",
+      "index": 19,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "Just AI och svårigheten att förklara hur det fungerar har skapat debatt och diskussion kring transparens, förklarbarhet och etik. Resultatet av uppdraget är kompetens, insikter, erfarenheter samt ett koncept på en förtroendemodell för automatisering i offentlig förvaltning. Modellen bygger på insyn och förståelse för att säkerställa tillit och förtroende vid automatisering inom den offentliga förvaltningen med hjälp av bland annat AI. Konceptet har testats på en verksamhet i Lantmäteriet och är generiskt för att kunna användas inom hela den offentliga förvaltningen. Modellen förklaras och illustreras med exempel i rapporten och dess bilagor. I denna första version är den framtagen främst för användningen av AI för automatisering. Modellen är dock möjlig att anpassa för även andra digitala stöd för automatisering. Förtroendemodellen bygger på ett antal förtroendemekanismer, eller förtroendeingivande faktorer som kan sammanfattas till: • transparens till hur ett system för automatiserade åtgärder är uppbyggt genom • tydlighet i form av en deklaration av det automatiserade systemets beståndsdelar och dess förmåga att utföra uppgifter, eller kompetens, på ett riktigt, rättssäkert och effektivt sätt och • en strukturerad, säker och öppen logg över systemets och komponenternas identiteter och versioner, innehåll med koppling till specifika ärenden eller åtgärder som utförts.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "security",
+          "reason": "majority of 3 independent annotators: A, C"
+        }
+      ],
+      "votes": {
+        "misuse": [
+          "C"
+        ],
+        "security": [
+          "A",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DIGG-LM-2",
+      "index": 20,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "60 7 1 Inledning 1.1 Uppdraget Lantmäteriet och Myndigheten för digital förvaltning (DIGG) har fått i uppdrag av regeringen att undersöka om det är möjligt att använda ny teknik som artificiell intelligens (AI) och blockkedjeteknik för att i högre grad automatisera rutiner och processer för ärendehantering och beslutsfattande i offentlig förvaltning 1 . Målsättningen med uppdraget är att processer och rutiner ska effektiviseras med bibehållen eller ökad kvalitet samtidigt som transparensen bakom beslutsfattande också bibehålls eller ökar genom ett koncept som kan appliceras i delar av Lantmäteriets verksamhet och vidareanvändas i den offentliga förvaltningen. 1.2 Metod och ansats Uppdraget är till sin karaktär mer av ett innovativt och utforskande uppdrag än ett uppdrag om att ta fram evidensbaserade resultat. Uppdraget har utgått ifrån en idé om ett behov att stärka förtroende kring automatisering och har därför utvecklat ett koncept för en teknisk lösning som ska vara möjlig att applicera på delar av Lantmäteriets verksamhet och sedan kunna vidareanvändas inom den offentliga förvaltningen. Arbetet har handlat om att utveckla och pröva tesen om att skapa en förtroendemodell för AI och sedan prova om resultatet fungerar. Resultatet har till vissa delar blivit väldigt nära idén samtidigt som andra delar har anpassats till den verklighet som råder och de kunskaper och erfarenheter som finns på området.",
+      "labels": [],
+      "votes": {
+        "misuse": [
+          "C"
+        ],
+        "transparency": [
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DIGG-LM-3",
+      "index": 21,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "Rättssäkerhet är ett ord som förmedlar ganska starka intryck om myndigheter i medias rubriksättning. Rättsmedvetandet och rättssäkerheten är något som är starkt förankrat i det svenska demokratiska samhällsbygget. Därför är också rättssäkerheten något som behandlas i det följande. Slutligen finns ett område som har blivit särskilt aktualiserat med digitalisering, automatisering och AI. Det är etik, som egentligen omfattar en rad olika 12 delområden som exempelvis värderingar, likabehandling och rättvisa, moral och juridik. I det följande redovisas således fyra områden som särskilt betydelsefulla i konceptet för en förtroendemodell för automatiserade åtgärder i offentlig förvaltning: transparens, rättssäkerhet, kunskap och etik. 2.2 Förtroende för digitalisering och särskilt om automatisering i offentlig förvaltning Det har fram tills alldeles nyligen inte funnits någon samlad kunskap om vilka myndigheter som använder automatiserade beslutsmetoder och i vilken omfattning så sker. Riksrevisionen har nyligen genomfört en granskning av automatiserat beslutsfattande i statsförvaltningen och i den rapport som lämnades finns en inventering och ett underlag som är värdefullt för både kunskap och fortsatt utveckling 4 . Exempel på beslut som fattas automatiskt idag är vissa om föräldrapenning hos Försäkringskassan, om trängselskatt hos Transportstyrelsen och en andel beslut om bl. a inteckningar hos Lantmäteriet. Förutom beslut så används teknik för automatisering av flera funktioner i processer och myndighetsflöden, ibland även för sådant som leder fram till beslut.",
+      "labels": [],
+      "votes": {
+        "transparency": [
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-DIGG-LM-4",
+      "index": 22,
+      "doc": "d6",
+      "lang": "sv",
+      "text": "Det saknas också en djupare kunskap om hur digitalisering, automatiserade beslut eller automatisering i övrigt hos myndigheter påverkar förtroendet för myndigheterna. En svensk undersökning från 2019, Medborgarna och automatiserat beslutsfattande 5 , påtalar att det finns förvånansvärt få studier som ägnats åt medborgares perspektiv på automatiserat beslutsfattande i offentlig sektor. Det finns studier av tekniska aspekter och om hur handläggares roller förändras. Men kunskap om hur förtroende och attityder till offentlig sektors digitalisering och automatisering påverkas och utvecklas behöver ökas. Den nämnda studien undersöker om medborgarna är medvetna om automatiserat 4 Automatiserat beslutsfattande i statsförvaltningen – effektivt, men kontroll och uppföljning brister (RiR 2020:22) 5 Denk, Hedström, Karlsson, SOM-institutet, Göteborgs universitet, 2019, https://som.gu.se/digitalAssets/1734/1734139_denk-hedstr--m-karlsson.pdf 13 beslutsfattande och hur de förväntar sig hur automatisering påverkar beslutsfattande i offentlig sektor. 2.3 Transparens Transparens, som egentligen betyder genomskinlighet, innefattar många aspekter i form av öppenhet, kommunikation och information. Transparens är både ett stort forsknings- och kunskapsområde. Transparens saknar givna ramverk och det är svårt för såväl privata som offentliga organisationer att hitta rätt nivåer och grader av transparens för att erhålla de effekter man eftersträvar. I uppdraget har en insats av ett litet forskarteam från RISE 6 avseende just transparens belyst vikten och utmaningarna med transparens.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, C"
+        }
+      ],
+      "votes": {
+        "transparency": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-PAC-HC356-1",
+      "index": 23,
+      "doc": "d7",
+      "lang": "en",
+      "text": "This involved relocating three functions from the Cabinet Office to DSIT: the Central Digital and Data Office (CDDO), which leads the government’s Digital and Data function; the Incubator for Artificial Intelligence (i.AI), which works across the public sector to identify and pilot AI opportunities; and the Government Digital Service, responsible for building common digital products and services across government. Successive governments have sought to support the use of AI through a range of policy interventions and strategies. Most recently, the government published A blueprint for modern digital government in January 2025 which included an ambition to harness the power of AI for public good and included a number of priority reforms. Conclusions and recommendations 1. Out–of–date legacy technology and poor data quality and data–sharing is putting AI adoption in the public sector at risk. AI relies on high quality data to learn, but too often government data is of poor quality and locked away in out–of–date legacy IT systems. Progress tackling these issues has been too slow, and 21 out of the 72 highest–risk legacy systems in government prioritised as part of the 2022–25 digital and data roadmap still lack remediation funding. DSIT has set out its ambitions to address these issues in A blueprint for digital government.",
+      "labels": [],
+      "votes": {
+        "security": [
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-PAC-HC356-2",
+      "index": 24,
+      "doc": "d7",
+      "lang": "en",
+      "text": "There are persistent digital skills shortages in the public sector and DSIT’s plans to address the skills gap may not be enough. 70% of government bodies responding to the NAO’s survey identified difficulties in recruiting and retaining staff with AI skills as a barrier to AI adoption. In 2024, around 50% of roles advertised in civil service digital and data campaigns were unfilled. In January 2025, the government’s State of digital government review set out the skills challenge faced by government. These include persistent difficulties recruiting, civil service pay levels that are uncompetitive with the private sector and the need for more technical roles within the profession. Its Blueprint for modern digital government sets out a series of priority reforms including plans to adopt a digital–first operating model, assess the optimum employment models, strengthen digital leadership, and assess competitiveness of the overall package for digital and data staff.",
+      "labels": [],
+      "votes": {}
+    },
+    {
+      "sample": "test4-PAC-HC356-3",
+      "index": 25,
+      "doc": "d7",
+      "lang": "en",
+      "text": "DSIT has no systematic mechanism for bringing together learning from pilots and there are few examples of successful at–scale adoption across government. At the time of the NAO report (March 2024), levels of AI use in government were low, but 70% of surveyed government bodies were piloting or planning AI tools. Examples of pilot activity include use of AI to analyse digital images to identify and classify objects, use of natural language processing to summarise or draft text, and use of AI to assess trends and patterns and monitor live data. More recently i.AI has developed a suite of tools to support civil servants with tasks including minute taking and analysis of consultation responses. However, there is so far little evidence of successful adoption at scale. To grasp the opportunities of AI, government must learn from these pilots, identify the most promising examples, and where appropriate, help drive adoption at scale so the whole of the public sector can take advantage. However, there is no systematic mechanism for bringing together the learning from all the pilot activity across government and disseminating it. We welcome the recent publication of the Evaluation Taskforce’s guidance for evaluating the impact of AI tools, and DSIT’s commitment to piloting an AI Knowledge Hub to bring together good practice and learning in one place.",
+      "labels": [],
+      "votes": {}
+    },
+    {
+      "sample": "test4-PAC-HC356-4",
+      "index": 26,
+      "doc": "d7",
+      "lang": "en",
+      "text": "recommendation DSIT, in collaboration with Cabinet Office, should set out publicly how its proposed AI sourcing and procurement framework will: get the best from all suppliers in a market dominated by a small number of global technology companies and ensure opportunities are available for small suppliers align with the overarching digital technology sourcing strategy (on how government builds, buys and partners) that the Blueprint for modern digital government promises leverage government’s spending power to achieve value for money for citizens Ensure those taking procurement decisions across government have access to the right digital skills and knowledge 6. Realising the benefits of AI across the public sector will require strong leadership from DSIT. Addressing the skills shortage, tackling the persistent issues with poor data quality and out–of–date technology, and providing the support and guardrails the public sector needs to build public trust and adopt AI safely and responsibly all require a clear strategy and strong leadership. In its report, the NAO raised concerns about unclear accountabilities and limited integration of governance across Cabinet Office—which was primarily responsible for AI adoption in the public sector, through CDDO, i.AI and the Government Digital Service (GDS)—and DSIT, which held responsibility for wider AI policy.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "accountability": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-EDPS-XAI-1",
+      "index": 27,
+      "doc": "d8",
+      "lang": "en",
+      "text": "For example, how many drivers can actually describe how an automatic transmission works? To this end, one should bear in mind that AI technology is often implemented for automated decision-making (or decision support), including by public authorities. In this context, transparency and accountability are, in most cases, essential legal requirements. It is therefore unacceptable to have a “black box” effect that hides the underlying logic of decisions made by AI. Another difference, this time from a technological point of view, taking into account the car’s automatic transmission, sometimes, unlike the case of the car’s functioning, AI engineers themselves may not have a full understanding of what is going on beneath the surface”. 2 AI systems such as machine learning (ML) or deep learning (DL) use algorithms learned by their own process of training, rather than by explicit human programming. During the process of training, AI models can discover new correlations between certain input features (e.g., clinical symptoms) and can make decisions or predictions (e.g., medical diagnoses) based on highly complex models involving a large number of interacting parameters (possibly millions), making it difficult even for AI experts to understand how their outputs are subsequently produced (Peters, 2023).",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-EDPS-XAI-2",
+      "index": 28,
+      "doc": "d8",
+      "lang": "en",
+      "text": "For instance, when AI is used to select job applicants, systems might inadvertently favour candidates from certain demographics or backgrounds due to biased training data. If the system is a “black box”, it could be difficult to understand why certain candidates have been rejected or selected, making it harder to identify and address bias. Another example is the use of AI models for medical diagnosis that may disproportionately misdiagnose or miss certain conditions for certain demographic groups due to biased training data. When the model is a “black box”, it becomes difficult for healthcare professionals to understand the reasoning behind the decisions, hindering their ability to address potential biases. Discriminatory outcomes are not the only problem with “black boxes”. The lack of transparency itself may hinder the ability of those affected by automated decisions to understand the underlying logic and its potential impact. This could be the case, for example, with AI models used for credit approval, where bank customers might have no insight into the automated decisions that affect their financial lives. More importantly, individuals may be affected by automated decision-making systems used by governments, the operation or capabilities of which may not be entirely clear or well defined in existing legislation.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "discrimination",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "contestability",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "contestability": [
+          "A",
+          "B",
+          "C"
+        ],
+        "discrimination": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-EDPS-XAI-3",
+      "index": 29,
+      "doc": "d8",
+      "lang": "en",
+      "text": "Transparency, interpretability and explainability The concepts of transparency, interpretability and explainability in the context of AI have no formal definition, and are sometimes used interchangeably. In the present document, the different concepts are interpreted as follows: • Transparency refers to the ability for a specific model to be understood. In the strictest sense, a model is transparent if a person can contemplate the entire model at once . Transparency can be considered at the level of the entire model, at the level of individual components (e.g., parameters), and at the level of a particular training algorithm. A second and less strict notion of transparency might be that each part of the model (e.g., each input, parameter, and computation) admits an intuitive explanation (Lepri, 2018). • Interpretability refers to the degree of human comprehensibility of a given “black box” model or decision (Lisboa, 2013) (Miller T. H., 2017). Poorly interpretable models “are opaque in the sense that when presented with the resulting decision, rarely does one have any concrete sense of how or why a particular classification has been arrived at from inputs (Burrell, 2016). A transparent AI system enables accountability by allowing stakeholders to validate and audit its decision-making processes, detect biases or unfairness, and ensure that the system is operating in alignment with ethical standards and legal requirements.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "sample": "test4-EDPS-XAI-4",
+      "index": 30,
+      "doc": "d8",
+      "lang": "en",
+      "text": "Because the perturbations injected by these methods are distinguishable from normal input data, models can tell them apart and a malicious developer could potentially create a highly biased and discriminatory model that would provide seemingly “unbiased” output when detecting perturbation-based inputs. In fact, several studies suggest that post-hoc explanatory methods should not be considered reliable. According to (Vale, 2022) “the use of post-hoc explanatory methods is useful in many cases, but these methods have limitations that prohibit reliance as the sole mechanism to guarantee fairness of model outcomes in high-stakes decision-making”. Different research, (Bordt, 2022)refers that “from a technical and philosophical point of view these explanations can never reveal the “unique, true reason” why an algorithm came to a certain decision”. It concludes that, “in the worst case, the explanations may induce us into falsely believing that 13 EDPS TechDispatch on Explainable Artificial Intelligence 9 a “justified”, or “objective” decision has been made even when this is not the case”. Therefore, the limitations of “black box” approaches should be considered when trying to assess the fairness of the models. 4. XAI and personal data protection The ability of XAI to provide transparent insights on AI decisions can contribute to ensure compliance with several personal data protection principles, notably transparency, accountability and fairness.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "discrimination",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        },
+        {
+          "category": "misuse",
+          "reason": "majority of 3 independent annotators: A, B, C"
+        }
+      ],
+      "votes": {
+        "discrimination": [
+          "A",
+          "B",
+          "C"
+        ],
+        "misuse": [
+          "A",
+          "B",
+          "C"
+        ],
+        "transparency": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    }
+  ]
+}

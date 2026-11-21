@@ -122,10 +122,13 @@ Historical note (before the three-annotator round): the frozen test set was then
 
 | Set | Passages | Labels | Precision | Recall | F1 |
 |---|---|---|---|---|---|
-| **New test set (the number to quote)** | 30 | 40 | **48%** | **63%** | **54%** |
+| **test3: new test set, nine documents** | 30 | 40 | **48%** | **63%** | **54%** |
+| **test4: second new test set, eight documents** | 30 | 47 | **45%** | **57%** | **50%** |
 | Earlier frozen set, relabelled by three annotators | 26 | 45 | 53% | 73% | 62% |
 
 Human oversight and accountability are the weakest categories on the new set.
+
+A second fresh set, **test4** (`prototype/eval/test4.json`: 30 passages from eight further documents, among them JO's review of Domstolsverket's DiBa system, two Irish Data Protection Commission decisions on council surveillance, the UK Public Accounts Committee report on AI in government and the EDPS note on explainable AI), was labelled the same way (agreement 0.84 pooled, transparency lowest at 0.69: explainability texts sit right on the guide's line between a mention and a concern; `npm run agreement -- test4`). Scored once: precision 45%, recall 57%, F1 50%. Two independent fresh sets now agree: **on documents it has not seen, about half of the tool's flags point at a real concern, and it finds roughly three in five of the concerns a reviewer would want flagged.** That is the honest summary. A learned model was tried next to the rules and did worse (see `docs/model-experiment.md`).
 
 Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
 

@@ -3,7 +3,7 @@ const fs = require("fs");
 
 async function loadSample(page) {
   await page.goto("/prototype/");
-  await page.getByRole("button", { name: "Load fictional sample" }).click();
+  await page.getByRole("button", { name: "Load sample", exact: true }).click();
   await expect(page.locator("#workspace")).toBeVisible();
 }
 

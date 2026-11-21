@@ -58,6 +58,13 @@ What it does not do: it does not understand context, judge lawfulness or fairnes
 
 A future prototype could use public Swedish and EU policy documents, official guidance, procurement documents, and published algorithmic-impact assessments. The quality, completeness, and institutional context of these documents would remain essential limitations.
 
+The prototype ships three samples in a Load sample menu. One is fictional. Two are verbatim excerpts from genuine official texts, with title, issuing body, date, document number, source URL, retrieval date and reuse basis shown in the interface, the exports and the printed report:
+
+- Förvaltningslag (2017:900), 28-33 §§ (Myndighetens beslut), SFS 2017:900, consolidated text from Sveriges riksdag: https://data.riksdagen.se/dokument/sfs-2017-900.text. Swedish statutes are not protected by copyright (9 § upphovsrättslagen).
+- Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 14 (Human oversight) and Article 86 (Right to explanation of individual decision-making), from EUR-Lex: https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689. Reusable under Commission Decision 2011/833/EU; only the Official Journal text is authentic.
+
+Each excerpt was checked word for word against the source text (whitespace normalised) before it was added. After a review, a summary card lists counts by decision and category, the reviewer-added rules that matched and the absence checks, in English and Swedish, and the same summary appears in the printed report.
+
 The initial approach should be conservative: source-linked information retrieval and transparent pattern matching. Later work could assess supervised classification or retrieval-augmented language models, but only where every output retains source references, confidence indicators, review logs, and mandatory human validation.
 
 The project must not score citizens, determine eligibility, infer protected characteristics, or make final decisions about individuals.

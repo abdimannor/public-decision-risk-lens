@@ -9,7 +9,7 @@ test.describe("Swedish browser", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "sv");
     await expect(page.locator(".banner")).toContainText("Rådgivande diskussionsstöd");
     await expect(page.getByRole("button", { name: "Svenska" })).toHaveAttribute("aria-pressed", "true");
-    await page.getByRole("button", { name: "Läs in fiktivt exempel" }).click();
+    await page.getByRole("button", { name: "Läs in exempel", exact: true }).click();
     await expect(page.locator("#flag-groups summary").first()).toContainText(/Transparens|Ansvarsskyldighet|Diskriminering|Integritet|Mänsklig kontroll|Säkerhet|Missbruk|Möjlighet/);
     await expect(page.locator("#status")).toContainText("flaggor");
     await expect(page.locator(".flag").first().getByLabel("Godta")).toBeVisible();
@@ -17,7 +17,7 @@ test.describe("Swedish browser", () => {
 
   test("Swedish Markdown and JSON exports use Swedish headings", async ({ page }) => {
     await page.goto("/prototype/");
-    await page.getByRole("button", { name: "Läs in fiktivt exempel" }).click();
+    await page.getByRole("button", { name: "Läs in exempel", exact: true }).click();
     await page.locator(".flag").first().getByLabel("Godta").check();
     const [md] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Exportera Markdown" }).click()]);
     const text = fs.readFileSync(await md.path(), "utf8");
@@ -37,7 +37,7 @@ test.describe("Swedish browser", () => {
 test("switching language re-renders, keeps decisions and is remembered", async ({ page }) => {
   await page.goto("/prototype/");
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await page.getByRole("button", { name: "Load fictional sample" }).click();
+  await page.getByRole("button", { name: "Load sample", exact: true }).click();
   await page.locator(".flag").first().getByLabel("Reject").check();
   await page.getByRole("button", { name: "Svenska" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "sv");

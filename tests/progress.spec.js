@@ -2,7 +2,7 @@ const { test, expect } = require("@playwright/test");
 
 test("progress meter counts decisions by category and jumps to the next unreviewed flag", async ({ page }) => {
   await page.goto("/prototype/");
-  await page.getByRole("button", { name: "Load fictional sample" }).click();
+  await page.getByRole("button", { name: "Load sample", exact: true }).click();
   const flags = page.locator("#flag-groups .flag");
   const total = await flags.count();
   const meter = page.locator("#progress");
@@ -24,7 +24,7 @@ test("progress meter counts decisions by category and jumps to the next unreview
 
 test("a flag without a reviewer question does not print the text null", async ({ page }) => {
   await page.goto("/prototype/");
-  await page.getByRole("button", { name: "Load fictional sample" }).click();
+  await page.getByRole("button", { name: "Load sample", exact: true }).click();
   await expect(page.locator("#flag-groups .flag").first()).not.toContainText("null");
   await expect(page.locator("#progress")).not.toContainText("null");
 });

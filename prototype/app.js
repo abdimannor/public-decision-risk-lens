@@ -13,6 +13,7 @@
   let reviews = {}; // flag id -> { decision, note }
   let sourceName = null; // null means pasted text, shown in the current language
   let pages = null; // [{ page, text }] when the document came from a PDF
+  let sampleId = null; // "fictional", "sv" or "eu" when a built-in sample is loaded
   const STORE_KEY = "risk-lens-review-v1";
   const RULES_KEY = "risk-lens-rules-v1";
   let rules = loadRules(); // reviewer-defined rules: [{ term, category, question }]
@@ -26,11 +27,37 @@
   const catLabel = (id) => L(TAXONOMY.find((c) => c.id === id)).label || id;
   const srcName = () => sourceName || t("pastedText");
 
+  // Source record for a built-in sample. Real samples carry their full
+  // citation; the fictional one says plainly that it is fictional.
+  function sampleMeta() {
+    if (sampleId === "fictional") return { kind: "fictional", title: window.RiskLensSample.title, note: t("srcFictional") };
+    const s = sampleId && window.RiskLensRealSamples && window.RiskLensRealSamples[sampleId];
+    if (!s) return null;
+    return { kind: "real", title: s.title, issuer: s.issuer, date: s.date, docNumber: s.docNumber, url: s.url, retrieved: s.retrieved, licence: s.licence, note: t("srcVerbatim") };
+  }
+  const META_FIELDS = [["title", "srcTitle"], ["issuer", "srcIssuer"], ["date", "srcDate"], ["docNumber", "srcNumber"], ["url", "srcUrl"], ["retrieved", "srcRetrieved"], ["licence", "srcLicence"]];
+  function metaList(m) {
+    const dl = el("dl", { class: "meta-list" });
+    for (const [k, label] of META_FIELDS) {
+      if (!m[k]) continue;
+      dl.append(el("dt", {}, t(label)), el("dd", {}, k === "url" ? el("a", { href: m[k], rel: "noopener" }, m[k]) : m[k]));
+    }
+    return dl;
+  }
+  function renderSourceMeta() {
+    const box = $("source-meta");
+    const m = sampleMeta();
+    box.hidden = !m;
+    box.replaceChildren();
+    if (!m) return;
+    box.append(el("h3", {}, t("srcMetaH")), metaList(m), el("p", { class: "hint" }, m.note));
+  }
+
   // Saves the document, reviewer and decisions in this browser only (localStorage).
   function save() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({
-        text: $("doc").value, pages, sourceName, reviewer: $("reviewer").value, reviews
+        text: $("doc").value, pages, sourceName, sampleId, reviewer: $("reviewer").value, reviews
       }));
     } catch (e) { /* storage may be unavailable, e.g. private mode */ }
   }
@@ -42,6 +69,8 @@
     $("doc").value = saved.text;
     sourceName = saved.sourceName && saved.sourceName !== "pasted text" ? saved.sourceName : null;
     pages = Array.isArray(saved.pages) ? saved.pages : null;
+    sampleId = ["fictional", "sv", "eu"].includes(saved.sampleId) ? saved.sampleId : null;
+    renderSourceMeta();
     $("reviewer").value = saved.reviewer || "";
     analyse(saved.reviews || {});
   }
@@ -52,6 +81,8 @@
     reviews = {};
     sourceName = null;
     pages = null;
+    sampleId = null;
+    renderSourceMeta();
     $("doc").value = "";
     $("reviewer").value = "";
     $("file").value = "";
@@ -278,6 +309,7 @@
       notice: t("notice"),
       exportedAt: new Date().toISOString(),
       source: srcName(),
+      sourceDetails: sampleMeta() || undefined,
       reviewer: $("reviewer").value.trim() || null,
       flags: result.flags.map((f) => ({
         id: f.id,
@@ -302,6 +334,7 @@
       t("mdTitle"), "",
       `> ${log.notice}`, "",
       `- ${t("exported")}: ${log.exportedAt}`, `- ${t("source")}: ${log.source}`, `- ${t("reviewer")}: ${log.reviewer || t("notGiven")}`, "",
+      ...(log.sourceDetails ? [`## ${t("srcMetaH")}`, "", ...META_FIELDS.filter(([k]) => log.sourceDetails[k]).map(([k, label]) => `- ${t(label)}: ${log.sourceDetails[k]}`), "", log.sourceDetails.note, ""] : []),
       `## ${t("flagsH")}`, ""
     ];
     for (const f of log.flags) {
@@ -336,6 +369,7 @@
           el("dt", {}, t("reviewer")), el("dd", {}, log.reviewer || t("notGiven")),
           el("dt", {}, t("generated")), el("dd", {}, new Date(log.exportedAt).toLocaleString(I18N.lang === "sv" ? "sv-SE" : undefined)),
           el("dt", {}, t("reviewed")), el("dd", {}, t("reviewedOf", { d: decided, n: log.flags.length })))),
+      ...(log.sourceDetails ? [el("h2", {}, t("srcMetaH")), metaList(log.sourceDetails), el("p", { class: "r-rule" }, log.sourceDetails.note)] : []),
       el("h2", {}, t("byCatH")),
       el("ul", { class: "r-counts" }, ...counts.map(([c, n]) => el("li", { "data-cat": c.id }, el("span", { class: "sw" }), `${c.label}: ${n}`))));
     if (!counts.length) box.append(el("p", {}, t("noFlags")));
@@ -375,11 +409,17 @@
   $("clear").addEventListener("click", clearReview);
   $("reviewer").addEventListener("input", save);
   $("load-sample").addEventListener("click", () => {
-    $("doc").value = window.RiskLensSample.text;
-    sourceName = window.RiskLensSample.title;
+    const id = $("sample-pick").value;
+    const real = window.RiskLensRealSamples && window.RiskLensRealSamples[id];
+    const s = real || window.RiskLensSample;
+    sampleId = real ? id : "fictional";
+    pages = null;
+    $("doc").value = s.text;
+    sourceName = s.title;
+    renderSourceMeta();
     analyse();
   });
-  $("doc").addEventListener("input", () => { sourceName = null; pages = null; });
+  $("doc").addEventListener("input", () => { sourceName = null; pages = null; if (sampleId) { sampleId = null; renderSourceMeta(); } });
   $("file").addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -399,6 +439,8 @@
         $("doc").value = await file.text();
       }
       sourceName = file.name;
+      sampleId = null;
+      renderSourceMeta();
       analyse();
     } catch (err) {
       pages = null;
@@ -624,6 +666,7 @@
     document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === I18N.lang)));
     renderRuleCats();
     renderRules();
+    renderSourceMeta();
     if (result) {
       const focusedFlag = document.activeElement && document.activeElement.closest && document.activeElement.closest(".flag");
       renderPassages(); renderRiskMap(); renderAbsences(); renderFlags(); renderProgress(); updateStatus();

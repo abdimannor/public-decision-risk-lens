@@ -87,8 +87,27 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 
 - The original workflow diagram in `assets/risk-lens-workflow.svg` was created for this project and is covered by this repository’s [CC BY 4.0 licence](LICENSE).
 - The illustrative photograph, [*Signing of the General Appropriations Act of 2025 A*](https://commons.wikimedia.org/wiki/File:Signing_of_the_General_Appropriations_Act_of_2025_A.jpg), is by the Philippine Presidential Communications Office and is marked **Public Domain** on Wikimedia Commons. It is used only as a general illustration of official document-signing.
-- No external code or datasets are included in this project.
+- No external code is included. `prototype/eval/heldout.json` holds short verbatim excerpts from the public documents listed under Evaluation.
 
 ## Evaluation
 
-`npm run eval` scores the engine against a small hand-annotated gold set (`prototype/eval/gold.json`, 54 passages from the three samples, 51 expected labels, one AI annotator, no inter-annotator agreement). After the error-analysis fixes: precision 82%, recall 73% (before: 76% and 51%). The fixes were made on the same passages, so these figures are optimistic. Method and limits in plain language: `prototype/evaluation.html`.
+`npm run eval` scores the engine against a small hand-annotated gold set (`prototype/eval/gold.json`, 54 passages from the three samples, 51 expected labels, one AI annotator, no inter-annotator agreement). After the error-analysis fixes: precision 82%, recall 73% (before: 76% and 51%). The fixes were made on the same passages, so these figures are optimistic.
+
+`npm run eval -- heldout` scores it on a held-out set (`prototype/eval/heldout.json`): 30 verbatim passages from seven real Swedish and EU documents the engine was never tuned on, chosen by reading and labelled blind (labels committed before the first engine run, engine unchanged since). **This is the honest estimate.**
+
+| Set | Passages | Labels | Precision | Recall | F1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Tuning (samples) | 54 | 51 | 82% | 73% | 77% |
+| Held-out (new documents) | 30 | 57 | 44% | 72% | 55% |
+
+Recall holds; precision drops because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fire on mere mentions. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
+
+Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
+
+- [JO, dnr 4778-2006 (2008-01-21): Ett fel i Försäkringskassans automatiserade behandling ...](https://www.jo.se/besluten/ett-fel-i-forsakringskassans-automatiserade-behandling-av-ett-arende-om-sjukpenninggrundande-inkomst-fick-till-foljd-att-den-forsakrade-aterkallade-ett-overklagande-varigenom-hon-fororsakades-en-ratt/) (2 passages)
+- [JO, dnr 3232-2023 (2023-06-19): En undersökning av hur 11 och 12 §§ förvaltningslagen tillämpas](https://www.jo.se/besluten/en-undersokning-av-hur-11-och-12-%c2%a7%c2%a7-forvaltningslagen-tillampas-hos-nagra-olika-myndigheter/) (3 passages)
+- [JO, dnr R 32-2024 (2024-05-02): Yttrande över Skatteverkets promemoria om uppgift om beslutsfattare](https://www.jo.se/app/uploads/2024/05/remissyttrande-r-32-2024.pdf) (1 passages)
+- [Riksrevisionen, RiR 2020:22: Automatiserat beslutsfattande i statsförvaltningen](https://www.riksrevisionen.se/download/18.2008b69c18bd0f6ed3f2a460/1605694925646/RiR%202020_22%20Anpassad.pdf) (7 passages)
+- [IMY, IMY-2024-9162: GDPR vid användning av generativ AI](https://www.imy.se/globalassets/dokument/rapporter/gdpr-vid-anvandning-av-generativ-ai_imy-2024-9162.pdf) (4 passages)
+- [Article 29 Working Party, WP251rev.01: Guidelines on automated individual decision-making and profiling](https://ec.europa.eu/newsroom/article29/redirection/document/49826) (11 passages)
+- [European Ombudsman, SI/4/2024/MIK (2024-12-05): Closing note on how the Commission decides on and uses AI](https://www.ombudsman.europa.eu/en/doc/closing-note/en/196934) (2 passages)

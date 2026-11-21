@@ -86,8 +86,8 @@
       description: "Use of the tool or its data beyond the original purpose, or in ways that could cause harm.",
       question: "Could the tool or its data be reused for a purpose that was never assessed or authorised?",
       patterns: {
-        en: ["misuse", "other purposes", "further use", "repurpos", "secondary use", "future use", "expand", "scale up", "control", "fraud", "sanction"],
-        sv: ["missbruk", "andra ändamål", "vidareanvänd", "framtida användning", "utök", "kontroll", "fusk", "bedrägeri", "sanktion"]
+        en: ["misuse", "other purposes", "further use", "repurpos", "secondary use", "future use", "expand", "scale up", "function creep", "abuse", "fraud", "sanction"],
+        sv: ["missbruk", "andra ändamål", "vidareanvänd", "framtida användning", "utök", "ändamålsglidning", "fusk", "bedrägeri", "sanktion"]
       }
     }
   ];

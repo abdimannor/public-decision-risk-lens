@@ -5,7 +5,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { evaluate } from "./evaluate.mjs";
 
-const BASELINE = { recall: 0.52, precision: 0.76 };
+// Before the error-analysis fixes: recall 0.52, precision 0.76.
+const BASELINE = { recall: 0.74, precision: 0.82 };
 
 test("overall recall on the gold set does not drop below the baseline", () => {
   const r = evaluate();

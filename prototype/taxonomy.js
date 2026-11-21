@@ -16,8 +16,8 @@
       description: "Whether people can see that a tool is used, what it does and on what basis.",
       question: "Would an affected person be able to find out that this tool is used and how it shapes the decision?",
       patterns: {
-        en: ["algorithm", "automated decision", "automated processing", "machine learning", "artificial intelligence", "AI system", "model", "black box", "proprietary", "trade secret"],
-        sv: ["algoritm", "automatiserat beslut", "automatiserad behandling", "maskininlärning", "artificiell intelligens", "AI-system", "modell", "affärshemlighet", "sekretess"]
+        en: ["algorithm", "automated decision", "automated processing", "machine learning", "artificial intelligence", "notif", "AI system", "model", "black box", "proprietary", "trade secret"],
+        sv: ["algoritm", "automatiser", "underrätt", "maskininlärning", "artificiell intelligens", "AI-system", "modell", "affärshemlighet", "sekretess"]
       }
     },
     {
@@ -66,8 +66,8 @@
       description: "Whether a person with real authority checks the tool's output before it affects someone.",
       question: "Does a person with competence and authority review the output, and can they overrule it?",
       patterns: {
-        en: ["human review", "manual review", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve"],
-        sv: ["manuell granskning", "handläggare", "mänsklig", "helt automatiserad", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
+        en: ["human review", "manual review", "oversight", "caseworker", "case officer", "officer", "fully automated", "without human", "automatically", "override", "sign off", "approve"],
+        sv: ["manuell granskning", "handläggare", "mänsklig", "automatiser", "automatiskt", "utan manuell", "godkänn", "beslutsfattare"]
       }
     },
     {
@@ -86,8 +86,8 @@
       description: "Use of the tool or its data beyond the original purpose, or in ways that could cause harm.",
       question: "Could the tool or its data be reused for a purpose that was never assessed or authorised?",
       patterns: {
-        en: ["other purposes", "further use", "repurpos", "secondary use", "future use", "expand", "scale up", "control", "fraud", "sanction"],
-        sv: ["andra ändamål", "vidareanvänd", "framtida användning", "utök", "kontroll", "fusk", "bedrägeri", "sanktion"]
+        en: ["misuse", "other purposes", "further use", "repurpos", "secondary use", "future use", "expand", "scale up", "control", "fraud", "sanction"],
+        sv: ["missbruk", "andra ändamål", "vidareanvänd", "framtida användning", "utök", "kontroll", "fusk", "bedrägeri", "sanktion"]
       }
     }
   ];
@@ -108,7 +108,7 @@
       category: "human-oversight",
       label: "No mention of human review",
       question: "Is it described elsewhere who reviews outputs before decisions are made?",
-      patterns: ["human review", "manual review", "caseworker", "case officer", "handläggare", "manuell granskning", "mänsklig"]
+      patterns: ["human review", "manual review", "oversight", "caseworker", "case officer", "handläggare", "manuell granskning", "mänsklig"]
     },
     {
       id: "absence-accountability",

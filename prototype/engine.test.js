@@ -168,3 +168,20 @@ test("explainFlag gives rule, context, category and related absence checks", () 
   assert.ok(x.relatedAbsenceChecks.length >= 1);
   assert.equal(x.relatedAbsenceChecks[0].status, "not found in this text");
 });
+
+test("Swedish inflections of automatiserad are matched", () => {
+  for (const s of ["Beslutet fattas automatiserat.", "Automatiserade beslut används.", "Ärendet automatiseras."]) {
+    const cats = findFlags(splitPassages(s)).map((f) => f.category);
+    assert.ok(cats.includes("transparency") && cats.includes("human-oversight"), s);
+  }
+});
+
+test("a negated term is not flagged, a later negation does not hide it", () => {
+  assert.ok(!findFlags(splitPassages("Beslutet fattas inte automatiserat.")).some((f) => f.category === "transparency"));
+  assert.ok(!findFlags(splitPassages("The decision is not fully automated by any algorithm.")).some((f) => f.rule.includes('"fully automated"')));
+  assert.ok(findFlags(splitPassages("An algorithm is used, which is not ideal.")).some((f) => f.rule.includes('"algorithm"')));
+  assert.ok(findFlags(splitPassages("It runs without human review.")).some((f) => f.rule.includes('"without human"')));
+  // A negated safeguard is still a reason to look closer.
+  assert.ok(findFlags(splitPassages("There is no appeal.")).some((f) => f.category === "contestability"));
+  assert.ok(findFlags(splitPassages("Ingen handläggare granskar, beslutet kan inte överklagas.")).some((f) => f.category === "contestability"));
+});

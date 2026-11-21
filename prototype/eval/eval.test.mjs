@@ -5,8 +5,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { evaluate } from "./evaluate.mjs";
 
-// Before the error-analysis fixes: recall 0.52, precision 0.76.
-const BASELINE = { recall: 0.74, precision: 0.82 };
+// Before the error-analysis fixes: recall 0.51, precision 0.76 (51 labels).
+// Recall went from 0.74 to 0.725 when förvaltningslag #13 got the
+// accountability label it shares with #11 and #12 (one more miss), not
+// because the engine got worse.
+const BASELINE = { recall: 0.72, precision: 0.82 };
 
 test("overall recall on the gold set does not drop below the baseline", () => {
   const r = evaluate();

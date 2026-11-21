@@ -99,7 +99,12 @@
       "sample": "sv-forvaltningslag",
       "index": 13,
       "text": "En avvikande mening ska anmälas innan myndigheten expedierar beslutet eller på annat sätt gör det tillgängligt för utomstående. Om beslutet inte ska göras tillgängligt för utomstående, ska anmälan göras senast när beslutet får sin slutliga form.",
-      "labels": []
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "Deadline for recording dissent: a dissent filed too late is not recorded, so the person counts as standing behind the decision (same mechanism as #11 and #12)."
+        }
+      ]
     },
     {
       "sample": "sv-forvaltningslag",

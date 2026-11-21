@@ -1,0 +1,565 @@
+{
+  "format": "risk-lens-gold",
+  "version": 1,
+  "annotator": "A single AI agent (Claude, acting for the repository owner), November 2026. One annotator only: there is no inter-annotator agreement, and the labels have not been checked by a lawyer or a domain expert.",
+  "method": "Every passage the engine produces from the three samples is listed. For each passage the annotator read the text and the category descriptions and review questions in prototype/taxonomy.js, and labelled a category only when a reviewer would genuinely want to ask that category's question about this passage. A mere mention of a word is not enough (for example 'AI system' in a sentence about oversight is labelled human oversight, not transparency). Passages with no label are true negatives and count for precision.",
+  "passages": [
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 1,
+      "text": "Myndighetens beslut",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 2,
+      "text": "Hur beslut fattas",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 3,
+      "text": "28 § Ett beslut kan fattas av en befattningshavare ensam eller av flera gemensamt eller automatiserat. Vid den slutliga handläggningen kan föredragande och andra befattningshavare medverka utan att delta i avgörandet.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "A decision may be taken 'automatiserat': an affected person needs to know an automated process shaped it."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "Automated decision-making with no person named raises who checks the output."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 4,
+      "text": "När flera ska fatta beslut gemensamt och de inte kan enas, ska ordföranden presentera de olika förslag till beslut som har förts fram. Varje förslag ska presenteras så att det kan besvaras med antingen ja eller nej.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 5,
+      "text": "När de som deltar i avgörandet har fått ta ställning till förslagen, meddelar ordföranden vad som enligt hans eller hennes uppfattning har beslutats. Detta blir beslutet, om inte omröstning begärs.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 6,
+      "text": "Omröstning",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 7,
+      "text": "29 § En omröstning ska genomföras öppet. Om det vid omröstningen finns fler än två förslag, ska man först avgöra vilket förslag som ska ställas mot det som ordföranden anser har beslutats.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 8,
+      "text": "Omröstningen avgörs genom enkel majoritet. Om det blir lika röstetal har ordföranden utslagsröst.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 9,
+      "text": "Varje ledamot som deltar i den slutliga handläggningen ska delta även i avgörandet. Ordföranden ska alltid rösta om det behövs för att ärendet ska kunna avgöras. Andra ledamöter behöver dock inte rösta för mer än ett förslag.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 10,
+      "text": "Reservation och avvikande mening",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 11,
+      "text": "30 § När ett beslut fattas av flera gemensamt har den som deltar i avgörandet rätt att reservera sig mot beslutet genom att få en avvikande mening antecknad. Den som inte gör det ska anses ha ställt sig bakom beslutet.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "Recording dissent decides who is deemed to stand behind the decision."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 12,
+      "text": "Den som medverkar vid den slutliga handläggningen av ett ärende utan att delta i avgörandet har alltid rätt att få en avvikande mening antecknad.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "Right to have a dissenting opinion recorded separates responsibility for the decision."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 13,
+      "text": "En avvikande mening ska anmälas innan myndigheten expedierar beslutet eller på annat sätt gör det tillgängligt för utomstående. Om beslutet inte ska göras tillgängligt för utomstående, ska anmälan göras senast när beslutet får sin slutliga form.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 14,
+      "text": "Dokumentation av beslut",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 15,
+      "text": "31 § För varje skriftligt beslut ska det finnas en handling som visar",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 16,
+      "text": "1. dagen för beslutet,",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 17,
+      "text": "2. vad beslutet innehåller,",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 18,
+      "text": "3. vem eller vilka som har fattat beslutet,",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "The record must show who took the decision."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 19,
+      "text": "4. vem eller vilka som har varit föredragande, och",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "The record must show who presented the case."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 20,
+      "text": "5. vem eller vilka som har medverkat vid den slutliga handläggningen utan att delta i avgörandet.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "The record must show who took part without deciding."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 21,
+      "text": "Motivering av beslut",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Heading for the duty to give reasons, which people need to challenge a decision."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 22,
+      "text": "32 § Ett beslut som kan antas påverka någons situation på ett inte obetydligt sätt ska innehålla en klargörande motivering, om det inte är uppenbart obehövligt. En sådan motivering ska innehålla uppgifter om vilka föreskrifter som har tillämpats och vilka omständigheter som har varit avgörande för myndighetens ställningstagande.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Duty to give clear reasons, including rules applied and decisive facts."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 23,
+      "text": "En motivering får helt eller delvis utelämnas, om",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Reasons may be left out in whole or part, which limits the ability to challenge."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 24,
+      "text": "1. beslutet gäller anställning av någon,",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 25,
+      "text": "2. ett väsentligt allmänt eller enskilt intresse kräver att beslutet meddelas omedelbart,",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 26,
+      "text": "3. det är nödvändigt med hänsyn till rikets säkerhet, skyddet för enskildas personliga eller ekonomiska förhållanden eller något annat jämförbart förhållande, eller",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Protection of individuals' personal or economic circumstances. ('rikets säkerhet' is national security, not system security.)"
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 27,
+      "text": "4. beslutet gäller meddelande av föreskrifter som avses i 8 kap. regeringsformen.",
+      "labels": []
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 28,
+      "text": "Om motiveringen har utelämnats enligt andra stycket 1, 2 eller 3 ska myndigheten om möjligt ge en motivering i efterhand, om någon enskild begär det och det behövs för att han eller hon ska kunna ta till vara sin rätt.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Reasons may be given afterwards on request so a person can assert their rights."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 29,
+      "text": "Underrättelse om innehållet i beslut och hur ett överklagande går till",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Heading on informing the party of the decision."
+        },
+        {
+          "category": "contestability",
+          "reason": "Heading on how an appeal works."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 30,
+      "text": "33 § En myndighet som meddelar ett beslut i ett ärende ska så snart som möjligt underrätta den som är part om det fullständiga innehållet i beslutet, om det inte är uppenbart obehövligt.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "The party must be informed of the full content of the decision."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 31,
+      "text": "Om parten får överklaga beslutet ska han eller hon även underrättas om hur det går till. Myndigheten ska samtidigt upplysa parten om avvikande meningar som har antecknats enligt 30 § eller enligt särskilda bestämmelser i någon annan författning. En underrättelse om hur man överklagar ska innehålla information om vilka krav som ställs på överklagandets form och innehåll och vad som gäller i fråga om ingivande och överklagandetid.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "The party must be told about appeal routes and recorded dissent."
+        },
+        {
+          "category": "contestability",
+          "reason": "Describes the right to appeal and what the appeal notice must contain."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 32,
+      "text": "Myndigheten bestämmer hur underrättelsen ska ske. En underrättelse ska dock alltid vara skriftlig om en part begär det. Underrättelse får ske genom delgivning.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "How notification of the decision is given."
+        }
+      ]
+    },
+    {
+      "sample": "sv-forvaltningslag",
+      "index": 33,
+      "text": "En skriftlig underrättelse behöver inte innehålla uppgift om en sådan person som avses i 31 §, om det kan befaras att personen utsätts för hot, trakasserier eller annan allvarlig olägenhet. Lag (2025:582).",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "A written notification may leave out a named person."
+        },
+        {
+          "category": "privacy",
+          "reason": "Identity of a person may be withheld to protect them from threats or harassment."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 1,
+      "text": "Article 14 Human oversight",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Heading: Human oversight."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 2,
+      "text": "1. High-risk AI systems shall be designed and developed in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "AI systems must be effectively overseen by natural persons."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 3,
+      "text": "2. Human oversight shall aim to prevent or minimise the risks to health, safety or fundamental rights that may emerge when a high-risk AI system is used in accordance with its intended purpose or under conditions of reasonably foreseeable misuse, in particular where such risks persist despite the application of other requirements set out in this Section.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "States the aim of human oversight."
+        },
+        {
+          "category": "misuse",
+          "reason": "Refers to reasonably foreseeable misuse."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 4,
+      "text": "3. The oversight measures shall be commensurate with the risks, level of autonomy and context of use of the high-risk AI system, and shall be ensured through either one or both of the following types of measures: (a) measures identified and built, when technically feasible, into the high-risk AI system by the provider before it is placed on the market or put into service; (b) measures identified by the provider before placing the high-risk AI system on the market or putting it into service and that are appropriate to be implemented by the deployer.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Oversight measures and how they are ensured."
+        },
+        {
+          "category": "accountability",
+          "reason": "Splits who builds the measures (provider) and who implements them (deployer)."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 5,
+      "text": "4.",
+      "labels": []
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 6,
+      "text": "For the purpose of implementing paragraphs 1, 2 and 3, the high-risk AI system shall be provided to the deployer in such a way that natural persons to whom human oversight is assigned are enabled, as appropriate and proportionate: (a) to properly understand the relevant capacities and limitations of the high-risk AI system and be able to duly monitor its operation, including in view of detecting and addressing anomalies, dysfunctions and unexpected performance; (b) to remain aware of the possible tendency of automatically relying or over-relying on the output produced by a high-risk AI system (automation bias), in particular for high-risk AI systems used to provide information or recommendations for decisions to be taken by natural persons; (c) to correctly interpret the high-risk AI system’s output, taking into account, for example, the interpretation tools and methods available; (d) to decide, in any particular situation, not to use the high-risk AI system or to otherwise disregard, override or reverse the output of the high-risk AI system; (e) to intervene in the operation of the high-risk AI system or interrupt the system through a ‘stop’ button or a similar procedure that allows the system to come to a halt in a safe state.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Overseers must monitor, be aware of automation bias and be able to override or stop the system."
+        },
+        {
+          "category": "transparency",
+          "reason": "Overseers must understand capacities and limits and interpret the output."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 7,
+      "text": "5. For high-risk AI systems referred to in point 1(a) of Annex III, the measures referred to in paragraph 3 of this Article shall be such as to ensure that, in addition, no action or decision is taken by the deployer on the basis of the identification resulting from the system unless that identification has been separately verified and confirmed by at least two natural persons with the necessary competence, training and authority.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Identification must be verified by two natural persons with competence and authority."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 8,
+      "text": "The requirement for a separate verification by at least two natural persons shall not apply to high-risk AI systems used for the purposes of law enforcement, migration, border control or asylum, where Union or national law considers the application of this requirement to be disproportionate.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Exception removing the two-person verification for some uses. ('border control' is a policy field, not a control function of the tool.)"
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 9,
+      "text": "[...]",
+      "labels": []
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 10,
+      "text": "Article 86 Right to explanation of individual decision-making",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Heading: right to an explanation of an individual decision."
+        },
+        {
+          "category": "transparency",
+          "reason": "Explanation of the AI system's role."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 11,
+      "text": "1. Any affected person subject to a decision which is taken by the deployer on the basis of the output from a high-risk AI system listed in Annex III, with the exception of systems listed under point 2 thereof, and which produces legal effects or similarly significantly affects that person in a way that they consider to have an adverse impact on their health, safety or fundamental rights shall have the right to obtain from the deployer clear and meaningful explanations of the role of the AI system in the decision-making procedure and the main elements of the decision taken.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Affected person may obtain an explanation of the decision."
+        },
+        {
+          "category": "transparency",
+          "reason": "Explanation of the role of the AI system in the decision."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 12,
+      "text": "2. Paragraph 1 shall not apply to the use of AI systems for which exceptions from, or restrictions to, the obligation under that paragraph follow from Union or national law in compliance with Union law.",
+      "labels": [
+        {
+          "category": "contestability",
+          "reason": "Exceptions to the right to explanation limit contestability."
+        },
+        {
+          "category": "transparency",
+          "reason": "Exceptions limit what affected people are told about AI use."
+        }
+      ]
+    },
+    {
+      "sample": "eu-ai-act",
+      "index": 13,
+      "text": "3. This Article shall apply only to the extent that the right referred to in paragraph 1 is not otherwise provided for under Union law.",
+      "labels": []
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 1,
+      "text": "FICTIONAL EXAMPLE. Exampleville Municipality does not exist. This text was written to demonstrate the prototype.",
+      "labels": []
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 2,
+      "text": "Decision on the introduction of a support tool for prioritising home-care applications",
+      "labels": [
+        {
+          "category": "discrimination",
+          "reason": "Prioritising applications may treat groups differently."
+        }
+      ]
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 3,
+      "text": "1. Purpose. The social services committee decides to introduce a support tool that sorts incoming home-care applications. The tool uses a machine learning model to give each application a risk score that indicates how urgently it should be handled.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "A machine learning model is used."
+        },
+        {
+          "category": "discrimination",
+          "reason": "A risk score sorts applications."
+        }
+      ]
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 4,
+      "text": "2. Data. The model is trained on applications from 2019 to 2024. Personal data used include age, postcode, household composition, earlier contacts with social services and health data recorded by the home-care unit. Data from the housing register will be combined with the application data.",
+      "labels": [
+        {
+          "category": "privacy",
+          "reason": "Personal and health data, combined with a register."
+        },
+        {
+          "category": "discrimination",
+          "reason": "Age and postcode are inputs and possible proxies."
+        },
+        {
+          "category": "transparency",
+          "reason": "Training data of the model is described."
+        }
+      ]
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 5,
+      "text": "3. Supplier. The tool is provided by a third-party supplier under the existing framework agreement. The model and its weights are proprietary and are treated as a trade secret by the supplier. The service is hosted in a cloud environment managed by the supplier.",
+      "labels": [
+        {
+          "category": "transparency",
+          "reason": "Model is proprietary and a trade secret."
+        },
+        {
+          "category": "accountability",
+          "reason": "A third-party supplier provides the tool."
+        },
+        {
+          "category": "security",
+          "reason": "Hosted in a supplier-managed cloud."
+        }
+      ]
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 6,
+      "text": "4. Processing. Applications with a low risk score are placed in a standard queue automatically. Applications with a high risk score are sent to a caseworker within two working days.",
+      "labels": [
+        {
+          "category": "human-oversight",
+          "reason": "Low-score applications are queued automatically without a caseworker."
+        },
+        {
+          "category": "discrimination",
+          "reason": "Risk score decides the queue."
+        }
+      ]
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 7,
+      "text": "5. Follow-up. After one year, the committee may decide to expand the use of the tool to other services, including control of payments.",
+      "labels": [
+        {
+          "category": "misuse",
+          "reason": "Possible expansion to other services and payment control."
+        }
+      ]
+    },
+    {
+      "sample": "fictional-home-care",
+      "index": 8,
+      "text": "6. Delegation. The head of the social services administration is given delegation to approve changes to the tool's settings.",
+      "labels": [
+        {
+          "category": "accountability",
+          "reason": "Delegation of authority over the tool."
+        },
+        {
+          "category": "human-oversight",
+          "reason": "A named role approves changes to the tool's settings."
+        }
+      ]
+    }
+  ]
+}

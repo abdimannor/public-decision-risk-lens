@@ -262,3 +262,22 @@ kbd { display: inline-block; min-width: 1.8em; text-align: center; font: 600 .85
 .summary ul { margin: 0; padding-left: 1.2rem; }
 .summary .sum-dec { padding-left: 0; }
 .sum-cats li { margin: .15rem 0; }
+
+/* File import: drop zone around the document text area. */
+.drop-zone { position: relative; }
+.drop-zone textarea { display: block; width: 100%; }
+.drop-cue { display: none; position: absolute; inset: 0; margin: 0; place-items: center; text-align: center; padding: 1rem;
+  font-weight: 600; color: var(--ink, #0b1f3a); background: rgba(227, 236, 251, .92); border: 2px dashed var(--signal, #2f7df6); border-radius: 8px; pointer-events: none; }
+.drop-zone.dragging .drop-cue { display: grid; }
+.open-file small { font-weight: 400; opacity: .85; }
+
+/* Flag map: a slim vertical minimap beside the passages. */
+.doc-with-map { display: grid; grid-template-columns: minmax(0, 1fr) 1.25rem; gap: .5rem; align-items: start; }
+.doc-with-map .passages { margin: 0; }
+.flag-map { position: sticky; top: calc(var(--banner-h, 0px) + 3.5rem); align-self: stretch; min-height: 8rem; max-height: min(70vh, 34rem); background: var(--surface, #fff); border: 1px solid var(--line, #d6dde8); border-radius: 999px; }
+.flag-map ol { list-style: none; margin: 0; padding: 0; position: absolute; inset: .5rem .2rem; }
+.flag-map li { position: absolute; left: 0; right: 0; top: var(--at); transform: translateY(-50%); }
+.fm-mark { display: flex; width: 100%; height: .55rem; min-height: 6px; padding: 0; margin: 0; border: 0; border-radius: 3px; overflow: hidden; cursor: pointer; background: transparent; }
+.fm-mark span { flex: 1; background: var(--cat); }
+.fm-mark:hover, .fm-mark:focus-visible { outline: 2px solid var(--ink, #0b1f3a); outline-offset: 2px; height: .8rem; }
+@media (max-width: 520px) { .doc-with-map { grid-template-columns: minmax(0, 1fr) 1rem; gap: .35rem; } }

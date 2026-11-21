@@ -86,3 +86,7 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 - The original workflow diagram in `assets/risk-lens-workflow.svg` was created for this project and is covered by this repository’s [CC BY 4.0 licence](LICENSE).
 - The illustrative photograph, [*Signing of the General Appropriations Act of 2025 A*](https://commons.wikimedia.org/wiki/File:Signing_of_the_General_Appropriations_Act_of_2025_A.jpg), is by the Philippine Presidential Communications Office and is marked **Public Domain** on Wikimedia Commons. It is used only as a general illustration of official document-signing.
 - No external code or datasets are included in this project.
+
+## Evaluation
+
+`npm run eval` scores the engine against a small hand-annotated gold set (`prototype/eval/gold.json`, 54 passages from the three samples, 50 expected labels, one AI annotator, no inter-annotator agreement). After the error-analysis fixes: precision 82%, recall 74% (before: 76% and 52%). The fixes were made on the same passages, so these figures are optimistic. Method and limits in plain language: `prototype/evaluation.html`.

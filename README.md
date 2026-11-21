@@ -93,14 +93,16 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 
 `npm run eval` scores the engine against a small hand-annotated gold set (`prototype/eval/gold.json`, 54 passages from the three samples, 51 expected labels, one AI annotator, no inter-annotator agreement). After the error-analysis fixes: precision 82%, recall 73% (before: 76% and 51%). The fixes were made on the same passages, so these figures are optimistic.
 
-`npm run eval -- heldout` scores it on a held-out set (`prototype/eval/heldout.json`): 30 verbatim passages from seven real Swedish and EU documents the engine was never tuned on, chosen by reading and labelled blind (labels committed before the first engine run, engine unchanged since). **This is the honest estimate.**
+`npm run eval -- heldout` scores it on a held-out set (`prototype/eval/heldout.json`): 30 verbatim passages from seven real Swedish and EU documents the engine was never tuned on, chosen by reading and labelled blind (labels committed before the first engine run). Its first score was the honest estimate; a later precision round used it for development, so it now counts as development data.
 
 | Set | Passages | Labels | Precision | Recall | F1 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Tuning (samples) | 54 | 51 | 82% | 73% | 77% |
-| Held-out (new documents) | 30 | 57 | 44% | 72% | 55% |
+| Held-out (new documents), first score | 30 | 57 | 44% | 72% | 55% |
+| Tuning, after precision round | 54 | 51 | 84% | 71% | 77% |
+| Held-out, after precision round (development data) | 30 | 57 | 65% | 82% | 73% |
 
-Recall holds; precision drops because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fire on mere mentions. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
+On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a fresh frozen test set of new documents has been labelled and will be scored after this change. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
 
 Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
 

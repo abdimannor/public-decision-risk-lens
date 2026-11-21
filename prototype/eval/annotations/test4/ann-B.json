@@ -1,0 +1,133 @@
+{
+ "annotator": "B",
+ "labels": {
+  "test4-PAC-HC356-1#23": [],
+  "test4-JO-4379-2023-1#1": [
+   "accountability",
+   "human-oversight",
+   "transparency",
+   "contestability"
+  ],
+  "test4-JO-9043-2024-1#5": [
+   "transparency",
+   "contestability",
+   "human-oversight"
+  ],
+  "test4-JO-9043-2024-2#6": [
+   "human-oversight",
+   "transparency",
+   "contestability"
+  ],
+  "test4-Datatilsynet-AI-3#17": [
+   "transparency"
+  ],
+  "test4-DPC-Waterford-1#12": [
+   "privacy"
+  ],
+  "test4-JO-4379-2023-3#3": [
+   "human-oversight",
+   "transparency"
+  ],
+  "test4-PAC-HC356-2#24": [],
+  "test4-DIGG-LM-2#20": [],
+  "test4-DPC-Kerry-1#9": [
+   "privacy",
+   "accountability",
+   "security"
+  ],
+  "test4-DPC-Kerry-2#10": [
+   "privacy"
+  ],
+  "test4-EDPS-XAI-1#27": [
+   "transparency"
+  ],
+  "test4-JO-9043-2024-4#8": [
+   "transparency",
+   "contestability"
+  ],
+  "test4-Datatilsynet-AI-4#18": [
+   "discrimination",
+   "privacy"
+  ],
+  "test4-JO-4379-2023-4#4": [
+   "accountability",
+   "human-oversight"
+  ],
+  "test4-DPC-Kerry-3#11": [
+   "privacy"
+  ],
+  "test4-EDPS-XAI-2#28": [
+   "discrimination",
+   "transparency",
+   "contestability"
+  ],
+  "test4-DIGG-LM-1#19": [
+   "transparency"
+  ],
+  "test4-Datatilsynet-AI-1#15": [],
+  "test4-PAC-HC356-4#26": [
+   "accountability"
+  ],
+  "test4-JO-4379-2023-2#2": [
+   "human-oversight"
+  ],
+  "test4-EDPS-XAI-3#29": [
+   "transparency"
+  ],
+  "test4-DIGG-LM-4#22": [],
+  "test4-EDPS-XAI-4#30": [
+   "discrimination",
+   "transparency",
+   "misuse"
+  ],
+  "test4-JO-9043-2024-3#7": [
+   "contestability",
+   "transparency"
+  ],
+  "test4-DPC-Waterford-3#14": [
+   "privacy"
+  ],
+  "test4-Datatilsynet-AI-2#16": [
+   "privacy",
+   "transparency"
+  ],
+  "test4-DIGG-LM-3#21": [],
+  "test4-DPC-Waterford-2#13": [
+   "privacy",
+   "misuse"
+  ],
+  "test4-PAC-HC356-3#25": []
+ },
+ "reasons": {
+  "test4-PAC-HC356-1#23": "Policy/legacy IT and data quality; no personal data or decision openness at stake",
+  "test4-JO-4379-2023-1#1": "Domstolsverket criticised for flawed system; judge hindered; judgment readability/how court reached conclusions",
+  "test4-JO-9043-2024-1#5": "Predetermined automated rejections, lacking reasons, manual sorting, decision not sent to representative",
+  "test4-JO-9043-2024-2#6": "Cases rejected automatically with standard text; agency defends no individual reasons",
+  "test4-Datatilsynet-AI-3#17": "Black box; difficulty explaining what was relevant for outcome",
+  "test4-DPC-Waterford-1#12": "Lawful basis for processing personal data; transparency/accountability only listed as headings",
+  "test4-JO-4379-2023-3#3": "Tool forces court to cite rule not applied; judgment misstates basis; judge cannot affect",
+  "test4-PAC-HC356-2#24": "Digital skills shortage only",
+  "test4-DIGG-LM-2#20": "Mission statement; transparency only a stated goal, AI mention otherwise bare",
+  "test4-DPC-Kerry-1#9": "Council as controller of CCTV data; controls access and deletion",
+  "test4-DPC-Kerry-2#10": "Lawful basis for CCTV processing of personal data",
+  "test4-EDPS-XAI-1#27": "Black box hiding logic of AI decisions unacceptable",
+  "test4-JO-9043-2024-4#8": "Automated decisions not sent to representative due to system limits",
+  "test4-Datatilsynet-AI-4#18": "Biased training data, discriminatory results, personal data and fairness",
+  "test4-JO-4379-2023-4#4": "Domstolsverket knowingly launched missing functions; judge's ability to formulate decisions",
+  "test4-DPC-Kerry-3#11": "No lawful basis for CCTV footage use",
+  "test4-EDPS-XAI-2#28": "Biased hiring/diagnosis; black box blocks affected people understanding decisions",
+  "test4-DIGG-LM-1#19": "Trust model: declaration of system components and open log linked to cases",
+  "test4-Datatilsynet-AI-1#15": "Technical description of static vs dynamic models",
+  "test4-PAC-HC356-4#26": "Unclear accountabilities across Cabinet Office and DSIT; suppliers",
+  "test4-JO-4379-2023-2#2": "Locked section: judge cannot influence wording of generated decisions",
+  "test4-EDPS-XAI-3#29": "Opacity: no sense how/why a decision was arrived at; auditability",
+  "test4-DIGG-LM-4#22": "Research gap and general definition of transparency; no decision-level issue",
+  "test4-EDPS-XAI-4#30": "Malicious developer hiding biased model; post-hoc explanations unreliable",
+  "test4-JO-9043-2024-3#7": "Adequacy of reasons explaining to individual why case not decided",
+  "test4-DPC-Waterford-3#14": "Dash cams, drones, covert surveillance processing personal data",
+  "test4-Datatilsynet-AI-2#16": "Data minimisation; black box result without explanation",
+  "test4-DIGG-LM-3#21": "Background; bare mentions of automated decisions",
+  "test4-DPC-Waterford-2#13": "Body cam data; potential subsequent use in criminal investigations outside purpose",
+  "test4-PAC-HC356-3#25": "AI pilots and adoption; bare mentions"
+ }
+}

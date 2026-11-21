@@ -143,6 +143,26 @@
     li.focus({ preventScroll: true });
   }
 
+
+  // Flag map: one mark per flagged passage at its relative position in the
+  // document, striped with the colour of each category that fired there.
+  function renderFlagMap() {
+    const list = $("flag-map").querySelector("ol");
+    list.replaceChildren();
+    const n = result.passages.length;
+    $("flag-map").hidden = !result.flags.length;
+    result.passages.forEach((p, i) => {
+      const cats = [...new Set(result.flags.filter((f) => f.passageIndex === p.index).map((f) => f.category))];
+      if (!cats.length) return;
+      const labels = cats.map((c) => (TAXONOMY.find((x) => x.id === c) ? L(TAXONOMY.find((x) => x.id === c)).label : c));
+      const btn = el("button", { type: "button", class: "fm-mark", "data-passage": String(p.index),
+        title: t("flagMark", { cats: labels.join(", "), where: passageLabel(p.index) }),
+        "aria-label": t("flagMark", { cats: labels.join(", "), where: passageLabel(p.index) }), onclick: () => goToPassage(p.index) },
+        ...cats.map((c) => el("span", { "data-cat": c, "aria-hidden": "true" })));
+      list.append(el("li", { style: `--at:${n > 1 ? (i / (n - 1)) * 100 : 50}%` }, btn));
+    });
+  }
+
   // Risk map: one column per passage, one row per category. Lit cells show
   // where trigger terms cluster. It counts matches; it does not weigh them.
   function renderRiskMap() {
@@ -290,6 +310,7 @@
     result = pages ? Engine.analysePages(pages, rules) : Engine.analyse(text, rules);
     reviews = savedReviews && typeof savedReviews === "object" && !(savedReviews instanceof Event) ? savedReviews : {};
     renderPassages();
+    renderFlagMap();
     renderRiskMap();
     renderAbsences();
     renderFlags();
@@ -421,32 +442,44 @@
     analyse();
   });
   $("doc").addEventListener("input", () => { sourceName = null; pages = null; if (sampleId) { sampleId = null; renderSourceMeta(); } });
-  $("file").addEventListener("change", async (e) => {
-    const file = e.target.files[0];
+  function fileError(name, err) {
+    const key = { unsupported: "errUnsupported", broken: "errBroken", empty: "errEmpty" }[err && err.code];
+    return key ? t(key, { name }) : t("couldNotRead", { name, err: (err && err.message) || err });
+  }
+  // Open a file from the picker or a drop. Everything is read in this browser.
+  async function openFile(file) {
     if (!file) return;
     const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
     try {
       if (isPdf) {
         $("status").textContent = t("readingPdf", { name: file.name });
-        pages = await readPdf(file);
+        const read = await readPdf(file);
+        if (!read.map((p) => p.text).join("").trim()) { $("status").textContent = t("noTextLayer"); return; }
+        pages = read;
         $("doc").value = pages.map((p) => p.text).join("\n\n");
-        if (!$("doc").value.trim()) {
-          pages = null;
-          $("status").textContent = t("noTextLayer");
-          return;
-        }
       } else {
+        const { text } = await window.RiskLensFileImport.readFile(file);
         pages = null;
-        $("doc").value = await file.text();
+        $("doc").value = text;
       }
       sourceName = file.name;
       sampleId = null;
       renderSourceMeta();
       analyse();
     } catch (err) {
-      pages = null;
-      $("status").textContent = t("couldNotRead", { name: file.name, err: err.message || err });
+      $("status").textContent = fileError(file.name, err);
     }
+  }
+  $("file").addEventListener("change", async (e) => { await openFile(e.target.files[0]); e.target.value = ""; });
+  const zone = $("drop-zone");
+  const hasFiles = (e) => e.dataTransfer && Array.from(e.dataTransfer.types || []).includes("Files");
+  zone.addEventListener("dragover", (e) => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; zone.classList.add("dragging"); });
+  zone.addEventListener("dragleave", (e) => { if (!zone.contains(e.relatedTarget)) zone.classList.remove("dragging"); });
+  zone.addEventListener("drop", (e) => {
+    zone.classList.remove("dragging");
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    openFile(e.dataTransfer.files[0]);
   });
 
   // PDF text extraction with the vendored pdf.js. Lines are rebuilt from the
@@ -710,7 +743,7 @@
     renderSourceMeta();
     if (result) {
       const focusedFlag = document.activeElement && document.activeElement.closest && document.activeElement.closest(".flag");
-      renderPassages(); renderRiskMap(); renderAbsences(); renderFlags(); renderProgress(); updateStatus();
+      renderPassages(); renderFlagMap(); renderRiskMap(); renderAbsences(); renderFlags(); renderProgress(); updateStatus();
       if (focusedFlag) { const again = $(focusedFlag.id); if (again) again.focus(); }
     }
     if ($("compare-out").childElementCount) $("compare-run").click();

@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Public Decision Risk Lens: prototype</title>
-  <meta name="description" content="Paste a public decision document or load a .txt or PDF file. Passages that contain trigger terms are highlighted and listed by category for human review.">
+  <meta name="description" content="Paste a public decision document or open a .txt, .md, .html, .docx or PDF file. Passages that contain trigger terms are highlighted and listed by category for human review.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Public Decision Risk Lens: prototype">
-  <meta property="og:description" content="Paste a public decision document or load a .txt or PDF file. Passages that contain trigger terms are highlighted and listed by category for human review.">
+  <meta property="og:description" content="Paste a public decision document or open a .txt, .md, .html, .docx or PDF file. Passages that contain trigger terms are highlighted and listed by category for human review.">
   <meta property="og:url" content="https://abdimannor.github.io/public-decision-risk-lens/prototype/">
   <meta property="og:image" content="https://abdimannor.github.io/public-decision-risk-lens/prototype/og.png">
   <meta property="og:image:width" content="1200">
@@ -33,14 +33,15 @@
 
   <header class="top">
     <h1>Public Decision Risk Lens <span class="tag" data-i18n="tag">prototype</span></h1>
-    <p class="lede" data-i18n="lede">Paste a public decision document or load a .txt or PDF file. PDF text is read in this browser and every passage keeps its page number. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
+    <p class="lede" data-i18n="lede">Paste a public decision document or open a .txt, .md, .html, .docx or PDF file. Files are read in this browser and every passage keeps its page number. Passages that contain trigger terms are highlighted and listed by category for human review.</p>
   </header>
 
   <main>
     <section class="input" aria-labelledby="input-h">
       <h2 id="input-h" data-i18n="inputH">1. Document</h2>
       <label for="doc" data-i18n="docLabel">Document text</label>
-      <textarea id="doc" rows="10" spellcheck="false" placeholder="Paste text here" data-i18n-attr="placeholder:docPlaceholder"></textarea>
+      <div class="drop-zone" id="drop-zone"><textarea id="doc" rows="10" spellcheck="false" placeholder="Paste text here" data-i18n-attr="placeholder:docPlaceholder" aria-describedby="file-hint"></textarea><p class="drop-cue" aria-hidden="true" data-i18n="dropHere">Drop the file to read it in this browser</p></div>
+      <p class="hint" id="file-hint" data-i18n="fileHint">Files are read in this browser. Nothing is uploaded. You can also drop a file on the text area.</p>
       <div class="row">
         <button id="analyse" type="button" class="primary" data-i18n="analyse">Analyse text</button>
         <span class="sample-pick"><label for="sample-pick" data-i18n="samplePick">Sample</label>
@@ -50,7 +51,7 @@
             <option value="eu" data-i18n="sampleEu">EU real: AI Act Articles 14 and 86</option>
           </select></span>
         <button id="load-sample" type="button" data-i18n="loadSample">Load sample</button>
-        <label class="file"><span data-i18n="loadFile">Load .txt or .pdf</span> <input id="file" type="file" accept=".txt,text/plain,.pdf,application/pdf"></label>
+        <label class="file open-file"><span data-i18n="openFile">Open a file</span> <small data-i18n="fileTypes">.txt, .md, .html, .docx or .pdf</small> <input id="file" type="file" accept=".txt,.md,.markdown,.html,.htm,.docx,.pdf,text/plain,text/markdown,text/html,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></label>
         <button id="clear" type="button" class="danger" hidden data-i18n="clear">Clear review</button>
       </div>
       <p class="hint" data-i18n="storageHint">Your text, decisions and notes are saved in this browser only (local storage) so they survive a reload. Use Clear review to remove them.</p>
@@ -84,7 +85,10 @@
     <div class="workspace" hidden id="workspace">
       <section class="doc-view" aria-labelledby="doc-h">
         <h2 id="doc-h" data-i18n="passagesH">2. Passages</h2>
-        <ol id="passages" class="passages"></ol>
+        <div class="doc-with-map">
+          <ol id="passages" class="passages"></ol>
+          <nav id="flag-map" class="flag-map" aria-label="Flag map" data-i18n-attr="aria-label:flagMapLabel"><ol></ol></nav>
+        </div>
       </section>
 
       <section class="flags" id="flags" aria-labelledby="flags-h" tabindex="-1">
@@ -154,6 +158,7 @@
   <script src="i18n.js"></script>
   <script src="taxonomy.js"></script>
   <script src="engine.js"></script>
+  <script src="fileimport.js"></script>
   <script src="sample.js"></script>
   <script src="samples-real.js"></script>
   <script src="app.js"></script>

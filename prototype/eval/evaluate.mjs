@@ -1,5 +1,7 @@
 // Evaluate the matching engine against the hand-annotated gold set.
-// Run with: npm run eval   (or: node prototype/eval/evaluate.mjs [--json])
+// Run with: npm run eval   (or: node prototype/eval/evaluate.mjs [gold|heldout] [--json])
+// "gold" (default) is the tuning set; "heldout" is the blind-labelled set of
+// documents the engine was never tuned on (see heldout.json).
 // No dependencies. The unit of evaluation is (passage, category): the engine
 // "predicts" a category for a passage when at least one taxonomy pattern of
 // that category fires in it. Reviewer-added rules are not used.
@@ -13,7 +15,13 @@ const require = createRequire(import.meta.url);
 const engine = require(join(here, "..", "engine.js"));
 const { TAXONOMY } = require(join(here, "..", "taxonomy.js"));
 
-export function evaluate(gold = JSON.parse(readFileSync(join(here, "gold.json"), "utf8"))) {
+export const SETS = { gold: "gold.json", heldout: "heldout.json" };
+export function loadSet(name = "gold") {
+  if (!SETS[name]) throw new Error(`unknown set "${name}", use one of: ${Object.keys(SETS).join(", ")}`);
+  return JSON.parse(readFileSync(join(here, SETS[name]), "utf8"));
+}
+
+export function evaluate(gold = loadSet("gold")) {
   const cats = TAXONOMY.map((c) => c.id);
   const stats = Object.fromEntries(cats.map((c) => [c, { tp: 0, fp: 0, fn: 0 }]));
   const falsePositives = [];
@@ -53,9 +61,10 @@ export function evaluate(gold = JSON.parse(readFileSync(join(here, "gold.json"),
 const pct = (x) => (x === null ? "  n/a" : (x * 100).toFixed(0).padStart(4) + "%");
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const r = evaluate();
+  const setName = process.argv.slice(2).find((a) => !a.startsWith("--")) || "gold";
+  const r = evaluate(loadSet(setName));
   if (process.argv.includes("--json")) { console.log(JSON.stringify(r, null, 2)); process.exit(0); }
-  console.log(`Gold passages: ${r.passages}. Unit: (passage, category). Single AI annotator, see gold.json.\n`);
+  console.log(`Set: ${setName}. Passages: ${r.passages}. Unit: (passage, category). Single AI annotator, see gold.json.\n`);
   console.log("category          support   TP  FP  FN  precision  recall     F1");
   for (const s of [...r.perCategory, { category: "OVERALL (micro)", ...r.overall }]) {
     console.log(`${s.category.padEnd(17)} ${String(s.support).padStart(7)} ${String(s.tp).padStart(4)} ${String(s.fp).padStart(3)} ${String(s.fn).padStart(3)}      ${pct(s.precision)}   ${pct(s.recall)}  ${pct(s.f1)}`);

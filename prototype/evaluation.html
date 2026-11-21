@@ -60,6 +60,15 @@
       <tfoot><tr><th scope=row>All</th><td>84%</td><td>71%</td><td>77%</td><td>51</td><td>65%</td><td>82%</td><td>73%</td><td>57</td></tr></tfoot>
     </table>
     <p>Held-out precision rose from 44% to 65% and recall from 72% to 82%; tuning precision rose from 82% to 84% while recall fell from 73% to 71%. Most remaining held-out false alarms are transparency flags on AI and algorithm mentions, which the tuning labels count as relevant.</p>
+    <h3>The frozen test: the honest number</h3>
+    <p>A third set, 26 passages from six further documents (an IMY supervisory decision on Försäkringskassan's machine-learning risk profile, a Försäkringskassan report, Statskontoret, SOU 2018:25, the Equality Ombudsman and the UK Centre for Data Ethics and Innovation), was labelled blind on a separate branch while the precision round was being made, and scored once afterwards, with the engine before and after the change. Nobody tuned anything on it.</p>
+    <table>
+      <caption>Frozen test set (26 passages, 43 labels), scored once</caption>
+      <thead><tr><th>Engine</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+      <tbody><tr><th scope=row>Before the precision round</th><td>36%</td><td>63%</td><td>46%</td></tr>
+      <tr><th scope=row>After the precision round</th><td>42%</td><td>72%</td><td>53%</td></tr></tbody>
+    </table>
+    <p>The change helps on unseen documents, but far less than the development numbers suggested: 42% precision, not 65%. This is the figure to quote. More than half of the flags on new documents are still false alarms, mostly transparency and human-oversight flags raised by a mere mention of AI, machine learning or automation. The tuning and held-out labels disagree on whether such a mention is itself a transparency concern, so the next step is a written annotation guideline, not more patterns.</p>
     <h2>What was changed</h2>
     <ul>
       <li>Swedish inflection: the phrase patterns "automatiserat beslut" and "automatiserad behandling" missed "beslut ... fattas automatiserat". They were replaced by the stem "automatiser", which covers automatiserad, automatiserat, automatiserade and automatiseras.</li>
@@ -110,6 +119,15 @@
       <tfoot><tr><th scope=row>Alla</th><td>84%</td><td>71%</td><td>77%</td><td>51</td><td>65%</td><td>82%</td><td>73%</td><td>57</td></tr></tfoot>
     </table>
     <p>Testmängdens precision steg från 44 % till 65 % och täckningen från 72 % till 82 %; justeringsmängdens precision steg från 82 % till 84 % medan täckningen sjönk från 73 % till 71 %.</p>
+    <h3>Den frysta testmängden: den ärliga siffran</h3>
+    <p>En tredje mängd, 26 stycken ur sex andra dokument (IMY:s tillsynsbeslut om Försäkringskassans maskininlärningsbaserade riskprofil, en rapport från Försäkringskassan, Statskontoret, SOU 2018:25, Diskrimineringsombudsmannen och brittiska Centre for Data Ethics and Innovation), märktes blint på en separat gren medan precisionsrundan gjordes, och poängsattes en gång efteråt, med motorn före och efter ändringen. Ingenting justerades mot den.</p>
+    <table>
+      <caption>Fryst testmängd (26 stycken, 43 etiketter), poängsatt en gång</caption>
+      <thead><tr><th>Motor</th><th>Precision</th><th>Täckning</th><th>F1</th></tr></thead>
+      <tbody><tr><th scope=row>Före precisionsrundan</th><td>36 %</td><td>63 %</td><td>46 %</td></tr>
+      <tr><th scope=row>Efter precisionsrundan</th><td>42 %</td><td>72 %</td><td>53 %</td></tr></tbody>
+    </table>
+    <p>Ändringen hjälper på okända dokument, men mycket mindre än utvecklingssiffrorna antydde: 42 % precision, inte 65 %. Det är den siffran som gäller. Mer än hälften av flaggorna på nya dokument är fortfarande falsklarm, oftast flaggor för transparens och mänsklig tillsyn som utlöses av att AI, maskininlärning eller automatisering bara nämns. Justerings- och testetiketterna är oense om huruvida ett sådant omnämnande i sig är en transparensfråga, så nästa steg är en skriven annoteringsguide, inte fler mönster.</p>
     <h3>Vad som ändrades</h3>
     <ul>
       <li>Böjning: "automatiserat beslut" missade "fattas automatiserat". Stammen "automatiser" täcker nu alla böjningsformer.</li>

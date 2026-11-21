@@ -101,8 +101,10 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 | Held-out (new documents), first score | 30 | 57 | 44% | 72% | 55% |
 | Tuning, after precision round | 54 | 51 | 84% | 71% | 77% |
 | Held-out, after precision round (development data) | 30 | 57 | 65% | 82% | 73% |
+| **Frozen test set, before precision round** | 26 | 43 | 36% | 63% | 46% |
+| **Frozen test set, after precision round (the honest number)** | 26 | 43 | 42% | 72% | 53% |
 
-On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a fresh frozen test set of new documents has been labelled and will be scored after this change. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
+On the first score recall held and precision dropped because broad stems ("kontroll"/"control", "profiling", "automatiser", "GDPR") fired on mere mentions. The precision round added context gates (a topic word such as "profiling" or "GDPR" flags only with a cue for the actual concern in the same passage) and removed "control" from misuse. Because both sets were used to develop it, a third, frozen test set (`prototype/eval/test2.json`: 26 passages from six further documents, labelled blind on a separate branch) was scored once afterwards: precision 36% to 42%, recall 63% to 72%. That is the number to quote; the development numbers overstate the gain. Both sets have a single AI annotator, so part of the gap may be the labels. Per-category numbers, error list and method: `prototype/evaluation.html`.
 
 Held-out sources (Swedish documents reused under 9 § upphovsrättslagen; EU documents under Commission Decision 2011/833/EU):
 

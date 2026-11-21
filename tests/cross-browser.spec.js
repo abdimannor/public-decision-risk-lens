@@ -7,7 +7,13 @@ test("phone width: no horizontal overflow, Swedish sample loads without errors",
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/prototype/");
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-  expect(overflow).toBe(0);
+  const wide = await page.evaluate(() =>
+    [...document.querySelectorAll("body *")]
+      .filter((e) => e.getBoundingClientRect().right > window.innerWidth + 1)
+      .slice(0, 6)
+      .map((e) => `${e.tagName}.${e.className}#${e.id} ${Math.round(e.getBoundingClientRect().right)}`)
+  );
+  expect(overflow, `wider than the viewport: ${wide.join(", ")}`).toBe(0);
   await page.selectOption("#sample-pick", "sv");
   await page.click("#load-sample");
   await expect(page.locator("#status")).not.toBeEmpty();

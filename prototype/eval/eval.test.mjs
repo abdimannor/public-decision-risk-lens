@@ -50,3 +50,14 @@ test("held-out (now development) precision and recall stay at the measured level
   assert.ok(r.overall.precision >= 0.65, `held-out precision ${r.overall.precision.toFixed(3)} < 0.65`);
   assert.ok(r.overall.recall >= 0.80, `held-out recall ${r.overall.recall.toFixed(3)} < 0.80`);
 });
+
+// Frozen final test set (test2.json): labelled blind on a separate branch and
+// scored once after the precision round: precision 0.42 (31 of 73 flags),
+// recall 0.72 (31 of 43). It must never be used to tune the engine; this test
+// only guards against regressions, with floors just below the measured values.
+test("frozen test set: scores, and does not fall below its one-time measurement", () => {
+  const r = evaluate(loadSet("test2"));
+  assert.equal(r.passages, 26);
+  assert.ok(r.overall.precision >= 0.41, `precision ${r.overall.precision}`);
+  assert.ok(r.overall.recall >= 0.70, `recall ${r.overall.recall}`);
+});

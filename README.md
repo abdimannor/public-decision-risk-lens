@@ -89,4 +89,4 @@ Any pilot should remain low-risk and advisory. It should strengthen review and a
 
 ## Evaluation
 
-`npm run eval` scores the engine against a small hand-annotated gold set (`prototype/eval/gold.json`, 54 passages from the three samples, 50 expected labels, one AI annotator, no inter-annotator agreement). After the error-analysis fixes: precision 82%, recall 74% (before: 76% and 52%). The fixes were made on the same passages, so these figures are optimistic. Method and limits in plain language: `prototype/evaluation.html`.
+`npm run eval` scores the engine against a small hand-annotated gold set (`prototype/eval/gold.json`, 54 passages from the three samples, 51 expected labels, one AI annotator, no inter-annotator agreement). After the error-analysis fixes: precision 82%, recall 73% (before: 76% and 51%). The fixes were made on the same passages, so these figures are optimistic. Method and limits in plain language: `prototype/evaluation.html`.

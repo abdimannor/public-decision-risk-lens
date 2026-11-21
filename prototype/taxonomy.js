@@ -32,8 +32,8 @@
       }, {
         terms: ["algorithm", "automated decision", "automated processing", "machine learning", "artificial intelligence", "AI system", "model",
                 "algoritm", "automatiser", "maskininlärning", "artificiell intelligens", "AI-system", "modell"],
-        cues: ["explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware", "document", "trace", "black box",
-               "förklar", "insyn", "motiver", "information", "informer", "skäl", "begrip", "transparens", "öppen", "känner till", "veta", "dokumentation", "spåra", "svarta lådan"]
+        cues: ["explain", "explanation", "inform", "insight", "reason", "rationale", "logic", "disclos", "transparen", "understand", "meaningful", "aware", "document", "trace", "black box", "why", "told", "tell",
+               "förklar", "varför", "berätta", "insyn", "motiver", "information", "informer", "skäl", "begrip", "transparens", "öppen", "känner till", "veta", "dokumentation", "spåra", "svarta lådan"]
       }]
     },
     {

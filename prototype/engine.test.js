@@ -242,3 +242,9 @@ test("context signal does not fire on words that merely start with ai", () => {
   const r = analyse("The aim is to aid applicants.");
   assert.equal(r.context.length, 0);
 });
+
+test("an automated decision that people are not told the reasons for is a transparency flag, not just context", () => {
+  for (const s of ["Decisions are made by an algorithm and applicants are not told why.", "Beslutet fattas av en algoritm och den sökande får inte veta varför."]) {
+    assert.ok(findFlags(splitPassages(s)).some((f) => f.category === "transparency"), s);
+  }
+});
